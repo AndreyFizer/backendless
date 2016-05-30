@@ -2,12 +2,22 @@
 
 'use strict';
 
+var APP = APP || {};
+
 require.config({
     shim : {
-        Underscore: {
+        Underscore : {
             exports: '_'
         },
-        Backbone  : {
+
+        jQuery : {
+            exports: '$'
+        },
+
+        Backendless: {
+            exports: 'Backendless'
+        },
+        Backbone   : {
             deps   : [
                 'Underscore',
                 'jQuery'
@@ -16,16 +26,28 @@ require.config({
         }
     },
     paths: {
-        jQuery    : '../js/libs/jquery/jquery',
-        Backbone  : '../js/libs/backbone/backbone',
-        Underscore: '../js/libs/underscore/underscore'
+        jQuery     : '../js/libs/jquery/jquery',
+        Underscore : '../js/libs/underscore/underscore',
+        Backbone   : '../js/libs/backbone/backbone',
+        Backendless: '../js/libs/backendless/libs/backendless.min',
+        text       : '../js/libs/requirejs-text/text',
+        views      : './views',
+        collections: './collections',
+        templates  : '../templates'
     }
 });
 
 require([
-    'app'
-], function (app) {
-    app.init();
+    'app',
+    'Backendless',
+    'const'
+
+], function (app, Backendless, CONST) {
+    var APP_ID = CONST.BL_CREDENTIALS.APPLICATION_ID;
+    var SECRET_KEY = CONST.BL_CREDENTIALS.SECRET_KEY;
+    var VERSION = CONST.BL_CREDENTIALS.VERSION;
     
-    console.log('Hello from Backbone!');
+    Backendless.initApp(APP_ID, SECRET_KEY, VERSION);
+    
+    app.init();
 });

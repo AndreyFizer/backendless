@@ -1,9 +1,11 @@
 {
-  "name"           : "backendless",
-  "version"        : "0.0.0",
-  "dependencies"   : {},
-  "devDependencies": {},
-  "engines"        : {
+  "name": "backendless",
+  "version": "0.0.0",
+  "dependencies": {},
+  "devDependencies": {
+    "backendless-coderunner": "^1.6.0"
+  },
+  "engines": {
     "node": ">=4.4.4"
   }
 }
