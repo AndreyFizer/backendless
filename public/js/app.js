@@ -27,6 +27,37 @@ define([
 
         new TopBarView;
         APP.router = new Router();
+
+        Backbone.View.prototype.letsUploadFile = function (f, d, cb) {
+            var fileImage = f;
+            var folder = 'files';
+            var onComplete;
+
+            if (typeof d === 'function') {
+                onComplete = d;
+            } else {
+                folder = d ? d : folder;
+                onComplete = (typeof cb === 'function') ? cb : function (er, rs) {
+                    if (er){
+                        return console.log(er);
+                    }
+                    console.log(rs);
+                };
+            }
+
+            if (fileImage) {
+                Backendless.Files.upload(fileImage, folder, true, new Backendless.Async(
+                    function (result) {
+                        onComplete(null, result);
+                    },
+                    function (err) {
+                        onComplete(err);
+                    }
+                ))
+            } else {
+                onComplete(null, null)
+            }
+        };
         
         Backbone.history.start({silent: true});
 

@@ -5,9 +5,10 @@
 
 define([
     'Backbone',
+    'Backendless',
     'models'
 
-], function (Backbone, Models) {
+], function (Backbone, Backendless, Models) {
     var Router = Backbone.Router.extend({
         
         initialize: function () {
@@ -27,7 +28,7 @@ define([
         
         homeRout: function () {
             var self = this;
-            var UserModel = Models.user;
+            var UserModel = Models.User;
 
             if (APP.sessionData.get('authorized')) {
 
