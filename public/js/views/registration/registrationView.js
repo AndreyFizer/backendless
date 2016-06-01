@@ -41,12 +41,16 @@ define([
             var userEmail = $regBox.find('#regEmail').val().trim();
             var userPass = $regBox.find('#regPass').val().trim();
             var userConf = $regBox.find('#regConfirm').val().trim();
+            var userFN = $regBox.find('#regFirstName').val().trim();
+            var userLN = $regBox.find('#regLastName').val().trim();
             var user = new Backendless.User();
             
-            if (userEmail && userPass && (userPass === userConf)) {
+            if (userFN && userLN && userEmail && userPass && (userPass === userConf)) {
                 user.email = userEmail;
                 user.password = userPass;
-                
+                user.firstName = userFN;
+                user.lastName = userLN;
+
                 Backendless.UserService.register(user, new Backendless.Async(
                     function () {
                         Backbone.history.navigate('login', {trigger: true})

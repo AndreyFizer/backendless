@@ -63,7 +63,7 @@ define([
 
         usr = Backendless.UserService.getCurrentUser();
 
-        url = Backbone.history.fragment || 'home';
+        url = Backbone.history.fragment || 'users';
         Backbone.history.fragment = '';
 
         if (usr && usr.objectId) {

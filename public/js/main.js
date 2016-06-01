@@ -23,10 +23,17 @@ require.config({
                 'jQuery'
             ],
             exports: 'Backbone'
+        },
+
+        jQueryUI   : {
+            deps   : [
+                'jQuery'
+            ]
         }
     },
     paths: {
         jQuery     : '../js/libs/jquery/jquery',
+        jQueryUI   : '../js/libs/jquery-ui/jquery-ui.min',
         Underscore : '../js/libs/underscore/underscore',
         Backbone   : '../js/libs/backbone/backbone',
         Backendless: '../js/libs/backendless/libs/backendless.min',

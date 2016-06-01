@@ -16,23 +16,65 @@ define([
         },
         
         routes: {
-            'login'  : 'loginRout',
-            'registr': 'registrationRout',
-            'home'   : 'homeRout',
-            '*any'   : 'anyRout'
+            'login'    : 'loginRout',
+            'registr'  : 'registrationRout',
+            'users'    : 'usersRout',
+            'retailers': 'retailerRout',
+            '*any'     : 'anyRout'
         },
         
         anyRout: function () {
-            Backbone.history.navigate('home', {trigger: true})
+            Backbone.history.navigate('users', {trigger: true})
         },
-        
-        homeRout: function () {
+
+        retailerRout: function () {
             var self = this;
-            var UserModel = Models.User;
+            var RetailerModel = Models.Retailer;
 
             if (APP.sessionData.get('authorized')) {
 
-                Backendless.Persistence.of(UserModel).find(new Backendless.Async(
+                Backendless.Persistence.of(RetailerModel).find(new Backendless.Async(
+                    function (list) {
+                        var dataList = list.data;
+                        var retailerCollection;
+                        var RetailerCollection = Backbone.Collection.extend({
+                            model: Backbone.Model.extend({
+                                'idAttribute': 'objectId'
+                            })
+                        });
+
+                        retailerCollection = new RetailerCollection(dataList);
+
+                        require(['views/retailers/retailersView'], function (View) {
+                            if (self.wrapperView) {
+                                self.wrapperView.undelegateEvents();
+                            }
+
+                            self.wrapperView = new View({collection: retailerCollection});
+                        })
+
+                    },
+                    APP.errorHandler
+                ));
+
+            } else {
+                Backbone.history.navigate('login', {trigger: true});
+            }
+        },
+
+        usersRout: function () {
+            var self = this;
+            var userStorage;
+            var queryData;
+
+            if (APP.sessionData.get('authorized')) {
+
+                userStorage = Backendless.Persistence.of(Models.User);
+                queryData = new Backendless.DataQuery();
+
+                queryData.condition = "isAdmin = false";
+
+                userStorage.find(queryData, new Backendless.Async(
                     function (list) {
                         var dataList = list.data;
                         var userCollection;
@@ -44,7 +86,7 @@ define([
 
                         userCollection = new UserCollection(dataList);
 
-                        require(['views/home/homeView'], function (View) {
+                        require(['views/users/usersView'], function (View) {
                             if (self.wrapperView) {
                                 self.wrapperView.undelegateEvents();
                             }
@@ -62,7 +104,7 @@ define([
         },
         
         registrationRout: function () {
-            if (!APP.sessionData.get('authorized')){
+            if (!APP.sessionData.get('authorized')) {
                 require(['views/registration/registrationView'], function (View) {
                     if (this.wrapperView) {
                         this.wrapperView.undelegateEvents();
@@ -70,13 +112,13 @@ define([
                     this.wrapperView = new View;
                 }.bind(this))
             } else {
-                Backbone.history.navigate('home', {trigger: true})
+                Backbone.history.navigate('users', {trigger: true})
             }
 
         },
 
         loginRout: function () {
-            if (!APP.sessionData.get('authorized')){
+            if (!APP.sessionData.get('authorized')) {
                 require(['views/login/loginView'], function (View) {
                     if (this.wrapperView) {
                         this.wrapperView.undelegateEvents();
@@ -84,7 +126,7 @@ define([
                     this.wrapperView = new View;
                 }.bind(this))
             } else {
-                Backbone.history.navigate('home', {trigger: true})
+                Backbone.history.navigate('users', {trigger: true})
             }
         }
         

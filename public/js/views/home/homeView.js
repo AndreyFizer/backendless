@@ -66,7 +66,6 @@ define([
             } else {
                 alert('Invalid file type!');
             }
-            
         },
         
         onUsrClick: function (ev) {
@@ -74,24 +73,6 @@ define([
             
             this.renderUserEdit(usrId)
         },
-
-        // letsUploadFile: function (argFile, cb) {
-        //     var fileImage = argFile;
-        //
-        //     if (fileImage) {
-        //         Backendless.Files.upload(fileImage, 'customFolder', true, new Backendless.Async(
-        //             function (result) {
-        //                 cb(null, result);
-        //             },
-        //             function (err) {
-        //                 cb(err);
-        //             }
-        //         ))
-        //     } else {
-        //         cb(null, null)
-        //     }
-        //
-        // },
         
         onEditClick: function () {
             var self = this;
