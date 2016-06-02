@@ -25,16 +25,8 @@ define([
         },
 
         events: {
+
             'click .usrEditBtn' : 'letsEditUser'
-        },
-
-        renderUsers: function () {
-            var usersData = this.collection.toJSON();
-            var $container = this.$el.find('#usrContainer').html('');
-
-            usersData.forEach(function (usr) {
-                $container.append(this.usrItm(usr));
-            }.bind(this));
         },
 
         letsEditUser: function (ev) {
@@ -44,6 +36,15 @@ define([
             var userModel = this.collection.get(userId);
 
             this.dialogView = new DialogView({ model: userModel });
+        },
+
+        renderUsers: function () {
+            var usersData = this.collection.toJSON();
+            var $container = this.$el.find('#usrContainer').html('');
+
+            usersData.forEach(function (usr) {
+                $container.append(this.usrItm(usr));
+            }.bind(this));
         },
         
         render: function () {
