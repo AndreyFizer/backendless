@@ -1,0 +1,15 @@
+<%
+    var limit = collection.length;
+    console.log(collection)
+
+    if (limit) {
+        for (var index = limit - 1; index >=0; index -= 1) {
+%>
+    <tr class="info">
+        <td><%= collection[index].mainImage %></td>
+        <td><%= new Date(collection[index].created).toDateString() %></td>
+    </tr>
+<% }} else { %>
+    <h1>Such user does not have any fav cards</h1>
+<% } %>
+

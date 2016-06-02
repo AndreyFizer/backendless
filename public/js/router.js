@@ -12,6 +12,21 @@ define([
     var Router = Backbone.Router.extend({
         
         initialize: function () {
+
+            var query = new Backendless.DataQuery();
+
+            query.options = {relations:[ "favoritedContentCards", ]};
+
+            Backendless.Persistence.of(Models.User).find(query, new Backendless.Async(
+                function success (users) {
+                    console.log(users.data)
+                },
+                function error (err) {
+                    console.log(err)
+                }
+            ))
+
+
            
         },
         
@@ -73,6 +88,7 @@ define([
                 queryData = new Backendless.DataQuery();
 
                 queryData.condition = "isAdmin = false";
+                queryData.options = {relations:[ "favoritedContentCards" ]};
 
                 userStorage.find(queryData, new Backendless.Async(
                     function (list) {

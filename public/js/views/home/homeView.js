@@ -11,7 +11,7 @@ define([
     'Backendless',
     'models',
     'text!templates/home/homeTemp.html',
-    'text!templates/home/userItemTemp.html',
+    'text!templates/home/userItemTempl.html',
     'text!templates/home/userEditTemp.html',
     'text!templates/home/animalEditTemp.html'
 
