@@ -23,8 +23,16 @@ define([
             
             this.render();
         },
-        
-        events: {},
+
+        events: {
+            'click .usrEditBtn' : 'onEditUser'
+        },
+
+        onEditUser: function (ev) {
+            // ev.stopPropagation();
+
+            alert('Edit user');
+        },
         
         renderUsers: function () {
             var usersData = this.collection.toJSON();

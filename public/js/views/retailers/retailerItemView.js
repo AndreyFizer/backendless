@@ -10,9 +10,10 @@ define([
     'Backbone',
     'Backendless',
     'text!templates/retailers/retailerEditTemp.html',
-    'models'
+    'models',
+    'async'
 
-], function ($, _, Backbone, Backendless, MainTemp, Models) {
+], function ($, _, Backbone, Backendless, MainTemp, Models, async) {
     var ItemView;
     ItemView = Backbone.View.extend({
 
@@ -26,33 +27,65 @@ define([
         },
 
         events: {
-            'change .retInpmFile' : 'prepareForDrawing',
-            'click #regCancelBtn' : 'closeDialog'
+            'change .retInpmFile': 'prepareForDrawing',
+            'click #regCancelBtn': 'closeDialog',
+            'click #regSaveBtn'  : 'letsSaveRetailer'
         },
 
         closeDialog: function () {
             this.remove();
         },
-        
+
         letsSaveRetailer: function () {
+            var self = this;
             var retailerStorage = Backendless.Persistence.of(Models.Retailer);
             var retailerData = this.addMode ? new Models.Retailer : this.model.toJSON();
 
-            var file1 = 
+            var $fileLogo = this.$el.find('#retLogoImgInpt');
+            var $fileRetLogo = this.$el.find('#retRetLogoImgInpt');
 
-            this.letsUploadFile()
-    
-            // retailerStorage.save(retailerData, new Backendless.Async(
-            //     function (respons) {
-            //
-            //     },
-            //     APP.errorHandler
-            // ))
+            var fileLogo = $fileLogo[0] && $fileLogo[0].files[0] ? $fileLogo[0].files[0] : null;
+            var fileRetLogo = $fileRetLogo[0] && $fileRetLogo[0].files[0] ? $fileRetLogo[0].files[0] : null;
+            var retName = this.$el.find('#regName').val().trim();
+            var retWebsite = this.$el.find('#regWeb').val().trim();
+
+            async.parallel([
+                function (cb) {
+                    self.letsUploadFile(fileLogo, 'logos', cb)
+                },
+
+                function (cb) {
+                    self.letsUploadFile(fileRetLogo, 'retailerLogos', cb)
+                }
+
+            ], function (error, result) {
+                if (error) {
+                    return APP.errorHandler(error);
+                }
+
+                if (result[0]) {
+                    retailerData.logo = result[0].fileURL;
+                }
+                if (result[1]) {
+                    retailerData.retailerLogo = result[1].fileURL;
+                }
+
+                retailerData.retailerName = retName;
+                retailerData.website = retWebsite;
+
+                retailerStorage.save(retailerData, new Backendless.Async(
+                    function () {
+                        self.trigger('successfullySaved');
+                    },
+                    APP.errorHandler
+                ))
+            });
+
         },
-    
+
         prepareForDrawing: function (ev) {
             ev.preventDefault();
-        
+
             var self = this;
             // var $inputFile = self.$el.find('#editFileImage');
             var $inputFile = $(ev.currentTarget);
@@ -61,25 +94,26 @@ define([
             var filesExt = ['jpg', 'png', 'jpeg', 'bmp', 'JPEG', 'JPG', 'PNG', 'BMP'];
             var parts = $inputFile.val().split('.');
             var fr;
-        
+
             if (filesExt.join().search(parts[parts.length - 1]) !== -1) {
                 fr = new FileReader();
-            
+
                 fr.onload = function () {
                     var src = fr.result;
-                
+
                     // self.$el.find('#editImage').attr('src', src);
                     $container.find('img').attr('src', src);
                 };
-            
+
                 if (file) {
                     fr.readAsDataURL(file);
                 }
-            
+
             } else {
                 alert('Invalid file type!');
             }
-        },
+        }
+        ,
 
         render: function () {
             var retailerData = this.addMode ? {} : this.model.toJSON();
@@ -101,8 +135,10 @@ define([
             return this;
         }
 
-    });
+    })
+    ;
 
     return ItemView;
 
-});
+})
+;

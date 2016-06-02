@@ -69,11 +69,11 @@ define(function () {
         this.user = args.user || ''; // TODO define type
         this.cards = args.cards || ''; // TODO define type
         this.hasUser = args.hasUser || ''; // TODO define type
-        this.webstite = args.webstite || ''; // TODO define type
+        this.website = args.website || ''; // TODO define type
         this.coverImage = args.coverImage || ''; // TODO define type
         this.favorited = args.favorited || ''; // TODO define type
         this.following = args.following || ''; // TODO define type
-        this.userString = args.userString || ''; // TODO define type
+        this.UserString = args.userString || ''; // TODO define type
         this.retailerId = args.retailerId || '';
         this.shoppingTip = args.shoppingTip || ''; // TODO define type
         this.notification = args.notification || ''; // TODO define type

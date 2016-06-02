@@ -8,7 +8,8 @@
     "underscore": "~1.5.2",
     "backbone": "~1.1.0",
     "backendless": "^3.1.9",
-    "toastr": "^2.1.2"
+    "toastr": "^2.1.2",
+    "async": "^1.5.2"
   },
   "devDependencies": {}
 }

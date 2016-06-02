@@ -40,6 +40,7 @@ require.config({
         Underscore : '../js/libs/underscore/underscore',
         Backbone   : '../js/libs/backbone/backbone',
         Backendless: '../js/libs/backendless/libs/backendless.min',
+        async      : '../js/libs/async/dist/async.min',
         toastr     : '../js/libs/toastr/toastr',
         text       : '../js/libs/requirejs-text/text',
         views      : './views',
