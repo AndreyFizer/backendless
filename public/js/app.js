@@ -30,7 +30,7 @@ define([
             messenger.alert('warning', message);
         };
 
-        APP.handleError = function(err) {
+        APP.errorHandler = function(err) {
             messenger.alert('error', err.message);
         };
 
