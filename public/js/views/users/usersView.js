@@ -8,36 +8,61 @@ define([
     'jQuery',
     'Underscore',
     'Backbone',
+    'Backendless',
+    'views/users/userItemView',
     'text!templates/users/usersTemp.html',
     'text!templates/users/userItemTemp.html'
 
-], function ($, _, Backbone, MainTemp, UstItemTrmp) {
-    var UserView;
-    UserView = Backbone.View.extend({
+], function ($, _, Backbone,  Backendless, DialogView, MainTemp, UstItemTemp) {
+
+    return Backbone.View.extend({
         el: '#wrapper',
         
         template: _.template(MainTemp),
-        usrItm  : _.template(UstItemTrmp),
+        usrItm  : _.template(UstItemTemp),
         
         initialize: function () {
-            
             this.render();
         },
 
         events: {
-            'click .usrEditBtn' : 'onEditUser'
+
+            'click .usrEditBtn' : 'letsEditUser'
         },
 
-        onEditUser: function (ev) {
-            // ev.stopPropagation();
+        letsEditUser: function (ev) {
+            ev.stopPropagation();
 
-            alert('Edit user');
+            var userId    = this.$el.find(ev.target).closest('.usrItem').attr('id');
+            var userModel = this.collection.get(userId);
+
+            this.dialogView = new DialogView({ model: userModel });
+            this.dialogView.on('userAction', this.userAction, this)
+        },
+
+        userAction: function (data) {
+            var isNew    = data.isNew || false;
+            var userData = data.model || { };
+            var userId;
+            var $userRow;
+
+            if (!isNew){
+
+            } else {
+                userId = userData.objectId;
+                this.collection.get(userId).set(userData);
+                $userRow = this.$el.find('#'  + userId);
+
+                $userRow.find('.userFirstName').text(userData.firstName || '');
+                $userRow.find('.userLastName').text(userData.lastName || '');
+                $userRow.find('.userEmail').text(userData.email || '');
+            }
         },
         
         renderUsers: function () {
             var usersData = this.collection.toJSON();
             var $container = this.$el.find('#usrContainer').html('');
-            
+
             usersData.forEach(function (usr) {
                 $container.append(this.usrItm(usr));
             }.bind(this));
@@ -49,9 +74,5 @@ define([
             
             return this;
         }
-        
     });
-    
-    return UserView;
-    
 });

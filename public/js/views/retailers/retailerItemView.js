@@ -116,8 +116,7 @@ define([
             } else {
                 alert('Invalid file type!');
             }
-        }
-        ,
+        },
 
         render: function () {
             var retailerData = this.addMode ? {} : this.model.toJSON();
@@ -139,10 +138,7 @@ define([
             return this;
         }
 
-    })
-    ;
+    });
 
     return ItemView;
-
-})
-;
+});

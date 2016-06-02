@@ -12,13 +12,13 @@ define([
     'text!templates/retailers/retailersTemp.html',
     'text!templates/retailers/retailItemTemp.html'
 
-], function ($, _, Backbone, DialogView, MainTemp, RetItemTrmp) {
+], function ($, _, Backbone, DialogView, MainTemp, RetItemTemp) {
     var RetailerView;
     RetailerView = Backbone.View.extend({
         el: '#wrapper',
 
         template: _.template(MainTemp),
-        retItm  : _.template(RetItemTrmp),
+        retItm  : _.template(RetItemTemp),
 
         initialize: function () {
 
@@ -76,7 +76,6 @@ define([
                 usrRow.find('.tRetName').text(retData.retailerName || '');
                 usrRow.find('.tRetWeb').text(retData.website || '');
             }
-
         },
 
         render: function () {
