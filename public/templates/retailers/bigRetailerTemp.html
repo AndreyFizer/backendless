@@ -1,0 +1,46 @@
+<div>
+    <div>
+        <img src="<%= model.coverImage || 'styles/libs/images/def_user.png'%>" alt="">
+    </div>
+    <div>
+        <img src="<%= model.retailerLogo || 'styles/libs/images/def_user.png'%>" alt="">
+        <div>
+            <span><%- model.retailerName || ''%></span>
+        </div>
+    </div>
+</div>
+<div>
+    <div id="acordion">
+        <h3>Style item relations</h3>
+    <% if (model.trendingStyles && model.trendingStyles.length){%>
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <td>Gender</td>
+                        <td>Title</td>
+                        <td>Description</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%model.trendingStyles.forEach(function(styleItem){%>
+                        <tr id="<%=styleItem.objectId%>">
+                            <td><%=styleItem.gender || ''%></td>
+                            <td><%=styleItem.styleTitle || ''%></td>
+                            <td><%=styleItem.styleDescription || ''%></td>
+                        </tr>
+                    <%})%>
+                </tbody>
+            </table>
+        </div>
+    <%} else {%>
+        <div>
+            <h4>Emty data</h4>
+        </div>
+    <%}%>
+        <h3>Style item relations</h3>
+        <div>
+            <h4>Emty data</h4>
+        </div>
+    </div>
+</div>

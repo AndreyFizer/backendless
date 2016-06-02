@@ -15,19 +15,17 @@ define([
 
             var query = new Backendless.DataQuery();
 
-            query.options = {relations:[ "favoritedContentCards", ]};
+            query.options = {relations: ["favoritedContentCards",]};
 
             Backendless.Persistence.of(Models.User).find(query, new Backendless.Async(
-                function success (users) {
+                function success(users) {
                     console.log(users.data)
                 },
-                function error (err) {
+                function error(err) {
                     console.log(err)
                 }
             ))
 
-
-           
         },
         
         routes: {
@@ -44,11 +42,13 @@ define([
 
         retailerRout: function () {
             var self = this;
-            var RetailerModel = Models.Retailer;
+            var query = new Backendless.DataQuery();
+
+            query.options = {relations: ['trendingStyles', 'contentCards']};
 
             if (APP.sessionData.get('authorized')) {
 
-                Backendless.Persistence.of(RetailerModel).find(new Backendless.Async(
+                Backendless.Persistence.of(Models.Retailer).find(query, new Backendless.Async(
                     function (list) {
                         var dataList = list.data;
                         var retailerCollection;
@@ -88,7 +88,7 @@ define([
                 queryData = new Backendless.DataQuery();
 
                 queryData.condition = "isAdmin = false";
-                queryData.options = {relations:[ "favoritedContentCards" ]};
+                queryData.options = {relations: ["favoritedContentCards"]};
 
                 userStorage.find(queryData, new Backendless.Async(
                     function (list) {

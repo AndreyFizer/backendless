@@ -11,10 +11,11 @@ define([
     'Backendless',
     'models',
     'views/retailers/retailerItemView',
+    'views/retailers/bigRetailerView',
     'text!templates/retailers/retailersTemp.html',
     'text!templates/retailers/retailItemTemp.html'
 
-], function ($, _, Backbone, Backendless, Models, DialogView, MainTemp, RetItemTemp) {
+], function ($, _, Backbone, Backendless, Models, DialogView, BigRetView, MainTemp, RetItemTemp) {
     var RetailerView;
     RetailerView = Backbone.View.extend({
         el: '#wrapper',
@@ -34,12 +35,33 @@ define([
             'click .retItem'   : 'onRowClick'
         },
 
+        checkFirstRetailer : function () {
+            var firstRetailer = this.$container.children() && this.$container.children().first() ? this.$container.children().first() : null;
+            var firstId;
+
+            if (firstRetailer){
+                firstId = firstRetailer.attr('id');
+
+                this.$container.find('.active').removeClass('active');
+                firstRetailer.addClass('active');
+
+                this.renderRightView(firstId);
+            }
+
+        },
+
+        renderRightView: function (id) {
+            var renderModel = this.collection.get(id);
+
+            new BigRetView({model: renderModel});
+        },
+
         renderRetailers: function () {
             var retData = this.collection.toJSON();
-            var $container = this.$el.find('#retailContainer').html('');
+            this.$container.html('');
 
             retData.forEach(function (ret) {
-                $container.append(this.retItm({model : ret}));
+                this.$container.append(this.retItm({model : ret}));
             }.bind(this));
         },
 
@@ -48,9 +70,13 @@ define([
 
             var $currentRow = $(ev.currentTarget);
             var $container = this.$el.find('#retailContainer');
+            var currentId;
 
             $container.find('.active').removeClass('active');
             $currentRow.addClass('active');
+
+            currentId = $currentRow.attr('id');
+            this.renderRightView(currentId);
         },
 
         letsCreateRetailer: function () {
@@ -68,20 +94,27 @@ define([
         },
 
         letsDeleteRetailer: function (ev) {
-            var retailerStorage = Backendless.Persistence.of(Models.Retailer);
-            var retId = $(ev.target).closest('.retItem').attr('id');
-            var retModel = this.collection.get(retId).toJSON();
+            ev.stopPropagation();
 
-            retailerStorage.remove(retModel, new Backendless.Async(
-                function () {
-                    this.$el.find('#'+retId).remove();
-                    APP.successNotification('Retailer successfully deleted.')
-                }.bind(this),
-                APP.errorHandler
-            ));
+            if (confirm('Do you realy want delete this retailer?')){
 
-            this.dialogView = new DialogView({model: retModel});
-            this.dialogView.on('retailerAction', this.retailerAction, this);
+                var retailerStorage = Backendless.Persistence.of(Models.Retailer);
+                var retId = $(ev.target).closest('.retItem').attr('id');
+                var retModel = this.collection.get(retId).toJSON();
+
+                retailerStorage.remove(retModel, new Backendless.Async(
+                    function () {
+                        this.$el.find('#'+retId).remove();
+                        this.collection.remove(retId);
+                        APP.successNotification('Retailer successfully deleted.');
+                        this.checkFirstRetailer();
+                    }.bind(this),
+                    APP.errorHandler
+                ));
+
+                this.dialogView = new DialogView({model: retModel});
+                this.dialogView.on('retailerAction', this.retailerAction, this);
+            }
         },
 
         retailerAction: function (data) {
@@ -96,6 +129,7 @@ define([
                 this.collection.add(retData);
 
                 $container.prepend(this.retItm({model : retData}));
+                this.checkFirstRetailer();
             } else {
                 usrId = retData.objectId;
                 this.collection.add(retData, {merge: true});
@@ -105,12 +139,20 @@ define([
                 usrRow.find('.tRetName').text(retData.retailerName || '');
                 usrRow.find('.tRetWeb').text(retData.website || '');
                 usrRow.find('.tRetDescrip').text(retData.retailerDescription || '');
+
+                this.renderRightView(usrId);
             }
         },
 
         render: function () {
             this.$el.html(this.template());
+            this.$container = this.$el.find('#retailContainer');
+            this.$el.tooltip({
+                track: true,
+                show: { delay: 800, duration: 800 }
+            });
             this.renderRetailers();
+            this.checkFirstRetailer();
 
             return this;
         }

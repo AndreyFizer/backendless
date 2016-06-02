@@ -1,27 +1,46 @@
-<span>Logo</span>
-<div class="imgContainer">
-    <img id="retLogoImg" src="<%= model.logo || 'styles/libs/images/def_user.png'%>" alt="Img">
-    <input type="file" id="retLogoImgInpt" class="retInpmFile" hidden>
-    <label for="retLogoImgInpt">
-        <div>Upload</div>
-    </label>
+<div class="inDialogBlock">
+    <div class="imgContainer">
+        <div>
+            <span>Logo</span>
+        </div>
+        <img id="retLogoImg" src="<%= model.logo || 'styles/libs/images/def_user.png'%>" alt="Img">
+        <input type="file" id="retLogoImgInpt" class="retInpmFile" hidden>
+        <label for="retLogoImgInpt">
+            <div>Upload</div>
+        </label>
+    </div>
+
+    <div class="imgContainer">
+        <div>
+            <span>Retailer logo</span>
+        </div>
+        <img id="retRetLogoImg" src="<%= model.retailerLogo || 'styles/libs/images/def_user.png'%>" alt="Img">
+        <input type="file" id="retRetLogoImgInpt" class="retInpmFile" hidden>
+        <label for="retRetLogoImgInpt">
+            <div>Upload</div>
+        </label>
+    </div>
+
+    <div class="imgContainer">
+        <div>
+            <span>Cover image</span>
+        </div>
+        <img id="retCoverImg" src="<%= model.coverImage || 'styles/libs/images/def_user.png'%>" alt="Img">
+        <input type="file" id="retCoverImgInpt" class="retInpmFile" hidden>
+        <label for="retCoverImgInpt">
+            <div>Upload</div>
+        </label>
+    </div>
 </div>
-
-<span>Retailer logo</span>
-<div class="imgContainer">
-    <img id="retRetLogoImg" src="<%= model.retailerLogo || 'styles/libs/images/def_user.png'%>" alt="Img">
-    <input type="file" id="retRetLogoImgInpt" class="retInpmFile" hidden>
-    <label for="retRetLogoImgInpt">
-        <div>Upload</div>
-    </label>
+<div class="inDialogBlock">
+    <label for="regName">Name</label>
+    <input type="text" id="regName" value="<%- model.retailerName || ''%>">
+    <label for="regWeb">Website</label>
+    <input type="text" id="regWeb" value="<%- model.website || ''%>">
+    <label for="regDescrip">Description</label>
+    <input type="text" id="regDescrip" value="<%- model.retailerDescription || ''%>">
 </div>
-
-<label for="regName">Name</label>
-<input type="text" id="regName" value="<%- model.retailerName || ''%>">
-<label for="regWeb">Website</label>
-<input type="text" id="regWeb" value="<%- model.website || ''%>">
-<label for="regDescrip">Description</label>
-<input type="text" id="regDescrip" value="<%- model.retailerDescription || ''%>">
-
-<input type="button" id="regSaveBtn" value="Save">
-<input type="button" id="regCancelBtn" value="Cancel">
+<!--<div class="inDialogBlock">-->
+    <!--<input type="button" id="regSaveBtn" value="Save">-->
+    <!--<input type="button" id="regCancelBtn" value="Cancel">-->
+<!--</div>-->

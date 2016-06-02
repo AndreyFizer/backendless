@@ -31,6 +31,7 @@ body {
 .retItem:hover,
 .usrItem:hover {
     background-color: #e2ded3;
+    cursor: pointer;
 }
 
 .retItem.active {
@@ -46,4 +47,9 @@ body {
 
 .loggedState #topBar {
     display: block;
+}
+
+.imgContainer {
+    display: block;
+    float: left;
 }

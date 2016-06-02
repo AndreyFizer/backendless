@@ -27,13 +27,9 @@ define([
         },
 
         events: {
-            'change .retInpmFile': 'prepareForDrawing',
-            'click #regCancelBtn': 'closeDialog',
-            'click #regSaveBtn'  : 'letsSaveRetailer'
-        },
-
-        closeDialog: function () {
-            this.remove();
+            'change .retInpmFile': 'prepareForDrawing'
+            // 'click #regCancelBtn': 'closeDialog',
+            // 'click #regSaveBtn'  : 'letsSaveRetailer'
         },
 
         letsSaveRetailer: function () {
@@ -43,9 +39,11 @@ define([
 
             var $fileLogo = this.$el.find('#retLogoImgInpt');
             var $fileRetLogo = this.$el.find('#retRetLogoImgInpt');
+            var $fileRetCover = this.$el.find('#retCoverImgInpt');
 
             var fileLogo = $fileLogo[0] && $fileLogo[0].files[0] ? $fileLogo[0].files[0] : null;
             var fileRetLogo = $fileRetLogo[0] && $fileRetLogo[0].files[0] ? $fileRetLogo[0].files[0] : null;
+            var fileRetCover = $fileRetCover[0] && $fileRetCover[0].files[0] ? $fileRetCover[0].files[0] : null;
             var retName = this.$el.find('#regName').val().trim();
             var retWebsite = this.$el.find('#regWeb').val().trim();
             var retDescription = this.$el.find('#regDescrip').val().trim();
@@ -57,6 +55,10 @@ define([
 
                 function (cb) {
                     self.letsUploadFile(fileRetLogo, 'retailerLogos', cb)
+                },
+
+                function (cb) {
+                    self.letsUploadFile(fileRetCover, 'coverImages', cb)
                 }
 
             ], function (error, result) {
@@ -69,6 +71,9 @@ define([
                 }
                 if (result[1]) {
                     retailerData.retailerLogo = result[1].fileURL;
+                }
+                if (result[2]) {
+                    retailerData.coverImage = result[2].fileURL;
                 }
 
                 retailerData.retailerName = retName;
@@ -134,7 +139,30 @@ define([
                 modal        : true,
                 resizable    : false,
                 draggable    : false,
-                width        : "600px"
+                width        : "600px",
+                close: function() {
+                    this.$el.remove();
+                }.bind(this),
+                buttons: [
+                    {
+                        text: "Cancel",
+                        icons: {
+                            primary: "ui-icon-closethick"
+                        },
+                        click: function() {
+                            $(this).dialog("close");
+                        }
+                    },
+                    {
+                        text: "Save",
+                        icons: {
+                            primary: "ui-icon-check"
+                        },
+                        click: function() {
+                            this.letsSaveRetailer();
+                        }.bind(this)
+                    }
+                ]
             });
             this.delegateEvents();
 
