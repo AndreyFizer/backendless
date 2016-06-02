@@ -20,7 +20,7 @@ require.config({
         Backbone   : {
             deps   : [
                 'Underscore',
-                'jQuery'
+                'jQueryUI'
             ],
             exports: 'Backbone'
         },

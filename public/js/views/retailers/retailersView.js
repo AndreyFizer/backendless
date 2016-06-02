@@ -8,36 +8,48 @@ define([
     'jQuery',
     'Underscore',
     'Backbone',
+    'views/retailers/retailerItemView',
     'text!templates/retailers/retailersTemp.html',
-    'text!templates/users/userItemTemp.html'
+    'text!templates/retailers/retailItemTemp.html'
 
-], function ($, _, Backbone, MainTemp, UstItemTrmp) {
+], function ($, _, Backbone, DialogView, MainTemp, RetItemTrmp) {
     var RetailerView;
     RetailerView = Backbone.View.extend({
         el: '#wrapper',
 
         template: _.template(MainTemp),
-        usrItm  : _.template(UstItemTrmp),
+        retItm  : _.template(RetItemTrmp),
 
         initialize: function () {
 
             this.render();
         },
 
-        events: {},
+        events: {
+            'click .retEditBtn' : 'letsEditRetailer'
+        },
 
-        renderUsers: function () {
-            var usersData = this.collection.toJSON();
-            var $container = this.$el.find('#usrContainer').html('');
-
-            usersData.forEach(function (usr) {
-                $container.append(this.usrItm(usr));
+        renderRetailers: function () {
+            var retData = this.collection.toJSON();
+            var $container = this.$el.find('#retailContainer').html('');
+    
+            retData.forEach(function (ret) {
+                $container.append(this.retItm(ret));
             }.bind(this));
+        },
+    
+        letsEditRetailer: function (ev) {
+            ev.stopPropagation();
+            
+            var retId = $(ev.target).closest('.retItem').attr('id');
+            var retModel = this.collection.get(retId);
+            
+            this.dialogView = new DialogView({model : retModel});
         },
 
         render: function () {
             this.$el.html(this.template());
-            this.renderUsers();
+            this.renderRetailers();
 
             return this;
         }
