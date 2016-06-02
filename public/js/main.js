@@ -32,7 +32,7 @@ require.config({
     },
     paths: {
         Backendless: '../js/libs/backendless/libs/backendless.min',
-        Underscore : '../js/libs/underscores/underscore',
+        Underscore : '../js/libs/underscore/underscore',
         Backbone   : '../js/libs/backbone/backbone',
         jQueryUI   : '../js/libs/jquery-ui/jquery-ui.min',
         jQuery     : '../js/libs/jquery/jquery',
