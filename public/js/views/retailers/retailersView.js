@@ -66,7 +66,6 @@ define([
                 usrRow.find('.tRetName').text(retData.retailerName || '');
                 usrRow.find('.tRetWeb').text(retData.website || '');
             }
-
         },
 
         render: function () {

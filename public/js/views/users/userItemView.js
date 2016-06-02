@@ -10,15 +10,16 @@ define([
     'Backbone',
     'Backendless',
     'models',
-    'text!templates/users/userEditTemp.html',
+    'text!templates/users/userEditTemp.html'
 
 ], function ($, _, Backbone, Backendless, Models, MainTemp) {
-    var ItemView
-    ItemView = Backbone.View.extend({
+
+    return Backbone.View.extend({
 
         template: _.template(MainTemp),
 
         initialize: function () {
+            this.model.on('change', this.updateUserData, this);
             this.render();
         },
 
@@ -27,50 +28,52 @@ define([
             'click #saveBtn'  : 'letsSaveUser'
         },
 
-        letsSaveUser: function (ev) {
-            ev.stopPropagation();
-
-            var $dialogCont = this.$dialogContainer;
-
-            var name    = $dialogCont.find('#name').val().trim();
-            var email   = $dialogCont.find('#email').val().trim();
-            var surname = $dialogCont.find('#surname').val().trim();
-
-            if (name === user.name && email === user.email) {
-                self.dialog('close');
-                self.remove();
-            }
-
-            user.name     = name;
-            user.email    = email;
-            user.lastName = surname;
-
-            Backendless.UserService.update(user)
-                .then(function () {
-                    $dialogForm.remove();
-                    self.render();
-                })
-                .catch(function (err) {
-                    APP.handleError(err);
-                });
-
-        },
-
         letsCloseDialog: function () {
             this.remove();
         },
 
-        render: function () {
+        letsSaveUser: function (ev) {
+            ev.stopPropagation();
+
+            var user = this.model;
+            var $dialogCont = this.$el.find('#dialog-form');
+
+            var firstName = $dialogCont.find('#firstName').val().trim();
+            var lastName = $dialogCont.find('#lastName').val().trim();
+            var email = $dialogCont.find('#email').val().trim();
+
+            user.set('firstName', firstName);
+            user.set('lastName', lastName);
+            user.set('email', email);
+
+            // stop listen users's data change event
+            user.off('change');
+            this.remove();
+        },
+
+        updateUserData: function (user) {
             var self = this;
-            this.$dialogContainer = this.$el.find('#dialog-form');
 
+            Backendless.UserService.update(user.toJSON(), new Backendless.Async(
+                function success(response) {
+                    self.trigger('userAction', {
+                        isNew: true,
+                        model: response
+                    });
+                },
+                function error(err) {
+                    APP.errorHandler(err);
+                }
+            ))
+        },
+
+        render: function () {
             var model = this.model;
-
             var userData = model ? model.toJSON() : { };
 
             this.undelegateEvents();
 
-            var dialogOptions = {
+            this.$el.html(this.template(userData)).dialog({
                 closeOnEscape: true,
                 resizable    : false,
                 draggable    : true,
@@ -79,19 +82,11 @@ define([
                 height       : 400,
                 width        : 320,
                 title        : 'User page'
-            };
-
-            this.undelegateEvents();
-
-            this.$el.html(this.template(userData)).dialog(dialogOptions);
+            });
 
             this.delegateEvents();
 
-
             return this;
         }
-
     });
-
-    return ItemView;
 });

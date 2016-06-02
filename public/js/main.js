@@ -39,7 +39,7 @@ require.config({
         jQueryUI   : '../js/libs/jquery-ui/jquery-ui.min',
         Underscore : '../js/libs/underscore/underscore',
         Backbone   : '../js/libs/backbone/backbone',
-        Backendless: '../js/libs/backendless/libs/backendless.min',
+        Backendless: '../js/libs/backendless/libs/backendless',
         async      : '../js/libs/async/dist/async.min',
         toastr     : '../js/libs/toastr/toastr',
         text       : '../js/libs/requirejs-text/text',

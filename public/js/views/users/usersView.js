@@ -8,11 +8,12 @@ define([
     'jQuery',
     'Underscore',
     'Backbone',
+    'Backendless',
     'views/users/userItemView',
     'text!templates/users/usersTemp.html',
     'text!templates/users/userItemTemp.html'
 
-], function ($, _, Backbone, DialogView, MainTemp, UstItemTemp) {
+], function ($, _, Backbone,  Backendless, DialogView, MainTemp, UstItemTemp) {
 
     return Backbone.View.extend({
         el: '#wrapper',
@@ -32,12 +33,32 @@ define([
         letsEditUser: function (ev) {
             ev.stopPropagation();
 
-            var userId    = this.$el.find(ev.target).attr('id');
+            var userId    = this.$el.find(ev.target).closest('.usrItem').attr('id');
             var userModel = this.collection.get(userId);
 
             this.dialogView = new DialogView({ model: userModel });
+            this.dialogView.on('userAction', this.userAction, this)
         },
 
+        userAction: function (data) {
+            var isNew    = data.isNew || false;
+            var userData = data.model || { };
+            var userId;
+            var $userRow;
+
+            if (!isNew){
+
+            } else {
+                userId = userData.objectId;
+                this.collection.get(userId).set(userData);
+                $userRow = this.$el.find('#'  + userId);
+
+                $userRow.find('.userFirstName').text(userData.firstName || '');
+                $userRow.find('.userLastName').text(userData.lastName || '');
+                $userRow.find('.userEmail').text(userData.email || '');
+            }
+        },
+        
         renderUsers: function () {
             var usersData = this.collection.toJSON();
             var $container = this.$el.find('#usrContainer').html('');
