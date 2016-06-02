@@ -1,0 +1,25 @@
+<span>Logo</span>
+<div class="imgContainer">
+    <img id="retLogoImg" src="<%= logo || 'styles/images/def_user.png'%>" alt="Img">
+    <input type="file" id="retLogoImgInpt" class="retInpmFile" hidden>
+    <label for="retLogoImgInpt">
+        <div>Upload</div>
+    </label>
+</div>
+
+<span>Retailer logo</span>
+<div class="imgContainer">
+    <img id="retRetLogoImg" src="<%= retailerLogo || 'styles/images/def_user.png'%>" alt="Img">
+    <input type="file" id="retRetLogoImgInpt" class="retInpmFile" hidden>
+    <label for="retRetLogoImgInpt">
+        <div>Upload</div>
+    </label>
+</div>
+
+<label for="regName">Name</label>
+<input type="text" id="regName" value="<%- retailerName || ''%>">
+<label for="regWeb">Website</label>
+<input type="text" id="regWeb" value="<%- website || ''%>">
+
+<input type="button" id="regSaveBtn" value="Save">
+<input type="button" id="regCancelBtn" value="Cancel">

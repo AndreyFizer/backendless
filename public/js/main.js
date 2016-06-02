@@ -1,3 +1,5 @@
+// Created by andrey on 12.05.16.
+
 'use strict';
 
 var APP = APP || {};
@@ -12,8 +14,14 @@ require.config({
             exports: '$'
         },
 
+        Backendless: {
+            exports: 'Backendless'
+        },
         Backbone   : {
-            deps   : ['Underscore', 'jQuery'],
+            deps   : [
+                'Underscore',
+                'jQueryUI'
+            ],
             exports: 'Backbone'
         },
 
@@ -22,41 +30,34 @@ require.config({
             exports: 'toastr'
         },
 
-        Backendless: {
-            exports: 'Backendless'
-        },
-
         jQueryUI   : {
             deps   : ['jQuery']
         }
     },
     paths: {
-        Backendless: '../js/libs/backendless/libs/backendless.min',
+        jQuery     : '../js/libs/jquery/jquery',
+        jQueryUI   : '../js/libs/jquery-ui/jquery-ui.min',
         Underscore : '../js/libs/underscore/underscore',
         Backbone   : '../js/libs/backbone/backbone',
-        jQueryUI   : '../js/libs/jquery-ui/jquery-ui.min',
-        jQuery     : '../js/libs/jquery/jquery',
+        Backendless: '../js/libs/backendless/libs/backendless.min',
         toastr     : '../js/libs/toastr/toastr',
         text       : '../js/libs/requirejs-text/text',
-
-        messenger  : '../js/helpers/messenger',
-        validator  : '../js/helpers/validator',
-
+        views      : './views',
         collections: './collections',
-        templates  : '../templates',
-        views      : './views'
+        templates  : '../templates'
     }
 });
 
 require([
     'app',
-    'const',
-    'Backendless'
-], function (app, CONST, Backendless) {
+    'Backendless',
+    'const'
+
+], function (app, Backendless, CONST) {
+    var APP_ID = CONST.BL_CREDENTIALS.APPLICATION_ID;
     var SECRET_KEY = CONST.BL_CREDENTIALS.SECRET_KEY;
     var VERSION = CONST.BL_CREDENTIALS.VERSION;
-    var APP_ID = CONST.BL_CREDENTIALS.APPLICATION_ID;
-
+    
     Backendless.initApp(APP_ID, SECRET_KEY, VERSION);
     
     app.init();
