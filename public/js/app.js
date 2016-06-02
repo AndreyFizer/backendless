@@ -7,7 +7,7 @@ define([
     'jQuery',
     'router',
     'Backbone',
-    'messenger',
+    'helpers/messenger',
     'Backendless',
     'views/topBar/topBarView'
 
