@@ -45,6 +45,28 @@ define([
             var retModel = this.collection.get(retId);
             
             this.dialogView = new DialogView({model : retModel});
+            this.dialogView.on('retailerAction', this.retailerAction, this)
+
+        },
+
+        retailerAction: function (data) {
+            var isNew = data.isNew;
+            var retData = data.model;
+            var usrId;
+            var usrRow;
+
+            if (isNew){
+
+            } else {
+                usrId = retData.objectId;
+                this.collection.get(usrId).set(retData);
+                usrRow = this.$el.find('#'+usrId);
+                usrRow.find('.tLogo>img').attr('src', retData.logo || 'styles/libs/images/def_user.png');
+                usrRow.find('.tRetLogo>img').attr('src', retData.retailerLogo || 'styles/libs/images/def_user.png');
+                usrRow.find('.tRetName').text(retData.retailerName || '');
+                usrRow.find('.tRetWeb').text(retData.website || '');
+            }
+
         },
 
         render: function () {
