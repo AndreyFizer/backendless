@@ -37,13 +37,17 @@ define([
         letsSaveRetailer: function () {
             var retailerStorage = Backendless.Persistence.of(Models.Retailer);
             var retailerData = this.addMode ? new Models.Retailer : this.model.toJSON();
+
+            var file1 = 
+
+            this.letsUploadFile()
     
-            retailerStorage.save(retailerData, new Backendless.Async(
-                function (respons) {
-                    
-                },
-                APP.errorHandler
-            ))
+            // retailerStorage.save(retailerData, new Backendless.Async(
+            //     function (respons) {
+            //
+            //     },
+            //     APP.errorHandler
+            // ))
         },
     
         prepareForDrawing: function (ev) {
