@@ -69,7 +69,6 @@ define([
                 $container.prepend(this.retItm({model : retData}));
             } else {
                 usrId = retData.objectId;
-                // this.collection.get(usrId).set(retData);
                 this.collection.add(retData, {merge: true});
                 usrRow = this.$el.find('#' + usrId);
                 usrRow.find('.tLogo>img').attr('src', retData.logo || 'styles/libs/images/def_user.png');
