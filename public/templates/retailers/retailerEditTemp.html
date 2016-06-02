@@ -1,6 +1,6 @@
 <span>Logo</span>
 <div class="imgContainer">
-    <img id="retLogoImg" src="<%= logo || 'styles/libs/images/def_user.png'%>" alt="Img">
+    <img id="retLogoImg" src="<%= model.logo || 'styles/libs/images/def_user.png'%>" alt="Img">
     <input type="file" id="retLogoImgInpt" class="retInpmFile" hidden>
     <label for="retLogoImgInpt">
         <div>Upload</div>
@@ -9,7 +9,7 @@
 
 <span>Retailer logo</span>
 <div class="imgContainer">
-    <img id="retRetLogoImg" src="<%= retailerLogo || 'styles/libs/images/def_user.png'%>" alt="Img">
+    <img id="retRetLogoImg" src="<%= model.retailerLogo || 'styles/libs/images/def_user.png'%>" alt="Img">
     <input type="file" id="retRetLogoImgInpt" class="retInpmFile" hidden>
     <label for="retRetLogoImgInpt">
         <div>Upload</div>
@@ -17,9 +17,9 @@
 </div>
 
 <label for="regName">Name</label>
-<input type="text" id="regName" value="<%- retailerName || ''%>">
+<input type="text" id="regName" value="<%- model.retailerName || ''%>">
 <label for="regWeb">Website</label>
-<input type="text" id="regWeb" value="<%- website || ''%>">
+<input type="text" id="regWeb" value="<%- model.website || ''%>">
 
 <input type="button" id="regSaveBtn" value="Save">
 <input type="button" id="regCancelBtn" value="Cancel">

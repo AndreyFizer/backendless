@@ -123,7 +123,7 @@ define([
 
             this.undelegateEvents();
 
-            this.$el.html(this.template(retailerData)).dialog({
+            this.$el.html(this.template({model : retailerData})).dialog({
                 closeOnEscape: false,
                 autoOpen     : true,
                 dialogClass  : "retailerDialog",
