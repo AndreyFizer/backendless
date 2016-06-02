@@ -10,5 +10,21 @@
     "backendless": "^3.1.9",
     "toastr": "^2.1.2"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "homepage": "https://github.com/AndreyFizer/backendless",
+  "authors": [
+    "'Smirnov <'smiranton.kiev@gmail.com'>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/js/libs",
+    "test",
+    "tests"
+  ]
 }
