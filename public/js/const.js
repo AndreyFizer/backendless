@@ -6,8 +6,8 @@
 
 define(function () {
     var backendlessCredentials = {
-        APPLICATION_ID: 'B1CC7C2B-5215-5338-FFB7-408CEEEEDF00',
-        SECRET_KEY    : '8D20D90E-F7D3-572D-FF94-D9CD49C28700',
+        APPLICATION_ID: 'EB5AA3A2-5C10-6EB8-FFAE-5CD8F8FD0000',
+        SECRET_KEY    : '5ED12FB8-D6A1-929A-FF96-F00AD1AF6C00',
         VERSION       : 'v1'
     };
 
