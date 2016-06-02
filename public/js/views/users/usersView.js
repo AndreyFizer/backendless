@@ -26,8 +26,7 @@ define([
         },
 
         events: {
-
-            'click .usrEditBtn' : 'letsEditUser'
+            'click .usrEditBtn': 'letsEditUser'
         },
 
         letsEditUser: function (ev) {
@@ -43,16 +42,17 @@ define([
         userAction: function (data) {
             var isNew    = data.isNew || false;
             var userData = data.model || { };
-            var userId;
             var $userRow;
+            var userId;
 
-            if (!isNew){
-
-            } else {
+            if (isNew){
                 userId = userData.objectId;
-                this.collection.get(userId).set(userData);
-                $userRow = this.$el.find('#'  + userId);
 
+                // update model in user's collection
+                this.collection.get(userId).set(userData);
+
+                // render updated user's props
+                $userRow = this.$el.find('#'  + userId);
                 $userRow.find('.userFirstName').text(userData.firstName || '');
                 $userRow.find('.userLastName').text(userData.lastName || '');
                 $userRow.find('.userEmail').text(userData.email || '');

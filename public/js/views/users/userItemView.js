@@ -46,7 +46,7 @@ define([
             user.set('lastName', lastName);
             user.set('email', email);
 
-            // stop listen users's data change event
+            // stop listen user's change event
             user.off('change');
             this.remove();
         },
