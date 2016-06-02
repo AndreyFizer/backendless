@@ -5,12 +5,13 @@
 
 define([
     'jQuery',
+    'router',
     'Backbone',
+    'messenger',
     'Backendless',
-    'views/topBar/topBarView',
-    'router'
+    'views/topBar/topBarView'
 
-], function ($, Backbone, Backendless, TopBarView, Router) {
+], function ($, Router, Backbone, messenger, Backendless, TopBarView) {
     
     var initialize = function () {
         var usr;
@@ -20,9 +21,17 @@ define([
             authorized: false,
             userId    : null
         });
-        
-        APP.errorHandler = function (errObj) {
-            alert(errObj.message);
+
+        APP.successNotification = function(message) {
+            messenger.alert('success', message);
+        };
+
+        APP.warningNotification = function(message) {
+            messenger.alert('warning', message);
+        };
+
+        APP.handleError = function(err) {
+            messenger.alert('error', err.message);
         };
 
         new TopBarView;

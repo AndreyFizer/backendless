@@ -25,10 +25,13 @@ require.config({
             exports: 'Backbone'
         },
 
+        toastr: {
+            deps   : ['jQuery'],
+            exports: 'toastr'
+        },
+
         jQueryUI   : {
-            deps   : [
-                'jQuery'
-            ]
+            deps   : ['jQuery']
         }
     },
     paths: {
@@ -37,6 +40,7 @@ require.config({
         Underscore : '../js/libs/underscore/underscore',
         Backbone   : '../js/libs/backbone/backbone',
         Backendless: '../js/libs/backendless/libs/backendless.min',
+        toastr     : '../js/libs/toastr/toastr',
         text       : '../js/libs/requirejs-text/text',
         views      : './views',
         collections: './collections',

@@ -4,15 +4,15 @@
 "use strict";
 
 define([
-    'Backbone',
     'Backendless',
+    'Backbone',
     'models'
 
-], function (Backbone, Backendless, Models) {
+], function (Backendless, Backbone, Models) {
     var Router = Backbone.Router.extend({
         
         initialize: function () {
-            
+           
         },
         
         routes: {
