@@ -8,11 +8,13 @@ define([
     'jQuery',
     'Underscore',
     'Backbone',
+    'Backendless',
+    'models',
     'views/retailers/retailerItemView',
     'text!templates/retailers/retailersTemp.html',
     'text!templates/retailers/retailItemTemp.html'
 
-], function ($, _, Backbone, DialogView, MainTemp, RetItemTemp) {
+], function ($, _, Backbone, Backendless, Models, DialogView, MainTemp, RetItemTemp) {
     var RetailerView;
     RetailerView = Backbone.View.extend({
         el: '#wrapper',
@@ -27,7 +29,9 @@ define([
 
         events: {
             'click .retEditBtn': 'letsEditRetailer',
-            'click #retCreate' : 'letsCreateRetailer'
+            'click .retDelBtn': 'letsDeleteRetailer',
+            'click #retCreate' : 'letsCreateRetailer',
+            'click .retItem'   : 'onRowClick'
         },
 
         renderRetailers: function () {
@@ -39,20 +43,45 @@ define([
             }.bind(this));
         },
 
+        onRowClick: function (ev) {
+            ev.stopPropagation();
+
+            var $currentRow = $(ev.currentTarget);
+            var $container = this.$el.find('#retailContainer');
+
+            $container.find('.active').removeClass('active');
+            $currentRow.addClass('active');
+        },
+
         letsCreateRetailer: function () {
             this.dialogView = new DialogView();
             this.dialogView.on('retailerAction', this.retailerAction, this)
         },
 
         letsEditRetailer: function (ev) {
-            ev.stopPropagation();
-            
             var retId = $(ev.target).closest('.retItem').attr('id');
             var retModel = this.collection.get(retId);
             
             this.dialogView = new DialogView({model: retModel});
             this.dialogView.on('retailerAction', this.retailerAction, this);
 
+        },
+
+        letsDeleteRetailer: function (ev) {
+            var retailerStorage = Backendless.Persistence.of(Models.Retailer);
+            var retId = $(ev.target).closest('.retItem').attr('id');
+            var retModel = this.collection.get(retId).toJSON();
+
+            retailerStorage.remove(retModel, new Backendless.Async(
+                function () {
+                    this.$el.find('#'+retId).remove();
+                    APP.successNotification('Retailer successfully deleted.')
+                }.bind(this),
+                APP.errorHandler
+            ));
+
+            this.dialogView = new DialogView({model: retModel});
+            this.dialogView.on('retailerAction', this.retailerAction, this);
         },
 
         retailerAction: function (data) {
@@ -75,6 +104,7 @@ define([
                 usrRow.find('.tRetLogo>img').attr('src', retData.retailerLogo || 'styles/libs/images/def_user.png');
                 usrRow.find('.tRetName').text(retData.retailerName || '');
                 usrRow.find('.tRetWeb').text(retData.website || '');
+                usrRow.find('.tRetDescrip').text(retData.retailerDescription || '');
             }
         },
 

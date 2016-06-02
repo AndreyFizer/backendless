@@ -48,6 +48,7 @@ define([
             var fileRetLogo = $fileRetLogo[0] && $fileRetLogo[0].files[0] ? $fileRetLogo[0].files[0] : null;
             var retName = this.$el.find('#regName').val().trim();
             var retWebsite = this.$el.find('#regWeb').val().trim();
+            var retDescription = this.$el.find('#regDescrip').val().trim();
 
             async.parallel([
                 function (cb) {
@@ -72,10 +73,12 @@ define([
 
                 retailerData.retailerName = retName;
                 retailerData.website = retWebsite;
+                retailerData.retailerDescription = retDescription;
 
                 retailerStorage.save(retailerData, new Backendless.Async(
                     function (respons) {
                         self.remove();
+                        APP.successNotification(self.addMode ? 'Retailer successfully created.' : 'Retailer successfully updated.');
                         self.trigger('retailerAction', {
                             isNew: self.addMode,
                             model: respons
