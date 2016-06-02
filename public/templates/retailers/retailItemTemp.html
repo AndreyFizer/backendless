@@ -1,7 +1,7 @@
-<tr id="<%= objectId%>" class="retItem">
-    <td class="tLogo"><img width="40px" height="40px" src="<%= logo || 'styles/libs/images/def_user.png'%>" alt="img"></td>
-    <td class="tRetLogo"><img width="40px" height="40px" src="<%= retailerLogo || 'styles/libs/images/def_user.png'%>" alt="img"></td>
-    <td class="tRetName"><%- retailerName || ''%></td>
-    <td class="tRetWeb"><%- website || ''%></td>
+<tr id="<%= model.objectId%>" class="retItem">
+    <td class="tLogo"><img width="40px" height="40px" src="<%= model.logo || 'styles/libs/images/def_user.png'%>" alt="img"></td>
+    <td class="tRetLogo"><img width="40px" height="40px" src="<%= model.retailerLogo || 'styles/libs/images/def_user.png'%>" alt="img"></td>
+    <td class="tRetName"><%- model.retailerName || ''%></td>
+    <td class="tRetWeb"><%- model.website || ''%></td>
     <td><button class="retEditBtn">Edit</button></td>
 </tr>
