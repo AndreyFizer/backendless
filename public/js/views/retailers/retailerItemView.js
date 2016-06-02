@@ -74,8 +74,12 @@ define([
                 retailerData.website = retWebsite;
 
                 retailerStorage.save(retailerData, new Backendless.Async(
-                    function () {
-                        self.trigger('successfullySaved');
+                    function (respons) {
+                        self.remove();
+                        self.trigger('retailerAction', {
+                            isNew: self.addMode,
+                            model: respons
+                        });
                     },
                     APP.errorHandler
                 ))
