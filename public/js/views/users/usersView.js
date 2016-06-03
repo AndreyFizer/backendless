@@ -53,20 +53,11 @@ define([
         userAction: function (data) {
             var isNew    = data.isNew || false;
             var userData = data.model || { };
-            var $userRow;
             var userId;
 
             if (isNew){
                 userId = userData.objectId;
-
-                // update model in user's collection
-                this.collection.get(userId).set(userData);
-
-                // render updated user's props
-                $userRow = this.$el.find('#'  + userId);
-                $userRow.find('.userFirstName').text(userData.firstName || '');
-                $userRow.find('.userLastName').text(userData.lastName || '');
-                $userRow.find('.userEmail').text(userData.email || '');
+                this.collection.add(userData, { merge: true });
             }
         },
         
@@ -74,27 +65,27 @@ define([
             var usersData = this.collection.toJSON();
             var $userCont = this.$el.find('#userContainer').html('');
 
-            this.firstUserIdInList = usersData[0].objectId;
+            var firstUserIdInList = usersData[0].objectId;
 
             // render every user's data
             usersData.forEach(function (user) {
                 $userCont.append(this.userItemTemp(user));
             }.bind(this));
+
+            this.renderFavCards(firstUserIdInList);
         },
 
         renderFavCards: function (userId) {
-            var favCards  = this.collection.get(userId).toJSON().favoritedContentCards;
-
-            var $favCardsContainer = this.$el.find('#favorContCardsContainer').html('');
+            var userFavCards  = this.collection.get(userId).get('favoritedContentCards');
+            var $cardsContainer = this.$el.find('#favorContCardsContainer').html('');
 
             // render first user's favorites content cards
-            $favCardsContainer.append(this.favCardsTemp({ collection: favCards }));
+            $cardsContainer.append(this.favCardsTemp({ collection: userFavCards }));
         },
         
         render: function () {
             this.$el.html(this.mainTemp());
             this.renderUsers();
-            this.renderFavCards(this.firstUserIdInList);
             
             return this;
         }

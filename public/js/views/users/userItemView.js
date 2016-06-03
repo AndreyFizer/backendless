@@ -36,11 +36,18 @@ define([
             ev.stopPropagation();
 
             var user = this.model;
-            var $dialogCont = this.$el.find('#dialog-form');
+            var userId = user.get('objectId');
+            var $userRow = $('#' + userId);
 
+            var $dialogCont = this.$el.find('#dialog-form');
             var firstName = $dialogCont.find('#firstName').val().trim();
             var lastName = $dialogCont.find('#lastName').val().trim();
             var email = $dialogCont.find('#email').val().trim();
+
+            // render user props
+            $userRow.find('.userFirstName').text(firstName || '');
+            $userRow.find('.userLastName').text(lastName || '');
+            $userRow.find('.userEmail').text(email || '');
 
             user.set('firstName', firstName);
             user.set('lastName', lastName);
