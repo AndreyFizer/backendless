@@ -11,22 +11,7 @@ define([
 ], function (Backendless, Backbone, Models) {
     var Router = Backbone.Router.extend({
         
-        initialize: function () {
-
-            var query = new Backendless.DataQuery();
-
-            query.options = {relations: ["favoritedContentCards",]};
-
-            Backendless.Persistence.of(Models.User).find(query, new Backendless.Async(
-                function success(users) {
-                    console.log(users.data)
-                },
-                function error(err) {
-                    console.log(err)
-                }
-            ))
-
-        },
+        initialize: function () { },
         
         routes: {
             'login'    : 'loginRout',
@@ -85,10 +70,10 @@ define([
             if (APP.sessionData.get('authorized')) {
 
                 userStorage = Backendless.Persistence.of(Models.User);
-                queryData = new Backendless.DataQuery();
 
+                queryData = new Backendless.DataQuery();
                 queryData.condition = "isAdmin = false";
-                queryData.options = {relations: ["favoritedContentCards"]};
+                queryData.options = { pageSize : 50, relations: ["favoritedContentCards"] };
 
                 userStorage.find(queryData, new Backendless.Async(
                     function (list) {
