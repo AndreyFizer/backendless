@@ -30,7 +30,7 @@ define([
             this.undelegateEvents();
             
             this.$el.html(this.template({model : retData}));
-            this.$el.find('#acordion').accordion()
+            this.$el.find('#acordion').accordion();
             
             this.delegateEvents();
             
