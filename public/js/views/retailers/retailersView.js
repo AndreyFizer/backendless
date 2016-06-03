@@ -53,7 +53,12 @@ define([
         renderRightView: function (id) {
             var renderModel = this.collection.get(id);
 
-            new BigRetView({model: renderModel});
+            if (this.rightView){
+                this.rightView.undelegateEvents();
+            }
+
+            this.rightView = new BigRetView({model: renderModel});
+            this.rightView.on('retailerAction', this.retailerAction, this)
         },
 
         renderRetailers: function () {
@@ -81,7 +86,7 @@ define([
 
         letsCreateRetailer: function () {
             this.dialogView = new DialogView();
-            this.dialogView.on('retailerAction', this.retailerAction, this)
+            this.dialogView.on('retailerAction', this.retailerAction, this);
         },
 
         letsEditRetailer: function (ev) {

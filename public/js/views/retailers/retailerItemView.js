@@ -41,9 +41,9 @@ define([
             var $fileRetLogo = this.$el.find('#retRetLogoImgInpt');
             var $fileRetCover = this.$el.find('#retCoverImgInpt');
 
-            var fileLogo = $fileLogo[0] && $fileLogo[0].files[0] ? $fileLogo[0].files[0] : null;
-            var fileRetLogo = $fileRetLogo[0] && $fileRetLogo[0].files[0] ? $fileRetLogo[0].files[0] : null;
-            var fileRetCover = $fileRetCover[0] && $fileRetCover[0].files[0] ? $fileRetCover[0].files[0] : null;
+            var fileLogo = $fileLogo[0] && $fileLogo[0].files[0]; // ? $fileLogo[0].files[0] : null;
+            var fileRetLogo = $fileRetLogo[0] && $fileRetLogo[0].files[0]; // ? $fileRetLogo[0].files[0] : null;
+            var fileRetCover = $fileRetCover[0] && $fileRetCover[0].files[0]; // ? $fileRetCover[0].files[0] : null;
             var retName = this.$el.find('#regName').val().trim();
             var retWebsite = this.$el.find('#regWeb').val().trim();
             var retDescription = this.$el.find('#regDescrip').val().trim();
@@ -141,7 +141,7 @@ define([
                 draggable    : false,
                 width        : "600px",
                 close: function() {
-                    this.$el.remove();
+                    this.remove();
                 }.bind(this),
                 buttons: [
                     {

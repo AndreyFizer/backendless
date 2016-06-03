@@ -11,20 +11,23 @@
 </div>
 <div>
     <div id="acordion">
-        <h3>Style item relations</h3>
+        <h3>Style items relations</h3>
     <% if (model.trendingStyles && model.trendingStyles.length){%>
         <div>
+            <button id="editStyleRelations">Edit</button>
             <table>
                 <thead>
                     <tr>
+                        <td></td>
                         <td>Gender</td>
                         <td>Title</td>
                         <td>Description</td>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="styleItemContainer">
                     <%model.trendingStyles.forEach(function(styleItem){%>
                         <tr id="<%=styleItem.objectId%>">
+                            <td></td>
                             <td><%=styleItem.gender || ''%></td>
                             <td><%=styleItem.styleTitle || ''%></td>
                             <td><%=styleItem.styleDescription || ''%></td>
@@ -35,12 +38,35 @@
         </div>
     <%} else {%>
         <div>
-            <h4>Emty data</h4>
+            <h4>Empty table</h4>
         </div>
     <%}%>
-        <h3>Style item relations</h3>
+        <h3>Content cards relations</h3>
+        <% if (model.contentCards && model.contentCards.length){%>
         <div>
-            <h4>Emty data</h4>
+            <table>
+                <thead>
+                <tr>
+                    <td>Gender</td>
+                    <td>Title</td>
+                    <td>Description</td>
+                </tr>
+                </thead>
+                <tbody>
+                <%model.contentCards.forEach(function(contentCard){%>
+                <tr id="<%=contentCard.objectId%>">
+                    <td><%=contentCard.gender || ''%></td>
+                    <td><%=contentCard.offerTitle || ''%></td>
+                    <td><%=contentCard.offerDescription || ''%></td>
+                </tr>
+                <%})%>
+                </tbody>
+            </table>
         </div>
+        <%} else {%>
+        <div>
+            <h4>Empty table</h4>
+        </div>
+        <%}%>
     </div>
 </div>
