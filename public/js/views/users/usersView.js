@@ -9,12 +9,13 @@ define([
     'Underscore',
     'Backbone',
     'Backendless',
+    'models',
     'views/users/userItemView',
     'text!templates/users/usersTemp.html',
     'text!templates/users/userItemTemp.html',
     'text!templates/users/userFavConCardsTemp.html'
 
-], function ($, _, Backbone,  Backendless, DialogView, MainTemp, UstItemTemp, UsrFavConCardsTemp) {
+], function ($, _, Backbone,  Backendless, Models, DialogView, MainTemp, UstItemTemp, UsrFavConCardsTemp) {
 
     return Backbone.View.extend({
         el: '#wrapper',
@@ -24,22 +25,52 @@ define([
         favCardsTemp: _.template(UsrFavConCardsTemp),
 
         initialize: function () {
-            this.collectionJSON = this.collection.toJSON();
             this.render();
         },
 
         events: {
-            'click .usrEditBtn': 'letsEditUser',
-            'click .usrItem'   : 'letsShowUserCards'
+            'click .usrRemoveBtn': 'letsRemoveUser',
+            'click .usrEditBtn' : 'letsEditUser',
+            'click .usrItem'    : 'letsShowUserCards'
+        },
+
+        letsRemoveUser: function (ev) {
+            ev.stopPropagation();
+
+            var self = this;
+            var $userRow = this.$el.find(ev.target).closest('.usrItem');
+            var userId = $userRow.attr('id');
+            var userModel = this.collection.get(userId);
+
+            if (confirm('Do you really want to remove user?')) {
+                // hide such user row
+                $userRow.hide();
+
+                // remove user from db
+                Backendless.Persistence.of(Models.User)
+                    .remove(userModel, new Backendless.Async(
+                        function success() {
+                            // remove current user from user's collection
+                            self.collection.remove(userId);
+                            // remove user row
+                            $userRow.remove();
+                        },
+                        function (err) {
+                            // show user row
+                            $userRow.show();
+                            APP.errorHandler(err);
+                        }
+                    ));
+            }
         },
 
         letsEditUser: function (ev) {
             ev.stopPropagation();
 
-            var userId    = this.$el.find(ev.target).closest('.usrItem').attr('id');
-            var userModel = this.collection.get(userId);
+            var userId = this.$el.find(ev.target).closest('.usrItem').attr('id');
+            var user   = this.collection.get(userId);
 
-            this.dialogView = new DialogView({ model: userModel });
+            this.dialogView = new DialogView({ model: user });
             this.dialogView.on('userAction', this.userAction, this)
         },
 
@@ -53,10 +84,8 @@ define([
         userAction: function (data) {
             var isNew    = data.isNew || false;
             var userData = data.model || { };
-            var userId;
 
             if (isNew){
-                userId = userData.objectId;
                 this.collection.add(userData, { merge: true });
             }
         },

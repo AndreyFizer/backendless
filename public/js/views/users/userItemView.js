@@ -88,7 +88,8 @@ define([
                 modal        : true,
                 height       : 400,
                 width        : 320,
-                title        : 'User page'
+                title        : 'User page',
+                close        : function () { this.remove() }.bind(this)
             });
 
             this.delegateEvents();

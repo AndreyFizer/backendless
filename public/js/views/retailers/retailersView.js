@@ -101,7 +101,7 @@ define([
         letsDeleteRetailer: function (ev) {
             ev.stopPropagation();
 
-            if (confirm('Do you realy want delete this retailer?')){
+            if (confirm('Do you really want to delete this retailer?')){
 
                 var retailerStorage = Backendless.Persistence.of(Models.Retailer);
                 var retId = $(ev.target).closest('.retItem').attr('id');
