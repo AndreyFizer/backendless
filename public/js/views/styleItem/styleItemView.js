@@ -15,7 +15,7 @@ define([
 ], function ($, _, Backbone, Backendless, Models, StyleTemp) {
     var StyleItemView;
     StyleItemView = Backbone.View.extend({
-        el: '#styleItemContainer',
+        el: '#styleViewContainer',
         
         template: _.template(StyleTemp),
         
@@ -64,7 +64,7 @@ define([
                 coll   : styleData,
                 current: cs
             }));
-            
+
             return this;
         }
         

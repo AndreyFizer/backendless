@@ -62,8 +62,7 @@ define([
                 if (this.nestedView){
                     this.nestedView.undelegateEvents();
                 }
-        
-                $currentButton.text('Accept');
+
                 this.nestedView = new StyleView({currentStyles : currentStyles});
             }
             
@@ -73,7 +72,10 @@ define([
             var retData = this.model.toJSON();
             
             this.$el.html(this.template({model : retData}));
-            this.$el.find('#acordion').accordion();
+            this.$el.find('#acordion').accordion({
+                collapsible: true,
+                heightStyle: "content"
+            });
             
             return this;
         }

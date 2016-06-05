@@ -1,8 +1,21 @@
-<%coll.forEach(function(styleItem){%>
-<tr class="styleItemRow" id="<%=styleItem.objectId%>">
-    <td><input type="checkbox" <%= (current.indexOf(styleItem.objectId) !== -1) ? 'checked' : ''%>></td>
-    <td><%=styleItem.gender || ''%></td>
-    <td><%=styleItem.styleTitle || ''%></td>
-    <td><%=styleItem.styleDescription || ''%></td>
-</tr>
-<%})%>
+<button id="editStyleRelations">Accept</button>
+<table>
+    <thead>
+    <tr>
+        <td></td>
+        <td>Gender</td>
+        <td>Title</td>
+        <td>Description</td>
+    </tr>
+    </thead>
+    <tbody>
+    <%coll.forEach(function(styleItem){%>
+    <tr class="styleItemRow" id="<%=styleItem.objectId%>">
+        <td><input type="checkbox" <%= (current.indexOf(styleItem.objectId) !== -1) ? 'checked' : ''%>></td>
+        <td><%=styleItem.gender || ''%></td>
+        <td><%=styleItem.styleTitle || ''%></td>
+        <td><%=styleItem.styleDescription || ''%></td>
+    </tr>
+    <%})%>
+    </tbody>
+</table>
