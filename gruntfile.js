@@ -5,15 +5,6 @@
 module.exports = function (grunt) {
     grunt.initConfig({
         
-        // concat: {
-        //     dist: {
-        //         src : [
-        //             'public/sass/*.scss'
-        //         ],
-        //         dest: 'public/sass/main.scss'
-        //     }
-        // },
-        
         sass: {
             options: {
                 sourceMap: true
@@ -28,15 +19,23 @@ module.exports = function (grunt) {
         watch: {
             sass: {
                 files: 'public/sass/main.scss',
-                tasks: ['sass']
+                tasks: ['sass', 'notify']
+            }
+        },
+        
+        notify: {
+            sass: {
+                options: {
+                    title  : 'SCSS to CSS',
+                    message: 'main.css successfully generated...'
+                }
             }
         }
     });
     
-    // grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-sass');
     grunt.loadNpmTasks('grunt-notify');
     
-    grunt.registerTask('default', ['sass', 'watch:sass']);
+    grunt.registerTask('default', ['sass', 'notify', 'watch']);
 };
