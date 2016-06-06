@@ -16,13 +16,13 @@ define([
     var StyleItemView;
     StyleItemView = Backbone.View.extend({
         el: '#styleViewContainer',
-        
+
         template: _.template(StyleTemp),
-        
+
         initialize: function (opts) {
             var styleStorage = Backendless.Persistence.of(Models.Style);
             var currentStyles = opts && opts.currentStyles;
-            
+
             styleStorage.find(new Backendless.Async(
                 function (res) {
                     this.collection = res.data;
@@ -32,20 +32,20 @@ define([
                 this
             ));
         },
-        
+
         events: {},
-        
+
         acceptNewStyles: function (cb) {
             var checked = this.$el.find('input:checked');
             var aLength = checked.length;
             var checkedIds = [];
             var curEl;
 
-            if (!aLength){
+            if (!aLength) {
                 return cb(null, []);
             }
 
-            while (aLength--){
+            while (aLength--) {
                 curEl = $(checked[aLength]);
                 checkedIds.push(curEl.closest('.styleItemRow').attr('id'));
             }
@@ -56,10 +56,10 @@ define([
 
             cb(null, result);
         },
-        
+
         render: function (cs) {
             var styleData = this.collection;
-            
+
             this.$el.html(this.template({
                 coll   : styleData,
                 current: cs
@@ -67,9 +67,9 @@ define([
 
             return this;
         }
-        
+
     });
-    
+
     return StyleItemView;
-    
+
 });
