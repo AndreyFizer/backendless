@@ -1,0 +1,41 @@
+@import "colors/project_default";
+
+// Base ------------------
+$baseBgColor     : $white;
+$baseTextColor   : $grey-1;
+$baseLinkColor   : $blue-1;
+$baseBorderColor : $grey-6;
+// -----------------------
+
+// General ---------------
+
+// -----------------------
+
+// Header ---------------
+
+// -----------------------
+
+// Navbar ----------------
+
+// -----------------------
+
+// Footer ----------------
+
+// -----------------------
+
+// Buttons ---------------
+$btnMainBgColor:    color('main', 'bg');
+$btnSuccessBgColor: color('success', 'bg');
+$btnErrorBgColor:   color('error', 'bg');
+$btnInfoBgColor:    color('info', 'bg');
+
+$btnMainBorderColor:    color('main', 'border');
+$btnSuccessBorderColor: color('success', 'border');
+$btnErrorBorderColor:   color('error', 'border');
+$btnInfoBorderColor:    color('info', 'border');
+
+$btnMainTextColor:    color('main', 'text');
+$btnSuccessTextColor: color('success', 'text');
+$btnErrorTextColor:   color('error', 'text');
+$btnInfoTextColor:    color('info', 'text');
+// -----------------------

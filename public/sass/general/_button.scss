@@ -1,0 +1,34 @@
+// Buttons style
+
+.btn {
+  padding: 8px 16px;
+
+  &-large{}
+
+  &-medium {}
+
+  &-small {}
+
+
+  &-main {
+    background-color: $btnMainBgColor;
+    border-color: $btnMainBorderColor;
+    color: $btnMainTextColor;
+  }
+
+  &-error {
+    background-color: $btnErrorBgColor;
+    border-color: $btnErrorBorderColor;
+    color: $btnErrorTextColor;
+  }
+  &-info {
+    background-color: $btnInfoBgColor;
+    border-color: $btnInfoBorderColor;
+    color: $btnInfoTextColor;
+  }
+  &-success {
+    background-color: $btnSuccessBgColor;
+    border-color: $btnSuccessBorderColor;
+    color: $btnSuccessTextColor;
+  }
+}

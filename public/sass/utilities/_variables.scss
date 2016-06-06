@@ -1,0 +1,96 @@
+// General Fonts variables
+$serif: sans-serif;
+$fontPath: '../fonts/';
+
+// Fonts variables for project
+$baseFontPath: 'lato/';
+$baseFontFile: (
+    1: 'Lato-Regular',
+    2: 'Lato-Bold',
+    3: 'Lato-Medium',
+    4: 'Lato-Light',
+    5: 'Lato-Semibold'
+);
+$baseFontName: (
+    1: 'Lato Regular',
+    2: 'Lato Bold',
+    3: 'Lato Medium',
+    4: 'Lato Lihght',
+    5: 'Lato Semibold'
+);
+$baseFont: (
+    'bold':     'Lato Bold',
+    'light':    'Lato Lihght',
+    'medium':   'Lato Medium',
+    'regular':  'Lato Regular',
+    'semibold': 'Lato Semibold',
+);
+
+$baseFontSvgId : ();
+
+// All fonts array
+$fonts: (
+    "baseFont": $baseFont
+);
+
+// usage: font("type_of_font", "name_of_font")
+// to avoid to repeating map-get($fonts, ...)
+
+@function font($font, $type) {
+  @if map-has-key($fonts, $font) {
+    $curr_font: map-get($fonts, $font);
+    @if map-has-key($curr_font, $type) {
+      @return map-get($curr_font, $type);
+    }
+  }
+  @warn "Unknown `#{name}` in $fonts.";
+  @return null;
+}
+
+// Fonts family variables
+$baseFontFamily:  font("baseFont", "regular"), $serif !default;
+$extraFontFamily: font("baseFont", "bold"), $serif !default;
+
+
+// Grid vars
+$numCols: 12 !default;
+$gutterWidth: 30px !default;
+
+$smallContainer:   760px !default;
+$mediumContainer:  960px !default;
+$largeContainer:   1170px !default;
+
+$extraSmallScreen: 480px !default;
+$smallScreen:      768px !default;
+$mediumScreen:     992px !default;
+$largeScreen:      1200px !default;
+
+// Grid vars -1
+$extraSmallScreenDown: 479px;
+$smallScreenDown:      767px;
+$mediumScreenDown:     991px;
+$largeScreenDown:      1199px;
+
+// Grid vars +1
+$extraSmallScreenUp: 481px;
+$smallScreenUp:      769px;
+$mediumScreenUp:     993px;
+$largeScreenUp:      1201px;
+
+/*** Typography ***/
+$fontSizeH1: 36px !default;
+$fontSizeH2: 30px !default;
+$fontSizeH3: 24px !default;
+$fontSizeH4: 16px !default;
+$fontSizeH5: 14px !default;
+$fontSizeH6: 12px !default;
+
+$fontMarginH1: 10px 0 15px !default;
+$fontMarginH2: 10px 0 15px !default;
+$fontMarginH3: 10px 0 !default;
+$fontMarginH4: 15px 0 !default;
+$fontMarginH5: 20px 0 !default;
+$fontMarginH6: 25px 0 !default;
+
+// Footer
+$footerHeight: 100px !default;

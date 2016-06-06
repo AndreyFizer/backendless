@@ -1,0 +1,33 @@
+// Container wrap
+
+.container {
+  @extend %container;
+  @extend %clearfix;
+
+  &-full {
+    @extend %container;
+    @extend %clearfix;
+  }
+
+  @media (min-width: $smallScreen) {
+    max-width: $smallContainer;
+  }
+
+  @media (min-width: $mediumScreen) {
+    max-width: $mediumContainer;
+  }
+
+  @media (min-width: $largeScreen) {
+    max-width: $largeContainer;
+  }
+}
+
+.row {
+  @include rem(margin-left, ($gutterWidth / -2));
+  @include rem(margin-right, ($gutterWidth / -2));
+  @extend %clearfix;
+}
+
+.clearfix {
+  @extend %clearfix;
+}

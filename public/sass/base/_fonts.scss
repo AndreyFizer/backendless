@@ -1,0 +1,15 @@
+// Fotns include
+$baseFontFirst: 1;
+$baseFontCount: 5;
+
+@for $i from $baseFontFirst through $baseFontCount {
+  @font-face {
+    font-family: map-get($baseFontName, $i);
+    src: url('#{$fontPath}#{$baseFontPath}#{map-get($baseFontFile, $i)}.eot');
+    src: url('#{$fontPath}#{$baseFontPath}#{map-get($baseFontFile, $i)}.eot?#iefix') format('embedded-opentype'),
+    url('#{$fontPath}#{$baseFontPath}#{map-get($baseFontFile, $i)}.woff2') format('woff2'),
+    url('#{$fontPath}#{$baseFontPath}#{map-get($baseFontFile, $i)}.woff') format('woff'),
+    url('#{$fontPath}#{$baseFontPath}#{map-get($baseFontFile, $i)}.ttf') format('truetype');
+    //url('#{$fontPath}#{$baseFontPath}#{map-get($baseFontFile, $j)}.svg##{map-get($baseFontSvgId, $j)}') format('svg');
+  }
+}
