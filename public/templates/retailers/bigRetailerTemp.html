@@ -45,8 +45,10 @@
             <%}%>
         </div>
         <h3>Content cards relations</h3>
-        <% if (model.contentCards && model.contentCards.length){%>
-        <div>
+        <div id="cardViewContainer">
+            <button id="editCardRelations">Edit</button>
+            <% if (model.contentCards && model.contentCards.length){%>
+
             <table>
                 <thead>
                 <tr>
@@ -65,11 +67,12 @@
                 <%})%>
                 </tbody>
             </table>
+
+            <%} else {%>
+            <div>
+                <h4>Empty table</h4>
+            </div>
+            <%}%>
         </div>
-        <%} else {%>
-        <div>
-            <h4>Empty table</h4>
-        </div>
-        <%}%>
     </div>
 </div>
