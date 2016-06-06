@@ -11,9 +11,10 @@ define([
     'Backendless',
     'models',
     'text!templates/retailers/bigRetailerTemp.html',
-    'views/styleItem/styleItemView'
+    'views/styleItem/styleItemView',
+    'views/contentCard/contentCardView'
 
-], function ($, _, Backbone, Backendless, Models, MainTemp, StyleView) {
+], function ($, _, Backbone, Backendless, Models, MainTemp, StyleView, CardView) {
     var RetailerView;
     RetailerView = Backbone.View.extend({
         el: '#bigRetailerItem',
@@ -43,7 +44,7 @@ define([
                         if (err) {
                             return APP.errorHandler(err);
                         }
-                        retData.trendingStyles = newCards;
+                        retData.contentCards = newCards;
                         Backendless.Persistence.of(Models.Retailer).save(retData, new Backendless.Async(
                             function (respons) {
                                 APP.successNotification('Successfully saved');
@@ -64,7 +65,7 @@ define([
                     this.cardNestedView.undelegateEvents();
                 }
             
-                this.cardNestedView = new StyleView({currentCards: currentCards});
+                this.cardNestedView = new CardView({currentCards: currentCards});
             }
         
         },
