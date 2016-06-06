@@ -1,9 +1,9 @@
 <div>
     <div>
-        <img src="<%= model.coverImage || 'styles/libs/images/def_user.png'%>" alt="">
+        <img src="<%= model.coverImage || 'images/def_user.png'%>" alt="">
     </div>
     <div>
-        <img src="<%= model.retailerLogo || 'styles/libs/images/def_user.png'%>" alt="">
+        <img src="<%= model.retailerLogo || 'images/def_user.png'%>" alt="">
         <div>
             <span><%- model.retailerName || ''%></span>
         </div>
@@ -13,7 +13,7 @@
     <div id="acordion">
         <h3>Style items relations</h3>
         <div id="styleViewContainer">
-            <button id="editStyleRelations">Edit</button>
+            <button id="editStyleRelations">Edit relations</button>
 
             <% if (model.trendingStyles && model.trendingStyles.length){%>
 
@@ -46,7 +46,7 @@
         </div>
         <h3>Content cards relations</h3>
         <div id="cardViewContainer">
-            <button id="editCardRelations">Edit</button>
+            <button id="editCardRelations">Edit relations</button>
             <% if (model.contentCards && model.contentCards.length){%>
 
             <table>
