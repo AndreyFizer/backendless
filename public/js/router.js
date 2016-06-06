@@ -73,7 +73,7 @@ define([
 
                 queryData = new Backendless.DataQuery();
                 queryData.condition = "isAdmin = false";
-                queryData.options = { pageSize : 50, relations: ["favoritedContentCards"] };
+                queryData.options = { pageSize : 50, relations: ["followedRetailers"] };
 
                 userStorage.find(queryData, new Backendless.Async(
                     function (list) {
