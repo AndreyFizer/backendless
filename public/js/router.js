@@ -11,28 +11,31 @@ define([
 ], function (Backendless, Backbone, Models) {
     var Router = Backbone.Router.extend({
         
-        initialize: function () { },
+        initialize: function () {
+        },
         
         routes: {
-            'login'    : 'loginRout',
-            'registr'  : 'registrationRout',
-            'users'    : 'usersRout',
-            'retailers': 'retailerRout',
-            '*any'     : 'anyRout'
+            'login'          : 'loginRout',
+            'registr'        : 'registrationRout',
+            'users'          : 'usersRout',
+            'styles'         : 'styleItemsRout',
+            'cards'          : 'contentCardsRout',
+            'retailers(/:id)': 'retailerRout',
+            '*any'           : 'anyRout'
         },
         
         anyRout: function () {
             Backbone.history.navigate('users', {trigger: true})
         },
-
-        retailerRout: function () {
+        
+        retailerRout: function (argId) {
             var self = this;
             var query = new Backendless.DataQuery();
-
+            
             query.options = {relations: ['trendingStyles', 'contentCards']};
-
+            
             if (APP.sessionData.get('authorized')) {
-
+                
                 Backendless.Persistence.of(Models.Retailer).find(query, new Backendless.Async(
                     function (list) {
                         var dataList = list.data;
@@ -42,39 +45,42 @@ define([
                                 'idAttribute': 'objectId'
                             })
                         });
-
+                        
                         retailerCollection = new RetailerCollection(dataList);
-
+                        
                         require(['views/retailers/retailersView'], function (View) {
                             if (self.wrapperView) {
                                 self.wrapperView.undelegateEvents();
                             }
-
-                            self.wrapperView = new View({collection: retailerCollection});
+                            
+                            self.wrapperView = new View({
+                                collection: retailerCollection,
+                                currentId : argId
+                            });
                         })
-
+                        
                     },
                     APP.errorHandler
                 ));
-
+                
             } else {
                 Backbone.history.navigate('login', {trigger: true});
             }
         },
-
+        
         usersRout: function () {
             var self = this;
             var userStorage;
             var queryData;
-
+            
             if (APP.sessionData.get('authorized')) {
-
+                
                 userStorage = Backendless.Persistence.of(Models.User);
-
+                
                 queryData = new Backendless.DataQuery();
                 queryData.condition = "isAdmin = false";
-                queryData.options = { pageSize : 50, relations: ["favoritedContentCards"] };
-
+                queryData.options = {pageSize: 50, relations: ["followedRetailers"]};
+                
                 userStorage.find(queryData, new Backendless.Async(
                     function (list) {
                         var dataList = list.data;
@@ -84,21 +90,95 @@ define([
                                 'idAttribute': 'objectId'
                             })
                         });
-
+                        
                         userCollection = new UserCollection(dataList);
-
+                        
                         require(['views/users/usersView'], function (View) {
                             if (self.wrapperView) {
                                 self.wrapperView.undelegateEvents();
                             }
-
+                            
                             self.wrapperView = new View({collection: userCollection});
                         })
-
+                        
                     },
                     APP.errorHandler
                 ));
-
+                
+            } else {
+                Backbone.history.navigate('login', {trigger: true});
+            }
+        },
+    
+        contentCardsRout: function () {
+            var self = this;
+            var query = new Backendless.DataQuery();
+    
+            query.options = {pageSize : 50};
+    
+            if (APP.sessionData.get('authorized')) {
+        
+                Backendless.Persistence.of(Models.Feed).find(query, new Backendless.Async(
+                    function (list) {
+                        var dataList = list.data;
+                        var cardsCollection;
+                        var CardsCollection = Backbone.Collection.extend({
+                            model: Backbone.Model.extend({
+                                'idAttribute': 'objectId'
+                            })
+                        });
+    
+                        cardsCollection = new CardsCollection(dataList);
+                
+                        require(['views/retailers/retailersView'], function (View) {
+                            if (self.wrapperView) {
+                                self.wrapperView.undelegateEvents();
+                            }
+                    
+                            self.wrapperView = new View({
+                                collection: retailerCollection,
+                                currentId : argId
+                            });
+                        })
+                
+                    },
+                    APP.errorHandler
+                ));
+        
+            } else {
+                Backbone.history.navigate('login', {trigger: true});
+            }
+        },
+        
+        styleItemsRout: function () {
+            var self = this;
+            var styleItemsStorage;
+            var queryData;
+            
+            if (APP.sessionData.get('authorized')) {
+                queryData = new Backendless.DataQuery();
+                queryData.options = {pageSize: 50};
+                
+                styleItemsStorage = Backendless.Persistence.of(Models.Style);
+                styleItemsStorage.find(queryData, new Backendless.Async(
+                    function (list) {
+                        var dataList = list.data;
+                        var StyleItemsCollection = Backbone.Collection.extend({
+                            model: Backbone.Model.extend({
+                                'idAttribute': 'objectId'
+                            })
+                        });
+                        var styleItemsCollection = new StyleItemsCollection(dataList);
+                        
+                        require(['views/styleItem/styleItemListView'], function (View) {
+                            self.wrapperView ? self.wrapperView.undelegateEvents() : null;
+                            self.wrapperView = new View({collection: styleItemsCollection});
+                        })
+                        
+                    },
+                    APP.errorHandler
+                ));
+                
             } else {
                 Backbone.history.navigate('login', {trigger: true});
             }
@@ -115,9 +195,9 @@ define([
             } else {
                 Backbone.history.navigate('users', {trigger: true})
             }
-
+            
         },
-
+        
         loginRout: function () {
             if (!APP.sessionData.get('authorized')) {
                 require(['views/login/loginView'], function (View) {

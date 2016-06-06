@@ -1,0 +1,21 @@
+<div style="padding: 30px">
+    <button id="createBtn">Create new style item</button>
+    <table>
+        <thead>
+        <tr>
+            <td>Gender</td>
+            <td>Title</td>
+            <td>Description</td>
+        </tr>
+        </thead>
+        <tbody>
+            <% for (var index = collection.length - 1; index >= 0; index -= 1) { %>
+            <tr class="styleItemRow" id="<%= collection[index].objectId %>">
+                <td><%= collection[index].gender === 'm' ? 'male' : 'female' %></td>
+                <td><%= collection[index].styleTitle || ''%></td>
+                <td><%= collection[index].styleDescription || ''%></td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+</div>

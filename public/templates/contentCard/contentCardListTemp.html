@@ -1,0 +1,20 @@
+<div class="fourthBox">
+    <table>
+        <thead>
+        <tr>
+            <td>Gender</td>
+            <td>Title</td>
+            <td>Description</td>
+        </tr>
+        </thead>
+        <tbody>
+        <%model.contentCards.forEach(function(contentCard){%>
+        <tr id="<%=contentCard.objectId%>">
+            <td><%=contentCard.gender || ''%></td>
+            <td><%=contentCard.offerTitle || ''%></td>
+            <td><%=contentCard.offerDescription || ''%></td>
+        </tr>
+        <%})%>
+        </tbody>
+    </table>
+</div>

@@ -35,14 +35,14 @@ define([
         letsSaveUser: function (ev) {
             ev.stopPropagation();
 
-            var user = this.model;
-            var userId = user.get('objectId');
+            var user     = this.model;
+            var userId   = user.get('objectId');
             var $userRow = $('#' + userId);
 
             var $dialogCont = this.$el.find('#dialog-form');
-            var firstName = $dialogCont.find('#firstName').val().trim();
-            var lastName = $dialogCont.find('#lastName').val().trim();
-            var email = $dialogCont.find('#email').val().trim();
+            var firstName   = $dialogCont.find('#firstName').val().trim();
+            var lastName    = $dialogCont.find('#lastName').val().trim();
+            var email       = $dialogCont.find('#email').val().trim();
 
             // render user props
             $userRow.find('.userFirstName').text(firstName || '');
@@ -75,8 +75,8 @@ define([
         },
 
         render: function () {
-            var model = this.model;
-            var userData = model ? model.toJSON() : { };
+            var model    = this.model;
+            var userData = model ? model.toJSON() : {};
 
             this.undelegateEvents();
 
@@ -89,7 +89,9 @@ define([
                 height       : 400,
                 width        : 320,
                 title        : 'User page',
-                close        : function () { this.remove() }.bind(this)
+                close        : function () {
+                    this.remove()
+                }.bind(this)
             });
 
             this.delegateEvents();

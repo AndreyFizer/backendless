@@ -23,37 +23,43 @@ define([
         template: _.template(MainTemp),
         retItm  : _.template(RetItemTemp),
 
-        initialize: function () {
+        initialize: function (opts) {
+            this.currentId = opts && opts.currentId ? opts.currentId : null;
 
             this.render();
         },
 
         events: {
             'click .retEditBtn': 'letsEditRetailer',
-            'click .retDelBtn': 'letsDeleteRetailer',
+            'click .retDelBtn' : 'letsDeleteRetailer',
             'click #retCreate' : 'letsCreateRetailer',
             'click .retItem'   : 'onRowClick'
         },
 
-        checkFirstRetailer : function () {
-            var firstRetailer = this.$container.children() && this.$container.children().first() ? this.$container.children().first() : null;
+        checkFirstRetailer: function () {
+            var firstRetailer;
             var firstId;
 
-            if (firstRetailer){
-                firstId = firstRetailer.attr('id');
-
-                this.$container.find('.active').removeClass('active');
-                firstRetailer.addClass('active');
-
-                this.renderRightView(firstId);
+            if (this.currentId) {
+                firstId = this.currentId;
+                firstRetailer = this.$container.find('#' + firstId);
+                this.currentId = null;
+            } else {
+                firstRetailer = this.$container.children() && this.$container.children().first() ? this.$container.children().first() : null;
+                firstId = firstRetailer ? firstRetailer.attr('id') : null;
+                Backbone.history.navigate('retailers');
             }
 
+            this.$container.find('.active').removeClass('active');
+            firstRetailer ? firstRetailer.addClass('active') : false;
+
+            this.renderRightView(firstId);
         },
 
         renderRightView: function (id) {
             var renderModel = this.collection.get(id);
 
-            if (this.rightView){
+            if (this.rightView) {
                 this.rightView.undelegateEvents();
             }
 
@@ -66,7 +72,7 @@ define([
             this.$container.html('');
 
             retData.forEach(function (ret) {
-                this.$container.append(this.retItm({model : ret}));
+                this.$container.append(this.retItm({model: ret}));
             }.bind(this));
         },
 
@@ -76,6 +82,8 @@ define([
             var $currentRow = $(ev.currentTarget);
             var $container = this.$el.find('#retailContainer');
             var currentId;
+
+            Backbone.history.navigate('retailers');
 
             $container.find('.active').removeClass('active');
             $currentRow.addClass('active');
@@ -101,7 +109,7 @@ define([
         letsDeleteRetailer: function (ev) {
             ev.stopPropagation();
 
-            if (confirm('Do you really want to delete this retailer?')){
+            if (confirm('Do you really want to delete this retailer?')) {
 
                 var retailerStorage = Backendless.Persistence.of(Models.Retailer);
                 var retId = $(ev.target).closest('.retItem').attr('id');
@@ -109,7 +117,7 @@ define([
 
                 retailerStorage.remove(retModel, new Backendless.Async(
                     function () {
-                        this.$el.find('#'+retId).remove();
+                        this.$el.find('#' + retId).remove();
                         this.collection.remove(retId);
                         APP.successNotification('Retailer successfully deleted.');
                         this.checkFirstRetailer();
@@ -133,7 +141,7 @@ define([
 
                 this.collection.add(retData);
 
-                $container.prepend(this.retItm({model : retData}));
+                $container.prepend(this.retItm({model: retData}));
                 this.checkFirstRetailer();
             } else {
                 usrId = retData.objectId;
@@ -154,7 +162,7 @@ define([
             this.$container = this.$el.find('#retailContainer');
             this.$el.tooltip({
                 track: true,
-                show: { delay: 800, duration: 800 }
+                show : {delay: 800, duration: 800}
             });
             this.renderRetailers();
             this.checkFirstRetailer();
