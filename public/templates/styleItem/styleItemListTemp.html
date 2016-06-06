@@ -1,17 +1,20 @@
 <div style="padding: 30px">
     <button id="createBtn">Create new style item</button>
+    <div id="dialogContainer"></div>
     <table>
         <thead>
         <tr>
+            <td>Image</td>
             <td>Gender</td>
             <td>Title</td>
             <td>Description</td>
         </tr>
         </thead>
-        <tbody>
+        <tbody id="styleItemsList">
             <% for (var index = collection.length - 1; index >= 0; index -= 1) { %>
             <tr class="styleItemRow" id="<%= collection[index].objectId %>">
-                <td><%= collection[index].gender === 'm' ? 'male' : 'female' %></td>
+                <td><img width="60px" height="60px" src="<%= collection[index].imageString || 'styles/libs/images/style_default.png' %>" alt="img" /></td>
+                <td><%= collection[index].gender || '' %></td>
                 <td><%= collection[index].styleTitle || ''%></td>
                 <td><%= collection[index].styleDescription || ''%></td>
             </tr>

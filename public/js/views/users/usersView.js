@@ -81,7 +81,7 @@ define([
             var user   = this.collection.get(userId);
 
             this.dialogView = new DialogView({model: user});
-            this.dialogView.on('userAction', this.userAction, this)
+            this.dialogView.on('userAction', this.userAction, this);
         },
 
         letsShowRetailers: function (ev) {

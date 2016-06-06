@@ -10,9 +10,10 @@ define([
     'Backbone',
     'Backendless',
     'models',
+    'views/styleItem/createStyleItemView',
     'text!templates/styleItem/styleItemListTemp.html'
 
-], function ($, _, Backbone, Backendless, Models, StyleTemp) {
+], function ($, _, Backbone, Backendless, Models, DialogView, StyleTemp) {
     return Backbone.View.extend({
         el      : '#wrapper',
         template: _.template(StyleTemp),
@@ -28,11 +29,17 @@ define([
         letsCreateStyleItem: function (ev) {
             ev.stopPropagation();
 
-            
+            // open create styleItem page
+            this.dialogView = new DialogView();
         },
 
         render: function () {
-            this.$el.html(this.template({collection: this.collection.toJSON()}));
+
+            console.log(this.collection);
+
+            this.$el.html(this.template({
+                collection: this.collection.toJSON()
+            }));
 
             return this;
         }
