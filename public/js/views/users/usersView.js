@@ -41,7 +41,7 @@ define([
 
             var retId = $(ev.currentTarget).attr('id');
 
-            Backbone.history.navigate('retailers/' + retId, {trigger: true, replace: true});
+            Backbone.history.navigate('retailers/' + retId, {trigger: true});
         },
 
         letsRemoveUser: function (ev) {

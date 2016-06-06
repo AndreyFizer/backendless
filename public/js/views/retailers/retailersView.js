@@ -44,7 +44,6 @@ define([
                 firstId = this.currentId;
                 firstRetailer = this.$container.find('#' + firstId);
                 this.currentId = null;
-                Backbone.history.navigate('retailers');
             } else {
                 firstRetailer = this.$container.children() && this.$container.children().first() ? this.$container.children().first() : null;
                 firstId = firstRetailer ? firstRetailer.attr('id') : null;
@@ -82,6 +81,8 @@ define([
             var $currentRow = $(ev.currentTarget);
             var $container = this.$el.find('#retailContainer');
             var currentId;
+
+            Backbone.history.navigate('retailers');
 
             $container.find('.active').removeClass('active');
             $currentRow.addClass('active');
