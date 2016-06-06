@@ -13,7 +13,7 @@
         <tbody id="styleItemsList">
             <% for (var index = collection.length - 1; index >= 0; index -= 1) { %>
             <tr class="styleItemRow" id="<%= collection[index].objectId %>">
-                <td><img width="60px" height="60px" src="<%= collection[index].imageString || 'styles/libs/images/style_default.png' %>" alt="img" /></td>
+                <td><img width="60px" height="60px" src="<%= collection[index].imageString || 'images/style_default.png' %>" alt="img" /></td>
                 <td><%= collection[index].gender || '' %></td>
                 <td><%= collection[index].styleTitle || ''%></td>
                 <td><%= collection[index].styleDescription || ''%></td>

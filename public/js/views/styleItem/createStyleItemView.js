@@ -105,7 +105,7 @@ define([
         },
 
         appendStyle: function (style) {
-            var imgUrl = style.imageString || 'styles/libs/images/style_default.png';
+            var imgUrl = style.imageString || 'images/style_default.png';
 
             $('#styleItemsList').append(
                 '<tr>' +
