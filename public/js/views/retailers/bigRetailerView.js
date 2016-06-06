@@ -11,9 +11,10 @@ define([
     'Backendless',
     'models',
     'text!templates/retailers/bigRetailerTemp.html',
-    'views/styleItem/styleItemView'
-    
-], function ($, _, Backbone, Backendless, Models, MainTemp, StyleView) {
+    'views/styleItem/styleItemView',
+    'views/contentCard/contentCardView'
+
+], function ($, _, Backbone, Backendless, Models, MainTemp, StyleView, CardView) {
     var RetailerView;
     RetailerView = Backbone.View.extend({
         el: '#bigRetailerItem',
@@ -26,9 +27,49 @@ define([
         },
         
         events: {
-            'click #editStyleRelations' : 'letsEditStyleList'
+            'click #editStyleRelations': 'letsEditStyleList',
+            'click #editCardRelations' : 'letsEditCardList'
         },
     
+        letsEditCardList: function (ev) {
+            var self = this;
+            var $currentButton = $(ev.currentTarget);
+            var retData = this.model.toJSON();
+            var currentCards;
+            var cardData;
+        
+            if ($currentButton.text() === 'Accept') {
+                if (this.cardNestedView) {
+                    this.cardNestedView.acceptNewCards(function (err, newCards) {
+                        if (err) {
+                            return APP.errorHandler(err);
+                        }
+                        retData.contentCards = newCards;
+                        Backendless.Persistence.of(Models.Retailer).save(retData, new Backendless.Async(
+                            function (respons) {
+                                APP.successNotification('Successfully saved');
+                                self.trigger('retailerAction', {
+                                    isNew: false,
+                                    model: respons
+                                });
+                            },
+                            APP.errorHandler
+                        ));
+                    });
+                }
+            } else {
+                cardData = retData.contentCards;
+                currentCards = _.pluck(cardData, 'objectId');
+            
+                if (this.cardNestedView) {
+                    this.cardNestedView.undelegateEvents();
+                }
+            
+                this.cardNestedView = new CardView({currentCards: currentCards});
+            }
+        
+        },
+        
         letsEditStyleList: function (ev) {
             var self = this;
             var $currentButton = $(ev.currentTarget);
@@ -36,10 +77,10 @@ define([
             var currentStyles;
             var styleData;
             
-            if ($currentButton.text() === 'Accept'){
-                if (this.nestedView){
-                    this.nestedView.acceptNewStyles(function (err, newStyles) {
-                        if (err){
+            if ($currentButton.text() === 'Accept') {
+                if (this.styleNestedView) {
+                    this.styleNestedView.acceptNewStyles(function (err, newStyles) {
+                        if (err) {
                             return APP.errorHandler(err);
                         }
                         retData.trendingStyles = newStyles;
@@ -58,12 +99,12 @@ define([
             } else {
                 styleData = retData.trendingStyles;
                 currentStyles = _.pluck(styleData, 'objectId');
-    
-                if (this.nestedView){
-                    this.nestedView.undelegateEvents();
+                
+                if (this.styleNestedView) {
+                    this.styleNestedView.undelegateEvents();
                 }
-
-                this.nestedView = new StyleView({currentStyles : currentStyles});
+                
+                this.styleNestedView = new StyleView({currentStyles: currentStyles});
             }
             
         },
@@ -71,7 +112,7 @@ define([
         render: function () {
             var retData = this.model.toJSON();
             
-            this.$el.html(this.template({model : retData}));
+            this.$el.html(this.template({model: retData}));
             this.$el.find('#acordion').accordion({
                 collapsible: true,
                 heightStyle: "content"

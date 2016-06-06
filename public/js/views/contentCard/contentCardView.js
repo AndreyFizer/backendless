@@ -10,23 +10,23 @@ define([
     'Backbone',
     'Backendless',
     'models',
-    'text!templates/styleItem/styleItemTemp.html'
+    'text!templates/contentCard/contentCardTemp.html'
 
-], function ($, _, Backbone, Backendless, Models, StyleTemp) {
+], function ($, _, Backbone, Backendless, Models, CardTemp) {
     var StyleItemView;
     StyleItemView = Backbone.View.extend({
-        el: '#styleViewContainer',
+        el: '#cardViewContainer',
 
-        template: _.template(StyleTemp),
+        template: _.template(CardTemp),
 
         initialize: function (opts) {
-            var styleStorage = Backendless.Persistence.of(Models.Style);
-            var currentStyles = opts && opts.currentStyles;
+            var cardStorage = Backendless.Persistence.of(Models.Feed);
+            var currentCards = opts && opts.currentCards;
 
-            styleStorage.find(new Backendless.Async(
+            cardStorage.find(new Backendless.Async(
                 function (res) {
                     this.collection = res.data;
-                    this.render(currentStyles);
+                    this.render(currentCards);
                 },
                 APP.errorHandler,
                 this
@@ -35,7 +35,7 @@ define([
 
         events: {},
 
-        acceptNewStyles: function (cb) {
+        acceptNewCards: function (cb) {
             var checked = this.$el.find('input:checked');
             var aLength = checked.length;
             var checkedIds = [];
@@ -47,7 +47,7 @@ define([
 
             while (aLength--){
                 curEl = $(checked[aLength]);
-                checkedIds.push(curEl.closest('.styleItemRow').attr('id'));
+                checkedIds.push(curEl.closest('.cardItemRow').attr('id'));
             }
 
             var result = _.filter(this.collection, function (item) {
@@ -58,10 +58,10 @@ define([
         },
 
         render: function (cs) {
-            var styleData = this.collection;
+            var cardData = this.collection;
 
             this.$el.html(this.template({
-                coll   : styleData,
+                coll   : cardData,
                 current: cs
             }));
 
