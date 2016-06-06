@@ -13,7 +13,7 @@
         </thead>
         <tbody>
 <% for (var index = hasRetailers - 1; index >=0; index -= 1) { %>
-    <tr class="info">
+    <tr id="<%= collection[index].objectId%>" class="info usrRetItemRow">
         <td><img width="40px" height="40px" src="<%= collection[index].retailerLogo || 'styles/libs/images/def_user.png'%>" alt="img" /></td>
         <td><%= collection[index].retailerName %></td>
         <td><%= collection[index].website %></td>
