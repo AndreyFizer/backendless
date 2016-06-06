@@ -18,11 +18,12 @@ define([
             'login'          : 'loginRout',
             'registr'        : 'registrationRout',
             'users'          : 'usersRout',
-            'styles'   : 'styleItemsRout',
+            'styles'         : 'styleItemsRout',
+            'cards'          : 'contentCardsRout',
             'retailers(/:id)': 'retailerRout',
             '*any'           : 'anyRout'
         },
-
+        
         anyRout: function () {
             Backbone.history.navigate('users', {trigger: true})
         },
@@ -104,46 +105,85 @@ define([
                     APP.errorHandler
                 ));
                 
-
             } else {
                 Backbone.history.navigate('login', {trigger: true});
             }
         },
-
+    
+        contentCardsRout: function () {
+            var self = this;
+            var query = new Backendless.DataQuery();
+    
+            query.options = {pageSize : 50};
+    
+            if (APP.sessionData.get('authorized')) {
+        
+                Backendless.Persistence.of(Models.Feed).find(query, new Backendless.Async(
+                    function (list) {
+                        var dataList = list.data;
+                        var cardsCollection;
+                        var CardsCollection = Backbone.Collection.extend({
+                            model: Backbone.Model.extend({
+                                'idAttribute': 'objectId'
+                            })
+                        });
+    
+                        cardsCollection = new CardsCollection(dataList);
+                
+                        require(['views/retailers/retailersView'], function (View) {
+                            if (self.wrapperView) {
+                                self.wrapperView.undelegateEvents();
+                            }
+                    
+                            self.wrapperView = new View({
+                                collection: retailerCollection,
+                                currentId : argId
+                            });
+                        })
+                
+                    },
+                    APP.errorHandler
+                ));
+        
+            } else {
+                Backbone.history.navigate('login', {trigger: true});
+            }
+        },
+        
         styleItemsRout: function () {
             var self = this;
             var styleItemsStorage;
             var queryData;
-
+            
             if (APP.sessionData.get('authorized')) {
-                queryData         = new Backendless.DataQuery();
+                queryData = new Backendless.DataQuery();
                 queryData.options = {pageSize: 50};
-
+                
                 styleItemsStorage = Backendless.Persistence.of(Models.Style);
                 styleItemsStorage.find(queryData, new Backendless.Async(
                     function (list) {
-                        var dataList             = list.data;
+                        var dataList = list.data;
                         var StyleItemsCollection = Backbone.Collection.extend({
                             model: Backbone.Model.extend({
                                 'idAttribute': 'objectId'
                             })
                         });
-                        var styleItemsCollection  = new StyleItemsCollection(dataList);
-
+                        var styleItemsCollection = new StyleItemsCollection(dataList);
+                        
                         require(['views/styleItem/styleItemListView'], function (View) {
                             self.wrapperView ? self.wrapperView.undelegateEvents() : null;
                             self.wrapperView = new View({collection: styleItemsCollection});
                         })
-
+                        
                     },
                     APP.errorHandler
                 ));
-
+                
             } else {
                 Backbone.history.navigate('login', {trigger: true});
             }
         },
-
+        
         registrationRout: function () {
             if (!APP.sessionData.get('authorized')) {
                 require(['views/registration/registrationView'], function (View) {

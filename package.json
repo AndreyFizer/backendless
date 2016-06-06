@@ -3,7 +3,10 @@
   "version": "0.0.0",
   "dependencies": {},
   "devDependencies": {
-    "backendless-coderunner": "^1.6.0"
+    "backendless-coderunner": "^1.6.0",
+    "grunt": "^1.0.1",
+    "grunt-contrib-sass": "^1.0.0",
+    "grunt-notify": "^0.4.5"
   },
   "engines": {
     "node": ">=4.4.4"
