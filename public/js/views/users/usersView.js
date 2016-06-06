@@ -118,7 +118,7 @@ define([
             var retailers      = this.collection.get(userId).get('followedRetailers');
             var $retailersCont = this.$el.find('#userRetailers').html('');
 
-            // render first user's following retailers list
+            // On app loading render first user's following retailers list
             $retailersCont.append(this.retailersTemp({collection: retailers}));
         },
 
