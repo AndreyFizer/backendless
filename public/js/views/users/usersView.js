@@ -1,5 +1,5 @@
 /**
- * Created by andrey on 01.06.16.
+ * Created by Anton Smirnov on 06.06.16.
  */
 
 "use strict";
@@ -13,16 +13,16 @@ define([
     'views/users/userItemView',
     'text!templates/users/usersTemp.html',
     'text!templates/users/userItemTemp.html',
-    'text!templates/users/userFavConCardsTemp.html'
+    'text!templates/users/userRetailersTemp.html'
 
-], function ($, _, Backbone,  Backendless, Models, DialogView, MainTemp, UstItemTemp, UsrFavConCardsTemp) {
+], function ($, _, Backbone, Backendless, Models, DialogView, MainTemp, UserItemTemp, UserRetailersTemp) {
 
     return Backbone.View.extend({
         el: '#wrapper',
 
-        mainTemp    : _.template(MainTemp),
-        userItemTemp: _.template(UstItemTemp),
-        favCardsTemp: _.template(UsrFavConCardsTemp),
+        mainTemp     : _.template(MainTemp),
+        userItemTemp : _.template(UserItemTemp),
+        retailersTemp: _.template(UserRetailersTemp),
 
         initialize: function () {
             this.render();
@@ -30,16 +30,16 @@ define([
 
         events: {
             'click .usrRemoveBtn': 'letsRemoveUser',
-            'click .usrEditBtn' : 'letsEditUser',
-            'click .usrItem'    : 'letsShowUserCards'
+            'click .usrEditBtn'  : 'letsEditUser',
+            'click .usrItem'     : 'letsShowRetailers'
         },
 
         letsRemoveUser: function (ev) {
             ev.stopPropagation();
 
-            var self = this;
-            var $userRow = this.$el.find(ev.target).closest('.usrItem');
-            var userId = $userRow.attr('id');
+            var self      = this;
+            var $userRow  = this.$el.find(ev.target).closest('.usrItem');
+            var userId    = $userRow.attr('id');
             var userModel = this.collection.get(userId);
 
             if (confirm('Do you really want to remove user?')) {
@@ -70,26 +70,26 @@ define([
             var userId = this.$el.find(ev.target).closest('.usrItem').attr('id');
             var user   = this.collection.get(userId);
 
-            this.dialogView = new DialogView({ model: user });
+            this.dialogView = new DialogView({model: user});
             this.dialogView.on('userAction', this.userAction, this)
         },
 
-        letsShowUserCards: function (ev) {
+        letsShowRetailers: function (ev) {
             ev.stopPropagation();
 
             var userId = this.$el.find(ev.currentTarget).attr('id');
-            this.renderFavCards(userId)
+            this.renderRetailers(userId);
         },
 
         userAction: function (data) {
             var isNew    = data.isNew || false;
-            var userData = data.model || { };
+            var userData = data.model || {};
 
-            if (isNew){
-                this.collection.add(userData, { merge: true });
+            if (isNew) {
+                this.collection.add(userData, {merge: true});
             }
         },
-        
+
         renderUsers: function () {
             var usersData = this.collection.toJSON();
             var $userCont = this.$el.find('#userContainer').html('');
@@ -101,21 +101,25 @@ define([
                 $userCont.append(this.userItemTemp(user));
             }.bind(this));
 
-            this.renderFavCards(firstUserIdInList);
+            this.renderRetailers(firstUserIdInList);
         },
 
-        renderFavCards: function (userId) {
-            var userFavCards  = this.collection.get(userId).get('favoritedContentCards');
-            var $cardsContainer = this.$el.find('#favorContCardsContainer').html('');
+        renderRetailers: function (userId) {
+            var retailers      = this.collection.get(userId).get('followedRetailers');
+            var hasRetailers   = retailers.length;
+            var $retailerInfo  = this.$el.find('#retailersInfo');
+            var $retailersCont = this.$el.find('#userRetailers').html('');
 
-            // render first user's favorites content cards
-            $cardsContainer.append(this.favCardsTemp({ collection: userFavCards }));
+            hasRetailers ? $retailerInfo.show() : $retailerInfo.hide();
+
+            // render first user's following retailers list
+            $retailersCont.append(this.retailersTemp({collection: retailers, hasRetailers: retailers.length}));
         },
-        
+
         render: function () {
             this.$el.html(this.mainTemp());
             this.renderUsers();
-            
+
             return this;
         }
     });
