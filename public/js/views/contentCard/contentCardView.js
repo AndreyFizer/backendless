@@ -21,9 +21,12 @@ define([
 
         initialize: function (opts) {
             var cardStorage = Backendless.Persistence.of(Models.Feed);
+            var query = new Backendless.DataQuery();
             var currentCards = opts && opts.currentCards;
+    
+            query.options = {pageSize : 50};
 
-            cardStorage.find(new Backendless.Async(
+            cardStorage.find(query, new Backendless.Async(
                 function (res) {
                     this.collection = res.data;
                     this.render(currentCards);

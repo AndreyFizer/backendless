@@ -1,0 +1,22 @@
+<div class="inDialogBlock">
+    <div class="imgContainer">
+        <div>
+            <span>Main image</span>
+        </div>
+        <img id="contCardImg" src="<%= model.mainImage || 'images/def_user.png'%>" alt="Img">
+        <input type="file" id="contCardImgInpt" class="retInpmFile" hidden>
+        <label for="contCardImgInpt">
+            <div>Upload</div>
+        </label>
+    </div>
+</div>
+<div class="inDialogBlock">
+    <div id="editCardGender">
+        <input id="gm" type="radio" name="gender" value="m" checked><label for="gm">m</label>
+        <input id="gf" type="radio" name="gender" value="f" <%= model.gender==='f' ? 'checked' : '' %> ><label for="gf">f</label>
+    </div>
+    <label for="editCardTitle">Title</label>
+    <input type="text" id="editCardTitle" value="<%- model.offerTitle || ''%>">
+    <label for="editCardDescrip">Description</label>
+    <input type="text" id="editCardDescrip" value="<%- model.offerDescription || ''%>">
+</div>

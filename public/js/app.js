@@ -73,7 +73,10 @@ define([
         usr = Backendless.UserService.getCurrentUser();
 
         url = Backbone.history.fragment || 'users';
-        Backbone.history.fragment = '';
+        
+        if (Backbone.history.fragment){
+            Backbone.history.fragment = ''
+        }
 
         if (usr && usr.objectId) {
             APP.sessionData.set({

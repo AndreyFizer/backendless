@@ -2,17 +2,21 @@
     <table>
         <thead>
         <tr>
+            <td>Img</td>
             <td>Gender</td>
             <td>Title</td>
             <td>Description</td>
+            <td><button id="btnAddNewCard">Create</button></td>
         </tr>
         </thead>
         <tbody>
-        <%model.contentCards.forEach(function(contentCard){%>
+        <%coll.forEach(function(contentCard){%>
         <tr id="<%=contentCard.objectId%>">
+            <td><img width="60px" height="60px" src="<%=contentCard.mainImage || 'images/def_user.png'%>" alt="Img"></td>
             <td><%=contentCard.gender || ''%></td>
             <td><%=contentCard.offerTitle || ''%></td>
             <td><%=contentCard.offerDescription || ''%></td>
+            <td><button class="btnEditCard">Edit</button></td>
         </tr>
         <%})%>
         </tbody>

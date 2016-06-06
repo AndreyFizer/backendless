@@ -109,15 +109,15 @@ define([
                 Backbone.history.navigate('login', {trigger: true});
             }
         },
-    
+        
         contentCardsRout: function () {
             var self = this;
             var query = new Backendless.DataQuery();
-    
-            query.options = {pageSize : 50};
-    
+            
+            query.options = {pageSize: 50};
+            
             if (APP.sessionData.get('authorized')) {
-        
+                
                 Backendless.Persistence.of(Models.Feed).find(query, new Backendless.Async(
                     function (list) {
                         var dataList = list.data;
@@ -127,24 +127,22 @@ define([
                                 'idAttribute': 'objectId'
                             })
                         });
-    
+                        
                         cardsCollection = new CardsCollection(dataList);
-                
-                        require(['views/retailers/retailersView'], function (View) {
+                        
+                        require(['views/contentCard/contentCardListView'], function (View) {
                             if (self.wrapperView) {
                                 self.wrapperView.undelegateEvents();
                             }
-                    
+                            
                             self.wrapperView = new View({
-                                collection: retailerCollection,
-                                currentId : argId
-                            });
-                        })
-                
+                                collection: cardsCollection
+                            })
+                        });
                     },
                     APP.errorHandler
                 ));
-        
+                
             } else {
                 Backbone.history.navigate('login', {trigger: true});
             }

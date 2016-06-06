@@ -21,9 +21,12 @@ define([
 
         initialize: function (opts) {
             var styleStorage = Backendless.Persistence.of(Models.Style);
+            var query = new Backendless.DataQuery();
             var currentStyles = opts && opts.currentStyles;
+    
+            query.options = {pageSize : 50};
 
-            styleStorage.find(new Backendless.Async(
+            styleStorage.find(query, new Backendless.Async(
                 function (res) {
                     this.collection = res.data;
                     this.render(currentStyles);
