@@ -6,11 +6,11 @@ var APP = APP || {};
 
 require.config({
     shim : {
-        Underscore : {
+        Underscore: {
             exports: '_'
         },
 
-        jQuery : {
+        jQuery: {
             exports: '$'
         },
 
@@ -30,8 +30,8 @@ require.config({
             exports: 'toastr'
         },
 
-        jQueryUI   : {
-            deps   : ['jQuery']
+        jQueryUI: {
+            deps: ['jQuery']
         }
     },
     paths: {
@@ -58,8 +58,8 @@ require([
     var APP_ID = CONST.BL_CREDENTIALS.APPLICATION_ID;
     var SECRET_KEY = CONST.BL_CREDENTIALS.SECRET_KEY;
     var VERSION = CONST.BL_CREDENTIALS.VERSION;
-    
+
     Backendless.initApp(APP_ID, SECRET_KEY, VERSION);
-    
+
     app.init();
 });
