@@ -31,7 +31,17 @@ define([
         events: {
             'click .usrRemoveBtn': 'letsRemoveUser',
             'click .usrEditBtn'  : 'letsEditUser',
-            'click .usrItem'     : 'letsShowRetailers'
+            'click .usrItem'     : 'letsShowRetailers',
+            'click .usrRetItemRow'     : 'goToCurrentRetailer'
+
+        },
+
+        goToCurrentRetailer: function (ev) {
+            ev.stopPropagation();
+
+            var retId = $(ev.currentTarget).attr('id');
+
+            Backbone.history.navigate('retailers/' + retId, {trigger: true});
         },
 
         letsRemoveUser: function (ev) {
