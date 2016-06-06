@@ -1,14 +1,27 @@
 <%
-    var limit = collection.length;
-    if (limit) {
-        for (var index = limit - 1; index >=0; index -= 1) {
+    var hasRetailers = collection.length;
+    if (hasRetailers) {
 %>
+    <table>
+        <h2>Following retailers</h2>
+        <thead>
+        <tr id="retailersInfo">
+            <td>Logo</td>
+            <td>Brand</td>
+            <td>Website</td>
+        </tr>
+        </thead>
+        <tbody>
+<% for (var index = hasRetailers - 1; index >=0; index -= 1) { %>
     <tr class="info">
         <td><img width="40px" height="40px" src="<%= collection[index].retailerLogo || 'styles/libs/images/def_user.png'%>" alt="img" /></td>
         <td><%= collection[index].retailerName %></td>
         <td><%= collection[index].website %></td>
     </tr>
-<% }} else { %>
+<% } %>
+        </tbody>
+    </table>
+<% } else { %>
     <h1>Such user did not follow any retailer</h1>
 <% } %>
 

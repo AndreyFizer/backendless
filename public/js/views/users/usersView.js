@@ -106,14 +106,10 @@ define([
 
         renderRetailers: function (userId) {
             var retailers      = this.collection.get(userId).get('followedRetailers');
-            var hasRetailers   = retailers.length;
-            var $retailerInfo  = this.$el.find('#retailersInfo');
             var $retailersCont = this.$el.find('#userRetailers').html('');
 
-            hasRetailers ? $retailerInfo.show() : $retailerInfo.hide();
-
             // render first user's following retailers list
-            $retailersCont.append(this.retailersTemp({collection: retailers, hasRetailers: retailers.length}));
+            $retailersCont.append(this.retailersTemp({collection: retailers}));
         },
 
         render: function () {
