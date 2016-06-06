@@ -47,6 +47,7 @@ define([
             } else {
                 firstRetailer = this.$container.children() && this.$container.children().first() ? this.$container.children().first() : null;
                 firstId = firstRetailer ? firstRetailer.attr('id') : null;
+                Backbone.history.navigate('retailers');
             }
 
             this.$container.find('.active').removeClass('active');
