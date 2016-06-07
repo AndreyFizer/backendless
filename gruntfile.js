@@ -18,8 +18,11 @@ module.exports = function (grunt) {
         
         watch: {
             sass: {
-                files: 'public/sass/main.scss',
-                tasks: ['sass', 'notify']
+                files: 'public/sass/**/*.scss',
+                tasks: ['sass', 'notify'],
+                options: {
+                    debounceDelay: 1000
+                }
             }
         },
         
