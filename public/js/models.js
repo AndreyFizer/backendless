@@ -17,7 +17,7 @@ define(function () {
         this.firstName = args.firstName || '';
         this.deviceToken = args.deviceToken || '';
         this.favoritedProducts = args.favoritedProducts || '';
-        this.favoritedTrendingStyles = args.favoritedTrendingStyles || '';  //TODO define type
+        this.favoritedTrendingStyles = args.favoritedTrendingStyles || '';
 
         // relations props
         this.productsInCart = args.productsInCart || [];
@@ -40,7 +40,7 @@ define(function () {
 
         this.___class = 'FeedContentCard';
         this.gender = args.gender || '';
-        this.retailer = args.retailer || ''; //TODO define type
+        this.retailer = args.retailer || '';
         this.videoURL = args.videoURL || '';
         this.altImages = args.altImages || '';
         this.mainImage = args.mainImage || '';
@@ -64,26 +64,26 @@ define(function () {
         var args = a || {};
 
         this.___class = 'RetailerPage';
-        this.cc = args.cc || '';  // TODO define type
-        this.logo = args.logo || ''; // TODO define type
-        this.user = args.user || ''; // TODO define type
-        this.cards = args.cards || ''; // TODO define type
-        this.hasUser = args.hasUser || ''; // TODO define type
-        this.website = args.website || ''; // TODO define type
-        this.coverImage = args.coverImage || ''; // TODO define type
-        this.favorited = args.favorited || ''; // TODO define type
-        this.following = args.following || ''; // TODO define type
-        this.UserString = args.userString || ''; // TODO define type
+        this.cc = args.cc || '';
+        this.logo = args.logo || '';
+        this.user = args.user || '';
+        this.cards = args.cards || '';
+        this.hasUser = args.hasUser || '';
+        this.website = args.website || '';
+        this.coverImage = args.coverImage || '';
+        this.favorited = args.favorited || '';
+        this.following = args.following || '';
+        this.UserString = args.userString || '';
         this.retailerId = args.retailerId || '';
-        this.shoppingTip = args.shoppingTip || ''; // TODO define type
-        this.notification = args.notification || ''; // TODO define type
+        this.shoppingTip = args.shoppingTip || '';
+        this.notification = args.notification || '';
         this.retailerLogo = args.retailerLogo || '';
         this.retailerName = args.retailerName || '';
         this.shoppingTips = args.shoppingTips || '';
         this.retailerDarkLogo = args.retailerDarkLogo || '';
         this.retailerCoverPhoto = args.retailerCoverPhoto || '';
         this.retailerDescription = args.retailerDescription || '';
-        this.shopStyleRetailerID = args.shopStyleRetailerID || ''; // TODO define type
+        this.shopStyleRetailerID = args.shopStyleRetailerID || '';
         this.maleFeaturedProductIDs = args.maleFeaturedProductIDs || '';
         this.femaleFeaturedProductIDs = args.femaleFeaturedProductIDs || '';
 
