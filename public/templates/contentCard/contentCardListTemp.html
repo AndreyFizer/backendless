@@ -1,24 +1,26 @@
-<div class="fourthBox">
-    <table>
-        <thead>
-        <tr>
-            <td>Img</td>
-            <td>Gender</td>
-            <td>Title</td>
-            <td>Description</td>
-            <td><button id="btnAddNewCard">Create</button></td>
-        </tr>
-        </thead>
-        <tbody>
-        <%coll.forEach(function(contentCard){%>
-        <tr id="<%=contentCard.objectId%>">
-            <td><img width="60px" height="60px" src="<%=contentCard.mainImage || 'images/def_user.png'%>" alt="Img"></td>
-            <td><%=contentCard.gender || ''%></td>
-            <td><%=contentCard.offerTitle || ''%></td>
-            <td><%=contentCard.offerDescription || ''%></td>
-            <td><button class="btnEditCard">Edit</button></td>
-        </tr>
-        <%})%>
-        </tbody>
-    </table>
+<div class="contentView">
+    <div class="fourthBox col s-12">
+        <table>
+            <thead>
+            <tr>
+                <th>Img</th>
+                <th>Gender</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th class="align-center"><button id="btnAddNewCard" class="btn btnSmall btnBlue">Create</button></th>
+            </tr>
+            </thead>
+            <tbody>
+            <%coll.forEach(function(contentCard){%>
+            <tr id="<%=contentCard.objectId%>">
+                <td class="align-center"><img width="60px" height="60px" src="<%=contentCard.mainImage || 'images/def_user.png'%>" alt="Img"></td>
+                <td><%=contentCard.gender || ''%></td>
+                <td><%=contentCard.offerTitle || ''%></td>
+                <td><%=contentCard.offerDescription || ''%></td>
+                <td class="align-center"><button class="btnEditCard btn btnSmall btnSuccess">Edit</button></td>
+            </tr>
+            <%})%>
+            </tbody>
+        </table>
+    </div>
 </div>
