@@ -92,7 +92,7 @@ define([
                     .save(style, new Backendless.Async(
                         function success() {
                             // append new style to list of styleItems
-                            $('#styleListContainer').before(this.styleTemp(style));
+                            $('#styleListContainer').before(self.styleTemp(style));
 
                             // close dialog page
                             self.remove();
