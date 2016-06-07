@@ -48,7 +48,10 @@ $fonts: (
 }
 
 // Fonts family variables
-$baseFontFamily:  font("baseFont", "regular"), $serif !default;
+$lightFontFamily:  font("baseFont", "regular"), $serif !default;
+$baseFontFamily:  font("baseFont", "light"), $serif !default;
+$mediumFontFamily:  font("baseFont", "medium"), $serif !default;
+$semiBoldFontFamily:  font("baseFont", "semibold"), $serif !default;
 $extraFontFamily: font("baseFont", "bold"), $serif !default;
 
 

@@ -15,6 +15,15 @@ body {
 body {
   background: $baseBgColor;
   color: $baseTextColor;
+
+  #topBar{
+    display: none;
+  }
+  &.loggedState{
+    #topBar{
+      display: block;
+    }
+  }
 }
 
 a {

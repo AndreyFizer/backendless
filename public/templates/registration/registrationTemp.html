@@ -1,18 +1,33 @@
-<div>
-    <div id="regBox">
-        <label for="regEmail"></label>
-        <input type="email" id="regEmail" placeholder="Email...">
-        <label for="regFirstName"></label>
-        <input type="text" id="regFirstName" placeholder="First name...">
-        <label for="regLastName"></label>
-        <input type="text" id="regLastName" placeholder="Last name...">
-        <label for="regPass"></label>
-        <input type="password" id="regPass" placeholder="Password...">
-        <label for="regConfirm"></label>
-        <input type="password" id="regConfirm" placeholder="Confirm password...">
-    </div>
-    <div>
-        <input type="button" id="regBtnBack" value="back to login">
-        <input type="button" id="regBtn" value="register">
+<div class="container">
+    <div class="loginBlock col m-offset-4 m-4">
+        <div id="regBox" class="formBlock">
+            <h2 class="align-center">Register</h2>
+            <div class="formItem">
+                <label for="regEmail">Email</label>
+                <input type="email" id="regEmail" placeholder="Email...">
+            </div>
+            <div class="formItem">
+                <label for="regFirstName">First name</label>
+                <input type="text" id="regFirstName" placeholder="First name...">
+            </div>
+            <div class="formItem">
+                <label for="regLastName">Last name</label>
+                <input type="text" id="regLastName" placeholder="Last name...">
+            </div>
+            <div class="formItem">
+                <label for="regPass">Password</label>
+                <input type="password" id="regPass" placeholder="Password...">
+            </div>
+            <div class="formItem">
+                <label for="regConfirm">Confirm password</label>
+                <input type="password" id="regConfirm" placeholder="Confirm password...">
+            </div>
+            <div class="formRegister">
+                <a href="#" id="regBtnBack">Back to login</a>
+            </div>
+            <div class="formSubmit align-center">
+                <input type="button" id="regBtn" value="register" class="regBtn btn btnLarge btnSuccess">
+            </div>
+        </div>
     </div>
 </div>
