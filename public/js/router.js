@@ -168,7 +168,7 @@ define([
                         });
                         var styleItemsCollection = new StyleItemsCollection(dataList);
                         
-                        require(['views/styleItem/styleItemListView'], function (View) {
+                        require(['views/styleItem/styleListView'], function (View) {
                             self.wrapperView ? self.wrapperView.undelegateEvents() : null;
                             self.wrapperView = new View({collection: styleItemsCollection});
                         })

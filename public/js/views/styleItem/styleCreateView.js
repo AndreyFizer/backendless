@@ -10,13 +10,15 @@ define([
     'Backbone',
     'Backendless',
     'models',
-    'text!templates/styleItem/createStyleItemTemp.html'
+    'text!templates/styleItem/styleTemp.html',
+    'text!templates/styleItem/styleCreateTemp.html'
 
-], function ($, _, Backbone, Backendless, Models, MainTemp) {
+], function ($, _, Backbone, Backendless, Models, StyleTemp, DialogTemp) {
 
     return Backbone.View.extend({
 
-        template: _.template(MainTemp),
+        dialogTemp: _.template(DialogTemp),
+        styleTemp : _.template(StyleTemp),
 
         initialize: function () {
             this.render();
@@ -63,37 +65,36 @@ define([
             ev.stopPropagation();
 
             var self = this;
+
+            // get user data from dialog form
             var $dialogForm = this.$el.find('#styleItem-form');
-            var file = $dialogForm.find('#styleImage')[0].files[0];
             var description = $dialogForm.find('#description').val().trim();
             var gender = $dialogForm.find('input:checked').val().trim();
             var title = $dialogForm.find('#title').val().trim();
+            var file = $dialogForm.find('#styleImage')[0].files[0];
 
-            var StyleModel = Models.Style;
-            var style = new StyleModel();
-            style.gender = gender;
-            style.styleTitle = title;
+            // create instance of style and add props
+            var Style = Models.Style;
+            var style = new Style();
             style.styleDescription = description;
+            style.styleTitle = title;
+            style.gender = gender;
 
             // upload style image
-            this.letsUploadFile(file, 'styleImages', function (error, result) {
-                if (error) {
-                    return APP.errorHandler(error);
+            this.letsUploadFile(file, 'styleImages', function (err, result) {
+                if (err) {
+                    return APP.errorHandler(err);
                 }
-
-                // add file url to created style model
+                // add file url style model
                 result ? style.imageString = result.fileURL : style.imageString = '';
-
-                console.log(style);
-
                 // save created style in database
-                Backendless.Persistence.of(StyleModel)
+                Backendless.Persistence.of(Style)
                     .save(style, new Backendless.Async(
                         function success() {
                             // append new style to list of styleItems
-                            self.appendStyle(style);
+                            $('#styleListContainer').before(this.styleTemp(style));
 
-                            // close create style page
+                            // close dialog page
                             self.remove();
                             APP.successNotification('New style has successfully created!');
                         },
@@ -104,23 +105,10 @@ define([
             });
         },
 
-        appendStyle: function (style) {
-            var imgUrl = style.imageString || 'images/style_default.png';
-
-            $('#styleItemsList').append(
-                '<tr>' +
-                '<td><img width="60px" height="60px" src=' + imgUrl + '/></td>' +
-                '<td>' + style.gender + '</td>' +
-                '<td>' + style.styleTitle + '</td>' +
-                '<td>' + style.styleDescription + '</td>' +
-                '</tr>'
-            );
-        },
-
         render: function () {
             this.undelegateEvents();
 
-            this.$el.html(this.template()).dialog({
+            this.$el.html(this.dialogTemp()).dialog({
                 closeOnEscape: true,
                 resizable    : false,
                 draggable    : true,
