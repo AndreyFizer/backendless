@@ -1,34 +1,88 @@
 // Buttons style
 
 .btn {
-  padding: 8px 16px;
+  @include transition(background-color .2s ease-in-out);
+  @include no-select;
+  background-color: $white;
+  font-family: $semiBoldFontFamily;
+  color: $white;
+  cursor: pointer;
+  text-align: center;
+  text-transform: uppercase;
+  vertical-align: middle;
+  display: inline-block;
+  white-space: nowrap;
+  outline: 0;
+  border-radius: 4px;
+  border-width: 1px;
+  border-style: solid;
 
-  &-large{}
-
-  &-medium {}
-
-  &-small {}
-
-
-  &-main {
-    background-color: $btnMainBgColor;
-    border-color: $btnMainBorderColor;
-    color: $btnMainTextColor;
+  &Large {
+    width: 100px;
+    height: 40px;
+    @include rem(font-size, 14px);
+    @include rem(line-height, 38px);
   }
 
-  &-error {
-    background-color: $btnErrorBgColor;
-    border-color: $btnErrorBorderColor;
-    color: $btnErrorTextColor;
+  &Medium {
+    width: 110px;
+    height: 40px;
+    @include rem(font-size, 12px);
+    @include rem(line-height, 38px);
   }
-  &-info {
-    background-color: $btnInfoBgColor;
-    border-color: $btnInfoBorderColor;
-    color: $btnInfoTextColor;
+
+  &Small {
+    width: 100px;
+    height: 30px;
+    @include rem(font-size, 12px);
+    @include rem(line-height, 28px);
   }
-  &-success {
-    background-color: $btnSuccessBgColor;
-    border-color: $btnSuccessBorderColor;
-    color: $btnSuccessTextColor;
+
+  &Blue {
+    border-color: $btnBlueColor;
+    color: $btnBlueColor;
+
+    &:hover {
+      background-color: $btnBlueColor;
+
+      a{
+        color: $white;
+      }
+    }
+    a{
+      color: $btnBlueColor;
+      text-decoration: none;
+    }
+  }
+
+  &Error {
+    border-color: $btnRedColor;
+    color: $btnRedColor;
+
+    &:hover {
+      background-color: $btnRedColor;
+    }
+  }
+
+  &Success {
+    border-color: $btnGreenColor;
+    color: $btnGreenColor;
+
+    &:hover {
+      background-color: $btnGreenColor;
+    }
+  }
+
+  &Disable {
+    border-color: $btnGrayColor;
+    color: $btnGrayColor;
+
+    &:hover {
+      background-color: $btnGrayColor;
+    }
+  }
+
+  &:hover {
+    color: $white;
   }
 }
