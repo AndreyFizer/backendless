@@ -9,9 +9,9 @@
     </tr>
     </thead>
     <tbody>
-    <%coll.forEach(function(cardItem){%>
+    <%coll.forEach(function(cardItem, i){%>
     <tr class="cardItemRow" id="<%=cardItem.objectId%>">
-        <td class="align-center checkItem"><input id="checkRetail" type="checkbox" <%= (current.indexOf(cardItem.objectId) !== -1) ? 'checked' : ''%>><label for="checkRetail"></label></td>
+        <td class="align-center checkItem"><input id="checkRetail-<%= i%>" type="checkbox" <%= (current.indexOf(cardItem.objectId) !== -1) ? 'checked' : ''%>><label for="checkRetail-<%= i%>"></label></td>
         <td><%=cardItem.gender || ''%></td>
         <td><%=cardItem.offerTitle || ''%></td>
         <td><%=cardItem.offerDescription || ''%></td>
