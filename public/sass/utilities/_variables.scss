@@ -15,12 +15,12 @@ $baseFontName: (
     1: 'Lato Regular',
     2: 'Lato Bold',
     3: 'Lato Medium',
-    4: 'Lato Lihght',
+    4: 'Lato Light',
     5: 'Lato Semibold'
 );
 $baseFont: (
     'bold':     'Lato Bold',
-    'light':    'Lato Lihght',
+    'light':    'Lato Light',
     'medium':   'Lato Medium',
     'regular':  'Lato Regular',
     'semibold': 'Lato Semibold',
@@ -48,8 +48,8 @@ $fonts: (
 }
 
 // Fonts family variables
-$lightFontFamily:  font("baseFont", "regular"), $serif !default;
-$baseFontFamily:  font("baseFont", "light"), $serif !default;
+$lightFontFamily:  font("baseFont", "light"), $serif !default;
+$baseFontFamily:  font("baseFont", "regular"), $serif !default;
 $mediumFontFamily:  font("baseFont", "medium"), $serif !default;
 $semiBoldFontFamily:  font("baseFont", "semibold"), $serif !default;
 $extraFontFamily: font("baseFont", "bold"), $serif !default;

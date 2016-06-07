@@ -1,40 +1,35 @@
-<div>
-    <div>
-        <img src="<%= model.coverImage || 'images/def_user.png'%>" alt="">
-    </div>
-    <div>
+<div class="retailerBlock">
+    <div style="background-image: url('<%= model.coverImage || 'images/def_user.png'%>')">
         <img src="<%= model.retailerLogo || 'images/def_user.png'%>" alt="">
-        <div>
-            <span><%- model.retailerName || ''%></span>
-        </div>
+        <span class="userName"><%- model.retailerName || ''%></span>
     </div>
 </div>
-<div>
+<div class="accordionBlock">
     <div id="acordion">
         <h3>Style items relations</h3>
         <div id="styleViewContainer">
-            <button id="editStyleRelations">Edit relations</button>
+            <button id="editStyleRelations" class="btn btnSmall btnBlue">Edit relations</button>
 
             <% if (model.trendingStyles && model.trendingStyles.length){%>
 
             <table>
                 <thead>
-                <tr>
-                    <td></td>
-                    <td>Gender</td>
-                    <td>Title</td>
-                    <td>Description</td>
-                </tr>
+                    <tr>
+                        <th></th>
+                        <th>Gender</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                    </tr>
                 </thead>
                 <tbody>
-                <%model.trendingStyles.forEach(function(styleItem){%>
-                <tr id="<%=styleItem.objectId%>">
-                    <td></td>
-                    <td><%=styleItem.gender || ''%></td>
-                    <td><%=styleItem.styleTitle || ''%></td>
-                    <td><%=styleItem.styleDescription || ''%></td>
-                </tr>
-                <%})%>
+                    <%model.trendingStyles.forEach(function(styleItem){%>
+                    <tr id="<%=styleItem.objectId%>">
+                        <td></td>
+                        <td><%=styleItem.gender || ''%></td>
+                        <td><%=styleItem.styleTitle || ''%></td>
+                        <td><%=styleItem.styleDescription || ''%></td>
+                    </tr>
+                    <%})%>
                 </tbody>
             </table>
 
@@ -46,31 +41,31 @@
         </div>
         <h3>Content cards relations</h3>
         <div id="cardViewContainer">
-            <button id="editCardRelations">Edit relations</button>
+            <button id="editCardRelations" class="btn btnSmall btnBlue">Edit relations</button>
             <% if (model.contentCards && model.contentCards.length){%>
 
             <table>
                 <thead>
-                <tr>
-                    <td>Gender</td>
-                    <td>Title</td>
-                    <td>Description</td>
-                </tr>
+                    <tr>
+                        <th>Gender</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                    </tr>
                 </thead>
                 <tbody>
-                <%model.contentCards.forEach(function(contentCard){%>
-                <tr id="<%=contentCard.objectId%>">
-                    <td><%=contentCard.gender || ''%></td>
-                    <td><%=contentCard.offerTitle || ''%></td>
-                    <td><%=contentCard.offerDescription || ''%></td>
-                </tr>
-                <%})%>
+                    <%model.contentCards.forEach(function(contentCard){%>
+                    <tr id="<%=contentCard.objectId%>">
+                        <td><%=contentCard.gender || ''%></td>
+                        <td><%=contentCard.offerTitle || ''%></td>
+                        <td><%=contentCard.offerDescription || ''%></td>
+                    </tr>
+                    <%})%>
                 </tbody>
             </table>
 
             <%} else {%>
             <div>
-                <h4>Empty table</h4>
+                <h4 class="align-center">Empty table</h4>
             </div>
             <%}%>
         </div>

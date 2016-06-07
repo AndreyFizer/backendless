@@ -18,21 +18,24 @@
   border-style: solid;
 
   &Large {
-    width: 100px;
+    width: auto;
+    padding: 0 15px;
     height: 40px;
     @include rem(font-size, 14px);
     @include rem(line-height, 38px);
   }
 
   &Medium {
-    width: 110px;
+    width: auto;
+    padding: 0 10px;
     height: 40px;
     @include rem(font-size, 12px);
     @include rem(line-height, 38px);
   }
 
   &Small {
-    width: 100px;
+    width: auto;
+    padding: 0 10px;
     height: 30px;
     @include rem(font-size, 12px);
     @include rem(line-height, 28px);

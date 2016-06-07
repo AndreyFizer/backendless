@@ -1,7 +1,7 @@
 @import "colors/project_default";
 
 // Base ------------------
-$baseBgColor     : $white;
+$baseBgColor     : $white-1;
 $baseTextColor   : $gray-1;
 $baseLinkColor   : $blue-1;
 $baseBorderColor : $gray-1;
@@ -17,8 +17,15 @@ $inputFocusColor  :    $blue-1;
 
 // -----------------------
 
-// Navbar ----------------
-
+// Table ----------------
+$tableHeadlineColor       :    $gray-2;
+$tableHeadlineBgr         :    $gray-6;
+$tableBorderColor         :    $gray-5;
+$tableTextColor           :    $gray-4;
+$tableSortInactiveColor   :    $gray-5;
+$tableSortActiveColor     :    $gray-2;
+$tableActiveBgr           :    $white-1;
+$tableHoverBgr            :    $gray-7;
 // -----------------------
 
 // Footer ----------------
