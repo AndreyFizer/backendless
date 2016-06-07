@@ -9,15 +9,15 @@
   padding-right: 0.9375rem; }
 
 html,
-body {
+body, header .mainMenu {
   margin: 0;
   padding: 0; }
 
-.container:before, .container-full:before, .row:before, .clearfix:before, .container:after, .container-full:after, .row:after, .clearfix:after {
+.container:before, .container-full:before, .row:before, .clearfix:before, header:before, #wrapper:before, .container:after, .container-full:after, .row:after, .clearfix:after, header:after, #wrapper:after {
   content: " ";
   display: table; }
 
-.container:after, .container-full:after, .row:after, .clearfix:after {
+.container:after, .container-full:after, .row:after, .clearfix:after, header:after, #wrapper:after {
   clear: both; }
 
 html, body,
@@ -118,7 +118,7 @@ table {
   src: url("../fonts/lato/Lato-Medium.eot?#iefix") format("embedded-opentype"), url("../fonts/lato/Lato-Medium.woff2") format("woff2"), url("../fonts/lato/Lato-Medium.woff") format("woff"), url("../fonts/lato/Lato-Medium.ttf") format("truetype"); }
 
 @font-face {
-  font-family: "Lato Lihght";
+  font-family: "Lato Light";
   src: url("../fonts/lato/Lato-Light.eot");
   src: url("../fonts/lato/Lato-Light.eot?#iefix") format("embedded-opentype"), url("../fonts/lato/Lato-Light.woff2") format("woff2"), url("../fonts/lato/Lato-Light.woff") format("woff"), url("../fonts/lato/Lato-Light.ttf") format("truetype"); }
 
@@ -137,12 +137,8 @@ table {
     box-sizing: border-box; }
 
 body {
-  background: #ffffff;
+  background: #f1f1f1;
   color: #acacac; }
-  body #topBar {
-    display: none; }
-  body.loggedState #topBar {
-    display: block; }
 
 a {
   background-color: transparent;
@@ -201,7 +197,7 @@ html {
       font-size: 100%; } }
 
 body {
-  font-family: "Lato Lihght", sans-serif; }
+  font-family: "Lato Regular", sans-serif; }
 
 h1,
 h2,
@@ -782,21 +778,24 @@ h6 {
   border-width: 1px;
   border-style: solid; }
   .btnLarge {
-    width: 100px;
+    width: auto;
+    padding: 0 15px;
     height: 40px;
     font-size: 14px;
     font-size: 0.875rem;
     line-height: 38px;
     line-height: 2.375rem; }
   .btnMedium {
-    width: 110px;
+    width: auto;
+    padding: 0 10px;
     height: 40px;
     font-size: 12px;
     font-size: 0.75rem;
     line-height: 38px;
     line-height: 2.375rem; }
   .btnSmall {
-    width: 100px;
+    width: auto;
+    padding: 0 10px;
     height: 30px;
     font-size: 12px;
     font-size: 0.75rem;
@@ -903,6 +902,19 @@ textarea {
   .formCheck input:checked + label:after {
     right: -2px; }
 
+.checkItem input {
+  display: none; }
+
+.checkItem label {
+  display: inline-block;
+  box-shadow: inset 0 0 0 2px #ffffff;
+  border: 2px solid #36aee9;
+  width: 20px;
+  height: 20px; }
+
+.checkItem input:checked + label {
+  background: #36aee9; }
+
 .wrapper {
   position: relative;
   height: 100%;
@@ -957,37 +969,135 @@ textarea {
 .img-thumb {
   padding: 4px;
   border: 1px solid #acacac;
-  background-color: #ffffff;
+  background-color: #f1f1f1;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px; }
 
-.loginBlock {
-  background: #ffffff;
-  margin-top: 70px;
-  box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.15); }
-  .loginBlock .formBlock {
-    padding: 30px; }
-  .loginBlock h2 {
-    color: #4f5054;
-    font-size: 22px;
-    font-size: 1.375rem; }
-  .loginBlock p {
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%; }
+  table tbody {
+    max-width: 100%; }
+  table th, table td {
+    padding: 11px 10px;
+    text-align: left;
+    border: 1px solid #cccccc;
+    color: #868686;
+    border-bottom: none;
+    border-right: none;
     font-size: 14px;
-    font-size: 0.875rem;
-    line-height: 19px;
-    line-height: 1.1875rem; }
-  .loginBlock .formItem label {
-    display: block;
+    font-size: 0.875rem; }
+    table th:last-child, table td:last-child {
+      border-right: 1px solid #cccccc; }
+  table th {
+    background: #f8f8f8;
     color: #4f5054;
-    margin: 20px 0 10px; }
-  .loginBlock a {
-    display: inline-block;
-    margin: 10px 0 30px;
-    font-size: 12px;
-    font-size: 0.75rem; }
-  .loginBlock .createAdmin {
-    margin-top: 20px; }
+    font-weight: 400; }
+  table tr:last-child td {
+    border-bottom: 1px solid #cccccc; }
+  table tr:hover {
+    background: #f5f9fa; }
+  table tr.active {
+    background: #f1f1f1; }
+
+header {
+  height: 40px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  background: #ffffff; }
+  header .logoutLink {
+    float: right;
+    margin: 5px 10px 0 0; }
+    header .logoutLink a {
+      text-decoration: none; }
+  header .mainMenu {
+    list-style: none;
+    float: left; }
+    header .mainMenu li {
+      float: left; }
+      header .mainMenu li a {
+        display: block;
+        padding: 0 30px;
+        height: 40px;
+        background: #ffffff;
+        color: #4f5054;
+        text-decoration: none;
+        text-transform: uppercase;
+        line-height: 40px;
+        line-height: 2.5rem;
+        font-size: 14px;
+        font-size: 0.875rem;
+        -webkit-transition: all 0.3s ease-in-out;
+        -moz-transition: all 0.3s ease-in-out;
+        -ms-transition: all 0.3s ease-in-out;
+        -o-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out; }
+        header .mainMenu li a.active {
+          background: #489bd6;
+          color: #ffffff; }
+        header .mainMenu li a:hover {
+          background: #afd5f0;
+          color: #ffffff; }
+
+header {
+  display: none; }
+
+.loggedState header {
+  display: block; }
+
+#wrapper {
+  margin: 0 15px 15px;
+  padding: 15px 0;
+  box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.15);
+  background: #ffffff; }
+
+.retailerBlock div {
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: cover;
+  height: 300px;
+  margin-bottom: 20px;
+  position: relative; }
+  .retailerBlock div img {
+    position: absolute;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    left: 50%;
+    top: 50%;
+    margin: -50px 0 0 -50px;
+    background: #ffffff; }
+  .retailerBlock div span {
+    position: absolute;
+    top: 70px;
+    left: 50%;
+    font-family: "Lato Regular", sans-serif;
+    background: #f1f1f1;
+    padding: 5px 10px;
+    color: #4f5054;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    transform: translateX(-50%);
+    line-height: 20px;
+    line-height: 1.25rem;
+    font-size: 14px;
+    font-size: 0.875rem; }
+
+.accordionBlock .ui-accordion-header-active {
+  background: #afd5f0;
+  border-color: #afd5f0;
+  outline: none !important; }
+
+.accordionBlock #styleViewContainer,
+.accordionBlock #cardViewContainer {
+  padding: 15px; }
+  .accordionBlock #styleViewContainer button,
+  .accordionBlock #cardViewContainer button {
+    margin-bottom: 10px; }
 
 .hide {
   display: none !important; }

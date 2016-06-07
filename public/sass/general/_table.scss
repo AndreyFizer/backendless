@@ -1,1 +1,43 @@
 // Tables style
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+
+  tbody {
+    max-width: 100%;
+  }
+
+  th, td {
+    padding: 11px 10px;
+    text-align: left;
+    border: 1px solid $tableBorderColor;
+    color: $tableTextColor;
+    border-bottom: none;
+    border-right: none;
+    @include rem(font-size, 14px);
+
+    &:last-child{
+      border-right: 1px solid $tableBorderColor;
+    }
+  }
+
+  th {
+    background: $tableHeadlineBgr;
+    color: $tableHeadlineColor;
+    font-weight: 400;
+  }
+  tr {
+    &:last-child{
+      td{
+        border-bottom: 1px solid $tableBorderColor;
+      }
+    }
+    &:hover{
+      background: $tableHoverBgr;
+    }
+    &.active{
+      background: $tableActiveBgr;
+    }
+  }
+}

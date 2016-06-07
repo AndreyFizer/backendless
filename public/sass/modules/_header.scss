@@ -1,1 +1,55 @@
 // Header block style
+header {
+  @extend %clearfix;
+  height: 40px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 2px rgba($black, 0.15);
+  background: $white;
+
+  .logoutLink {
+    float: right;
+    margin: 5px 10px 0 0;
+
+    a{
+      text-decoration: none;
+    }
+  }
+
+  .mainMenu {
+    @extend %noIndent;
+    list-style: none;
+    float: left;
+
+    li {
+      float: left;
+
+      a {
+        display: block;
+        padding: 0 30px;
+        height: 40px;
+        background: $white;
+        color: $gray-2;
+        text-decoration: none;
+        text-transform: uppercase;
+        @include rem(line-height, 40px);
+        @include rem(font-size, 14px);
+        @include transition(all .3s ease-in-out);
+
+        &.active {
+          background: $colorBlue;
+          color: $white;
+        }
+        &:hover {
+          background: $blue-1;
+          color: $white;
+        }
+      }
+    }
+  }
+}
+header {
+  display: none;
+}
+.loggedState header {
+  display: block;
+}
