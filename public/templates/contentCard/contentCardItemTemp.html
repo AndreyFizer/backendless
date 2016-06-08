@@ -1,22 +1,22 @@
 <div class="inDialogBlock">
-    <div class="imgContainer">
-        <div>
-            <span>Main image</span>
-        </div>
+    <div class="imgContainer coverImage">
+        <h4>Main image</h4>
         <img id="contCardImg" src="<%= model.mainImage || 'images/def_user.png'%>" alt="Img">
         <input type="file" id="contCardImgInpt" class="retInpmFile" hidden>
-        <label for="contCardImgInpt">
-            <div>Upload</div>
-        </label>
+        <a class="btn btnSmall btnBlue"><label for="contCardImgInpt">Upload</label></a>
     </div>
 </div>
-<div class="inDialogBlock">
+<div class="inDialogBlock dialogFormBlock">
     <div id="editCardGender">
         <input id="gm" type="radio" name="gender" value="male" checked><label for="gm">m</label>
         <input id="gf" type="radio" name="gender" value="female" <%= model.gender==='female' ? 'checked' : '' %> ><label for="gf">f</label>
     </div>
-    <label for="editCardTitle">Title</label>
-    <input type="text" id="editCardTitle" value="<%- model.offerTitle || ''%>">
-    <label for="editCardDescrip">Description</label>
-    <input type="text" id="editCardDescrip" value="<%- model.offerDescription || ''%>">
+    <div class="formItem">
+        <label for="editCardTitle">Title</label>
+        <input type="text" id="editCardTitle" value="<%- model.offerTitle || ''%>">
+    </div>
+    <div class="formItem">
+        <label for="editCardDescrip">Description</label>
+        <input type="text" id="editCardDescrip" value="<%- model.offerDescription || ''%>">
+    </div>
 </div>

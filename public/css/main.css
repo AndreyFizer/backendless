@@ -1005,7 +1005,8 @@ textarea {
       display: block;
       margin: 0 auto; }
     .ui-dialog .smallImgContainer .imgContainer a {
-      margin-top: 20px; }
+      margin-top: 20px;
+      cursor: pointer; }
 
 .ui-dialog .coverImage {
   padding: 15px;
@@ -1014,7 +1015,8 @@ textarea {
     display: block;
     margin: 0 auto; }
   .ui-dialog .coverImage a {
-    margin-top: 20px; }
+    margin-top: 20px;
+    cursor: pointer; }
 
 table {
   border-collapse: separate;
