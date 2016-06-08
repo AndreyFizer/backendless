@@ -870,6 +870,9 @@ textarea {
 .formBlock {
   padding: 30px; }
 
+.dialogFormBlock {
+  padding: 10px 20px; }
+
 .formItem label {
   display: block;
   color: #4f5054;
