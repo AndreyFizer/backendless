@@ -83,20 +83,16 @@ define([
                 }.bind(this),
                 buttons      : [
                     {
-                        text : "Cancel",
-                        icons: {
-                            primary: "ui-icon-closethick"
-                        },
-                        click: function () {
+                        text   : "Cancel",
+                        'class': 'btn btnMedium btnError',
+                        click  : function () {
                             $(this).dialog("close");
                         }
                     },
                     {
-                        text : "Save",
-                        icons: {
-                            primary: "ui-icon-check"
-                        },
-                        click: function () {
+                        text   : "Save",
+                        'class': 'btn btnMedium btnSuccess',
+                        click  : function () {
                             this.letsSaveUser();
                         }.bind(this)
                     }
