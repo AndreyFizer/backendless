@@ -1,32 +1,27 @@
 <div class="inDialogBlock">
-    <div class="imgContainer">
-        <div>
-            <span>Logo</span>
+    <div class="smallImgContainer">
+        <div class="imgContainer">
+            <h3>Logo</h3>
+            <img id="retLogoImg" src="<%= model.logo || 'images/def_user.png'%>" alt="Img">
+            <input type="file" id="retLogoImgInpt" class="retInpmFile" hidden>
+            <label for="retLogoImgInpt">Upload</label>
         </div>
-        <img id="retLogoImg" src="<%= model.logo || 'images/def_user.png'%>" alt="Img">
-        <input type="file" id="retLogoImgInpt" class="retInpmFile" hidden>
-        <label for="retLogoImgInpt">Upload</label>
-    </div>
 
-    <div class="imgContainer">
-        <div>
-            <span>Retailer logo</span>
+        <div class="imgContainer">
+            <h3>Retailer logo</h3>
+            <img id="retRetLogoImg" src="<%= model.retailerLogo || 'images/def_user.png'%>" alt="Img">
+            <input type="file" id="retRetLogoImgInpt" class="retInpmFile" hidden>
+            <label for="retRetLogoImgInpt">Upload</label>
         </div>
-        <img id="retRetLogoImg" src="<%= model.retailerLogo || 'images/def_user.png'%>" alt="Img">
-        <input type="file" id="retRetLogoImgInpt" class="retInpmFile" hidden>
-        <label for="retRetLogoImgInpt">Upload</label>
     </div>
-
     <div class="imgContainer">
-        <div>
-            <span>Cover image</span>
-        </div>
+        <h3>Cover image</h3>
         <img id="retCoverImg" src="<%= model.coverImage || 'images/def_user.png'%>" alt="Img">
         <input type="file" id="retCoverImgInpt" class="retInpmFile" hidden>
         <label for="retCoverImgInpt">Upload</label>
     </div>
 </div>
-<div class="inDialogBlock formBlock">
+<div class="inDialogBlock dialogFormBlock">
     <div class="formItem">
         <label for="regName">Name</label>
         <input type="text" id="regName" value="<%- model.retailerName || ''%>">

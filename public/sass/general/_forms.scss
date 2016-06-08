@@ -30,8 +30,11 @@ textarea{
     border-color: $inputFocusColor;
   }
 }
-.formBlock {
+.formBlock{
   padding: 30px;
+}
+.dialogFormBlock{
+  padding: 10px 20px;
 }
 .formItem {
   label {
