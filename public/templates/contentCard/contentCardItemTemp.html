@@ -12,8 +12,8 @@
 </div>
 <div class="inDialogBlock">
     <div id="editCardGender">
-        <input id="gm" type="radio" name="gender" value="m" checked><label for="gm">m</label>
-        <input id="gf" type="radio" name="gender" value="f" <%= model.gender==='f' ? 'checked' : '' %> ><label for="gf">f</label>
+        <input id="gm" type="radio" name="gender" value="male" checked><label for="gm">m</label>
+        <input id="gf" type="radio" name="gender" value="female" <%= model.gender==='female' ? 'checked' : '' %> ><label for="gf">f</label>
     </div>
     <label for="editCardTitle">Title</label>
     <input type="text" id="editCardTitle" value="<%- model.offerTitle || ''%>">
