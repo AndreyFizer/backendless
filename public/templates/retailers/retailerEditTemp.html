@@ -5,9 +5,7 @@
         </div>
         <img id="retLogoImg" src="<%= model.logo || 'images/def_user.png'%>" alt="Img">
         <input type="file" id="retLogoImgInpt" class="retInpmFile" hidden>
-        <label for="retLogoImgInpt">
-            <div>Upload</div>
-        </label>
+        <label for="retLogoImgInpt">Upload</label>
     </div>
 
     <div class="imgContainer">
@@ -16,9 +14,7 @@
         </div>
         <img id="retRetLogoImg" src="<%= model.retailerLogo || 'images/def_user.png'%>" alt="Img">
         <input type="file" id="retRetLogoImgInpt" class="retInpmFile" hidden>
-        <label for="retRetLogoImgInpt">
-            <div>Upload</div>
-        </label>
+        <label for="retRetLogoImgInpt">Upload</label>
     </div>
 
     <div class="imgContainer">
@@ -27,16 +23,20 @@
         </div>
         <img id="retCoverImg" src="<%= model.coverImage || 'images/def_user.png'%>" alt="Img">
         <input type="file" id="retCoverImgInpt" class="retInpmFile" hidden>
-        <label for="retCoverImgInpt">
-            <div>Upload</div>
-        </label>
+        <label for="retCoverImgInpt">Upload</label>
     </div>
 </div>
-<div class="inDialogBlock">
-    <label for="regName">Name</label>
-    <input type="text" id="regName" value="<%- model.retailerName || ''%>">
-    <label for="regWeb">Website</label>
-    <input type="text" id="regWeb" value="<%- model.website || ''%>">
-    <label for="regDescrip">Description</label>
-    <input type="text" id="regDescrip" value="<%- model.retailerDescription || ''%>">
+<div class="inDialogBlock formBlock">
+    <div class="formItem">
+        <label for="regName">Name</label>
+        <input type="text" id="regName" value="<%- model.retailerName || ''%>">
+    </div>
+    <div class="formItem">
+        <label for="regWeb">Website</label>
+        <input type="text" id="regWeb" value="<%- model.website || ''%>">
+    </div>
+    <div class="formItem">
+        <label for="regDescrip">Description</label>
+        <input type="text" id="regDescrip" value="<%- model.retailerDescription || ''%>">
+    </div>
 </div>

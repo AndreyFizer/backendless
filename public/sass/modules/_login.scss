@@ -4,10 +4,6 @@
   margin-top: 70px;
   box-shadow: 0 1px 2px 1px rgba($black, .15);
 
-  .formBlock {
-    padding: 30px;
-  }
-
   h2 {
     color: $loginTextColor;
     @include rem(font-size, 22px);
@@ -18,13 +14,7 @@
     @include rem(line-height, 19px);
   }
 
-  .formItem {
-    label {
-      display: block;
-      color: $loginTextColor;
-      margin: 20px 0 10px;
-    }
-  }
+
   a {
     display: inline-block;
     margin: 10px 0 30px;
