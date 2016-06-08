@@ -867,6 +867,14 @@ textarea {
   textarea:hover, textarea:focus, textarea:active {
     border-color: #afd5f0; }
 
+.formBlock {
+  padding: 30px; }
+
+.formItem label {
+  display: block;
+  color: #4f5054;
+  margin: 20px 0 10px; }
+
 .formCheck {
   margin: 20px 0 10px; }
   .formCheck input {
@@ -976,6 +984,12 @@ textarea {
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px; }
+
+.ui-dialog .ui-widget-header {
+  background: #afd5f0;
+  border-color: #afd5f0;
+  outline: none !important;
+  color: #ffffff; }
 
 table {
   border-collapse: separate;
@@ -1100,8 +1114,6 @@ header {
   background: #ffffff;
   margin-top: 70px;
   box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.15); }
-  .loginBlock .formBlock {
-    padding: 30px; }
   .loginBlock h2 {
     color: #4f5054;
     font-size: 22px;
@@ -1111,10 +1123,6 @@ header {
     font-size: 0.875rem;
     line-height: 19px;
     line-height: 1.1875rem; }
-  .loginBlock .formItem label {
-    display: block;
-    color: #4f5054;
-    margin: 20px 0 10px; }
   .loginBlock a {
     display: inline-block;
     margin: 10px 0 30px;

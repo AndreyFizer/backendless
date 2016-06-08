@@ -1,1 +1,9 @@
 // Popup style
+.ui-dialog{
+  .ui-widget-header{
+    background: $blue-1;
+    border-color: $blue-1;
+    outline: none !important;
+    color: $white;
+  }
+}

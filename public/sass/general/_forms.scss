@@ -30,6 +30,16 @@ textarea{
     border-color: $inputFocusColor;
   }
 }
+.formBlock {
+  padding: 30px;
+}
+.formItem {
+  label {
+    display: block;
+    color: $loginTextColor;
+    margin: 20px 0 10px;
+  }
+}
 .formCheck{
   margin: 20px 0 10px;
 
