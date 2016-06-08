@@ -65,6 +65,10 @@ define([
             var title = $dialogForm.find('#title').val().trim();
             var file = $dialogForm.find('#styleImage')[0].files[0];
 
+            if (!title && !description){
+                return APP.warningNotification('Enter, please, title or description!');
+            }
+
             // create instance of style and add props
             var Style = Models.Style;
             var style = new Style();
