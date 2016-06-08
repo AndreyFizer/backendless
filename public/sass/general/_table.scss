@@ -25,7 +25,7 @@ table {
   th {
     background: $tableHeadlineBgr;
     color: $tableHeadlineColor;
-    font-weight: 400;
+    font-family: $extraFontFamily;
   }
   tr {
     &:last-child{
