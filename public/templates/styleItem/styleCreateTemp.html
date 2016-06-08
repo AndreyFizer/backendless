@@ -1,18 +1,21 @@
-<div id="styleItem-form">
+<div id="styleItem-form" class="dialogFormBlock">
     <!-- styleItems fields -->
-    <div class="styleImageContainer">
-        <img width="60px" height="60px" src="images/def_user.png" alt="img" /><br />
+    <div class="styleImageContainer coverImage">
+        <img src="images/def_user.png" alt="img" /><br />
         <input type="file" id="styleImage" class="styleInputFile" hidden>
-        <label for="styleImage">Upload</label>
-    </div><br />
-
-    <label>Female/Male</label><br />
-    <input type="radio" value="female" name="gender" checked="checked" class="text ui-widget-content ui-corner-all">
-    <input type="radio" value="male"   name="gender" class="text ui-widget-content ui-corner-all"><br />
-
-    <label>Title</label><br />
-    <input type="text" id="title" class="text ui-widget-content ui-corner-all" /><br />
-
-    <label>Description</label><br />
-    <input type="text" id="description" class="text ui-widget-content ui-corner-all"><br />
+        <a class="btn btnSmall btnBlue"><label for="styleImage">Upload</label></a>
+    </div>
+    <div class="formItem">
+        <label>Female/Male</label>
+        <input type="radio" value="female" name="gender" checked="checked" class="text ui-widget-content ui-corner-all">
+        <input type="radio" value="male"   name="gender" class="text ui-widget-content ui-corner-all">
+    </div>
+    <div class="formItem">
+        <label for="title">Title</label>
+        <input type="text" id="title" />
+    </div>
+    <div class="formItem">
+        <label for="description">Description</label>
+        <input type="text" id="description" />
+    </div>
 </div>
