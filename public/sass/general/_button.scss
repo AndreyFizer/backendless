@@ -3,19 +3,19 @@
 .btn {
   @include transition(background-color .2s ease-in-out);
   @include no-select;
-  background-color: $white;
-  font-family: $semiBoldFontFamily;
-  color: $white;
+  background-color: $white !important;
+  font-family: $semiBoldFontFamily !important;
+  color: $white !important;
   cursor: pointer;
-  text-align: center;
+  text-align: center !important;
   text-transform: uppercase;
-  vertical-align: middle;
-  display: inline-block;
-  white-space: nowrap;
+  vertical-align: middle !important;
+  display: inline-block !important;
+  white-space: nowrap !important;
   outline: 0;
-  border-radius: 4px;
-  border-width: 1px;
-  border-style: solid;
+  border-radius: 4px !important;
+  border-width: 1px !important;
+  border-style: solid !important;
 
   &Large {
     width: auto;
@@ -27,8 +27,8 @@
 
   &Medium {
     width: auto;
-    padding: 0 10px;
-    height: 40px;
+    padding: 0 10px !important;
+    height: 40px !important;
     @include rem(font-size, 12px);
     @include rem(line-height, 38px);
   }
@@ -42,37 +42,37 @@
   }
 
   &Blue {
-    border-color: $btnBlueColor;
-    color: $btnBlueColor;
+    border-color: $btnBlueColor !important;
+    color: $btnBlueColor !important;
 
     &:hover {
-      background-color: $btnBlueColor;
+      background-color: $btnBlueColor !important;
 
       a{
-        color: $white;
+        color: $white !important;
       }
     }
     a{
-      color: $btnBlueColor;
+      color: $btnBlueColor !important;
       text-decoration: none;
     }
   }
 
   &Error {
-    border-color: $btnRedColor;
-    color: $btnRedColor;
+    border-color: $btnRedColor !important;
+    color: $btnRedColor !important;
 
     &:hover {
-      background-color: $btnRedColor;
+      background-color: $btnRedColor !important;
     }
   }
 
   &Success {
-    border-color: $btnGreenColor;
-    color: $btnGreenColor;
+    border-color: $btnGreenColor !important;
+    color: $btnGreenColor !important;
 
     &:hover {
-      background-color: $btnGreenColor;
+      background-color: $btnGreenColor !important;
     }
   }
 
@@ -86,7 +86,7 @@
   }
 
   &:hover {
-    color: $white;
+    color: $white !important;
   }
 }
 #createBtn{
