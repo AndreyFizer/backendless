@@ -40,6 +40,10 @@ define([
             var cardGender = this.$el.find('#editCardGender>input:checked').val();
             var cardTitle = this.$el.find('#editCardTitle').val().trim();
             var cardDescription = this.$el.find('#editCardDescrip').val().trim();
+
+            if (!cardTitle && !cardDescription){
+                return APP.warningNotification('Enter, please, title or description!');
+            }
     
             this.letsUploadFile(cardImage, 'cardImage', function (error, result) {
                 if (error) {

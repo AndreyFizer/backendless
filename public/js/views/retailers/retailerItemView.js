@@ -37,16 +37,21 @@ define([
             var retailerStorage = Backendless.Persistence.of(Models.Retailer);
             var retailerData = this.addMode ? new Models.Retailer : this.model.toJSON();
 
+            var retName = this.$el.find('#regName').val().trim();
+            var retWebsite = this.$el.find('#regWeb').val().trim();
+            var retDescription = this.$el.find('#regDescrip').val().trim();
+
+            if (!retName || !retWebsite){
+                return APP.warningNotification('"Name" and "Website" are required fields');
+            }
+
             var $fileLogo = this.$el.find('#retLogoImgInpt');
             var $fileRetLogo = this.$el.find('#retRetLogoImgInpt');
             var $fileRetCover = this.$el.find('#retCoverImgInpt');
 
-            var fileLogo = $fileLogo[0] && $fileLogo[0].files[0]; // ? $fileLogo[0].files[0] : null;
-            var fileRetLogo = $fileRetLogo[0] && $fileRetLogo[0].files[0]; // ? $fileRetLogo[0].files[0] : null;
-            var fileRetCover = $fileRetCover[0] && $fileRetCover[0].files[0]; // ? $fileRetCover[0].files[0] : null;
-            var retName = this.$el.find('#regName').val().trim();
-            var retWebsite = this.$el.find('#regWeb').val().trim();
-            var retDescription = this.$el.find('#regDescrip').val().trim();
+            var fileLogo = $fileLogo[0] && $fileLogo[0].files[0];
+            var fileRetLogo = $fileRetLogo[0] && $fileRetLogo[0].files[0];
+            var fileRetCover = $fileRetCover[0] && $fileRetCover[0].files[0];
 
             async.parallel([
                 function (cb) {
