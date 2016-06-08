@@ -23,26 +23,15 @@ define([
             this.render();
         },
 
-        events: {
-            'click #cancelBtn': 'letsCloseDialog',
-            'click #saveBtn'  : 'letsSaveUser'
-        },
-
-        letsCloseDialog: function () {
-            this.remove();
-        },
-
-        letsSaveUser: function (ev) {
-            ev.stopPropagation();
-
-            var user     = this.model;
-            var userId   = user.get('objectId');
+        letsSaveUser: function () {
+            var user = this.model;
+            var userId = user.get('objectId');
             var $userRow = $('#' + userId);
 
             var $dialogCont = this.$el.find('#dialog-form');
-            var firstName   = $dialogCont.find('#firstName').val().trim();
-            var lastName    = $dialogCont.find('#lastName').val().trim();
-            var email       = $dialogCont.find('#email').val().trim();
+            var firstName = $dialogCont.find('#firstName').val().trim();
+            var lastName = $dialogCont.find('#lastName').val().trim();
+            var email = $dialogCont.find('#email').val().trim();
 
             // render user props
             $userRow.find('.userFirstName').text(firstName || '');
@@ -75,7 +64,7 @@ define([
         },
 
         render: function () {
-            var model    = this.model;
+            var model = this.model;
             var userData = model ? model.toJSON() : {};
 
             this.undelegateEvents();
@@ -91,7 +80,27 @@ define([
                 title        : 'User page',
                 close        : function () {
                     this.remove()
-                }.bind(this)
+                }.bind(this),
+                buttons      : [
+                    {
+                        text : "Cancel",
+                        icons: {
+                            primary: "ui-icon-closethick"
+                        },
+                        click: function () {
+                            $(this).dialog("close");
+                        }
+                    },
+                    {
+                        text : "Save",
+                        icons: {
+                            primary: "ui-icon-check"
+                        },
+                        click: function () {
+                            this.letsSaveUser();
+                        }.bind(this)
+                    }
+                ]
             });
 
             this.delegateEvents();

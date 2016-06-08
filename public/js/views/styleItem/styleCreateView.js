@@ -25,9 +25,7 @@ define([
         },
 
         events: {
-            'change #styleImage': 'letsPrepareForImageUpload',
-            'click #cancelBtn'  : 'letsCloseDialog',
-            'click #saveBtn'    : 'letsSaveStyleItem'
+            'change #styleImage': 'letsPrepareForImageUpload'
         },
 
         letsPrepareForImageUpload: function (ev) {
@@ -57,13 +55,7 @@ define([
             }
         },
 
-        letsCloseDialog: function () {
-            this.remove();
-        },
-
-        letsSaveStyleItem: function (ev) {
-            ev.stopPropagation();
-
+        letsSaveStyleItem: function () {
             var self = this;
 
             // get user data from dialog form
@@ -119,7 +111,27 @@ define([
                 title        : 'Style item page',
                 close        : function () {
                     this.remove()
-                }.bind(this)
+                }.bind(this),
+                buttons      : [
+                    {
+                        text : "Cancel",
+                        icons: {
+                            primary: "ui-icon-closethick"
+                        },
+                        click: function () {
+                            $(this).dialog("close");
+                        }
+                    },
+                    {
+                        text : "Save",
+                        icons: {
+                            primary: "ui-icon-check"
+                        },
+                        click: function () {
+                            this.letsSaveStyleItem();
+                        }.bind(this)
+                    }
+                ]
             });
 
             this.delegateEvents();
