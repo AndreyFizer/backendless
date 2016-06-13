@@ -113,7 +113,7 @@ define([
                 modal        : true,
                 resizable    : false,
                 draggable    : false,
-                width        : "600px",
+                width        : "500px",
                 close: function() {
                     this.remove();
                 }.bind(this),
