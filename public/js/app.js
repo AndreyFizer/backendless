@@ -12,25 +12,25 @@ define([
     'views/topBar/topBarView'
 
 ], function ($, Router, Backbone, messenger, Backendless, TopBarView) {
-    
+
     var initialize = function () {
         var usr;
         var url;
-        
+
         APP.sessionData = new Backbone.Model({
             authorized: false,
             userId    : null
         });
 
-        APP.successNotification = function(message) {
+        APP.successNotification = function (message) {
             messenger.alert('success', message);
         };
 
-        APP.warningNotification = function(message) {
+        APP.warningNotification = function (message) {
             messenger.alert('warning', message);
         };
 
-        APP.errorHandler = function(err) {
+        APP.errorHandler = function (err) {
             messenger.alert('error', err.message);
         };
 
@@ -47,7 +47,7 @@ define([
             } else {
                 folder = d ? d : folder;
                 onComplete = (typeof cb === 'function') ? cb : function (er, rs) {
-                    if (er){
+                    if (er) {
                         return console.log(er);
                     }
                     console.log(rs);
@@ -67,14 +67,14 @@ define([
                 onComplete(null, null)
             }
         };
-        
+
         Backbone.history.start({silent: true});
 
         usr = Backendless.UserService.getCurrentUser();
 
         url = Backbone.history.fragment || 'users';
-        
-        if (Backbone.history.fragment){
+
+        if (Backbone.history.fragment) {
             Backbone.history.fragment = ''
         }
 
@@ -95,7 +95,7 @@ define([
         }
 
     };
-    
+
     return {
         init: initialize
     };

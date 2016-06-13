@@ -1,4 +1,3 @@
-// Created by andrey on 12.05.16.
 
 'use strict';
 
@@ -17,6 +16,7 @@ require.config({
         Backendless: {
             exports: 'Backendless'
         },
+
         Backbone   : {
             deps   : [
                 'Underscore',
@@ -40,6 +40,7 @@ require.config({
         Underscore : '../js/libs/underscore/underscore',
         Backbone   : '../js/libs/backbone/backbone',
         Backendless: '../js/libs/backendless/libs/backendless',
+        Jcrop      : '../js/libs/Jcrop/js/Jcrop.min',
         async      : '../js/libs/async/dist/async.min',
         toastr     : '../js/libs/toastr/toastr',
         text       : '../js/libs/requirejs-text/text',
