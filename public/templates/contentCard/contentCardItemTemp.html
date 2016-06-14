@@ -1,15 +1,18 @@
 <div class="inDialogBlock">
     <div class="imgContainer coverImage">
         <h4>Main image</h4>
-        <img id="contCardImg" src="<%= model.mainImage || 'images/def_user.png'%>" alt="Img">
+        <div id="fileArrayList">
+            <img id="contCardImg" src="<%= model.mainImage || 'images/def_user.png'%>" alt="Img">
+        </div>
         <input type="file" id="contCardImgInpt" class="retInpmFile" hidden>
-        <a class="btn btnSmall btnBlue"><label for="contCardImgInpt">Upload</label></a>
+        <a class="btn btnSmall btnBlue"><label for="contCardImgInpt">Add</label></a>
     </div>
 </div>
 <div class="inDialogBlock dialogFormBlock">
     <div id="editCardGender">
-        <input id="gm" type="radio" name="gender" value="male" checked><label for="gm">m</label>
-        <input id="gf" type="radio" name="gender" value="female" <%= model.gender==='female' ? 'checked' : '' %> ><label for="gf">f</label>
+        <input id="gm" type="radio" name="gender" value="male" checked><label for="gm">male</label>
+        <input id="gf" type="radio" name="gender" value="female" <%= model.gender==='female' ? 'checked' : '' %> ><label for="gf">female</label>
+        <input id="gb" type="radio" name="gender" value="both" <%= model.gender==='both' ? 'checked' : '' %> ><label for="gb">both</label>
     </div>
     <div class="formItem">
         <label for="editCardTitle">Title</label>

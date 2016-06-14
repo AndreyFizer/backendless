@@ -107,14 +107,14 @@ define([
             this.undelegateEvents();
 
             this.$el.html(this.dialogTemp()).dialog({
-                closeOnEscape: true,
-                resizable    : false,
-                draggable    : true,
+                closeOnEscape: false,
                 autoOpen     : true,
-                modal        : true,
-                height       : 400,
-                width        : 320,
+                dialogClass  : "cardDialog",
                 title        : 'Style item page',
+                modal        : true,
+                resizable    : false,
+                draggable    : false,
+                width        : "500px",
                 close        : function () {
                     this.remove()
                 }.bind(this),
