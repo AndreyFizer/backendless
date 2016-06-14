@@ -16,22 +16,26 @@ define([
 ], function ($, _, Backbone, Backendless, MainTemp, Models, async) {
     var ItemView;
     ItemView = Backbone.View.extend({
-
-        template: _.template(MainTemp),
         
-        fileArray: [],
-
+        template       : _.template(MainTemp),
+        retailerItmTmpl: _.template("<li data-id='<%= retailer.objectId%>' class='retSelectItem'><%- retailer.retailerName || ''%></li>"),
+        
+        fileArray       : [],
+        selectCollection: null,
+        
         initialize: function () {
-
+            
             this.addMode = !this.model;
-
+            
             this.render();
         },
-
+        
         events: {
-            'change .retInpmFile': 'prepareForDrawing'
+            'change .retInpmFile' : 'prepareForDrawing',
+            'change .vidInpmFile' : 'prepareForVideo',
+            'click .retSelectItem': 'onSelectClick'
         },
-
+        
         letsSaveCard: function () {
             var self = this;
             var cardStorage = Backendless.Persistence.of(Models.Feed);
@@ -39,37 +43,62 @@ define([
             var cardGender = this.$el.find('#editCardGender>input:checked').val();
             var cardTitle = this.$el.find('#editCardTitle').val().trim();
             var cardDescription = this.$el.find('#editCardDescrip').val().trim();
-            var fileLength = this.fileArray.length;
-            var parallelArray = [];
-
-            if (!cardTitle && !cardDescription){
+            var $videoInput = this.$el.find('#contCardVideoInpt');
+            var videoFile = $videoInput[0] && $videoInput[0].files[0];
+            
+            if (!cardTitle && !cardDescription) {
                 return APP.warningNotification('Enter, please, title or description!');
             }
-
-            for (var i=0; i < fileLength; i +=1){
-                parallelArray.push(
-                    function (cb) {
-                        var file = self.fileArray[i];
-
-                        self.letsUploadFile(file, 'cardImage', cb)
-                    }
-                )
-            }
-
-            async.parallel(parallelArray, function (err, res) {
-                if (err){
+            
+            async.parallel({
+                videoUrl: function (pCb) {
+                    self.letsUploadFile(videoFile, 'cardVideo', function (err, res) {
+                        if (err) {
+                            return pCb(err);
+                        }
+                        
+                        pCb(null, res);
+                    })
+                },
+                
+                imgArray: function (pCb) {
+                    var urlArray = [];
+                    
+                    async.each(self.fileArray, function (file, eCb) {
+                        self.letsUploadFile(file, 'cardImage', function (err, res) {
+                            if (err) {
+                                return eCb(err);
+                            }
+                            
+                            urlArray.push(res.fileURL);
+                            eCb();
+                        })
+                    }, function (err) {
+                        if (err) {
+                            return pCb(err);
+                        }
+                        
+                        pCb(null, urlArray);
+                    })
+                }
+            }, function (err, resObj) {
+                if (err) {
                     return APP.errorHandler(err);
                 }
-
-                if (res.length){
-                    cardData.mainImage = res[0];
-                    cardData.altImages= res.join(',');
+                
+                if (resObj.imgArray && resObj.imgArray.length) {
+                    cardData.mainImage = resObj.imgArray[0];
+                    cardData.altImages = resObj.imgArray.join(',');
                 }
-
+                
+                if (resObj.videoUrl) {
+                    cardData.videoURL = resObj.videoUrl.fileURL;
+                }
+                
                 cardData.gender = cardGender;
                 cardData.offerTitle = cardTitle;
                 cardData.offerDescription = cardDescription;
-
+                
                 cardStorage.save(cardData, new Backendless.Async(
                     function () {
                         self.remove();
@@ -79,22 +108,35 @@ define([
                     },
                     APP.errorHandler
                 ))
-
             });
-
-            // this.letsUploadFile(cardImage, 'cardImage', function (error, result) {
-            //     if (error) {
-            //         return APP.errorHandler(error);
-            //     }
-            //
-            //
-            // });
-
+            
         },
-
+        
+        prepareForVideo: function (ev) {
+            ev.preventDefault();
+            
+            var self = this;
+            var $inputFile = $(ev.currentTarget);
+            var $container = $inputFile.closest('.vidContainer');
+            var file = $inputFile[0].files[0];
+            // var filesExt = ['jpg', 'png', 'jpeg', 'bmp', 'JPEG', 'JPG', 'PNG', 'BMP'];
+            // var parts = $inputFile.val().split('.');
+            var fr = new FileReader();
+            
+            fr.onload = function () {
+                var src = fr.result;
+                
+                APP.successNotification('Video successfully uploaded...')
+            };
+            
+            if (file) {
+                fr.readAsDataURL(file);
+            }
+        },
+        
         prepareForDrawing: function (ev) {
             ev.preventDefault();
-
+            
             var self = this;
             var $inputFile = $(ev.currentTarget);
             var $container = $inputFile.closest('.imgContainer');
@@ -102,36 +144,78 @@ define([
             var filesExt = ['jpg', 'png', 'jpeg', 'bmp', 'JPEG', 'JPG', 'PNG', 'BMP'];
             var parts = $inputFile.val().split('.');
             var fr;
-
+            
             if (filesExt.join().search(parts[parts.length - 1]) !== -1) {
                 self.fileArray.push(file);
+                self.$el.find('#linkText').text('Add image');
                 fr = new FileReader();
-
+                
                 fr.onload = function () {
                     var src = fr.result;
-
+                    
                     if (self.fileArray.length > 1) {
-                        $container.find('#fileArrayList').append('<img  src="' + src + '" alt="Img">');
+                        $container.find('#fileArrayList').append('<img src="' + src + '" alt="Img">');
                     } else {
-                        $container.find('#fileArrayList').html('<img  src="' + src + '" alt="Img">');
+                        $container.find('#fileArrayList').html('<img src="' + src + '" alt="Img">');
                     }
                 };
-
+                
                 if (file) {
                     fr.readAsDataURL(file);
                 }
-
+                
             } else {
-                alert('Invalid file type!');
+                APP.warningNotification('Invalid file type!');
             }
         },
-
+        
+        renderRetailerSelect: function () {
+            var self = this;
+            var $selectContainer = this.$el.find('#retSelectContainer');
+            var query = new Backendless.DataQuery();
+            var storageService = Backendless.Persistence.of(Models.Retailer)
+            
+            query.options = {relations: ['contentCards']};
+            
+            storageService.find(query, new Backendless.Async(
+                function (list) {
+                    var dataList = list.data;
+                    var l = dataList.length;
+                    var RetailerCollection = Backbone.Collection.extend({
+                        model: Backbone.Model.extend({
+                            'idAttribute': 'objectId'
+                        })
+                    });
+                    
+                    self.selectCollection = new RetailerCollection(dataList);
+                    
+                    while (l--) {
+                        $selectContainer.append(self.retailerItmTmpl({retailer: dataList[l]}));
+                    }
+                    
+                }
+            ));
+            
+        },
+        
+        onSelectClick: function (ev) {
+            ev.stopPropagation();
+            
+            var $selectedRow = $(ev.currentTarget);
+            var $container = this.$el.find('#retSelectContainer');
+            var currentId = $selectedRow.data('id');
+            var currentName = $selectedRow.text() || '';
+            
+            this.$el.find('#editCardRetailer').data("id", currentId).text(currentName);
+            
+        },
+        
         render: function () {
             var cardData = this.addMode ? {} : this.model;
-
+            
             this.undelegateEvents();
-
-            this.$el.html(this.template({model : cardData})).dialog({
+            
+            this.$el.html(this.template({model: cardData})).dialog({
                 closeOnEscape: false,
                 autoOpen     : true,
                 dialogClass  : "cardDialog",
@@ -140,32 +224,33 @@ define([
                 resizable    : false,
                 draggable    : false,
                 width        : "500px",
-                close: function() {
+                close        : function () {
                     this.remove();
                 }.bind(this),
-                buttons: [
+                buttons      : [
                     {
-                        text: "Cancel",
-                        'class' : 'btn btnMedium btnError',
-                        click: function() {
+                        text   : "Cancel",
+                        'class': 'btn btnMedium btnError',
+                        click  : function () {
                             $(this).dialog("close");
                         }
                     },
                     {
-                        text: "Save",
-                        'class' : 'btn btnMedium btnSuccess',
-                        click: function() {
+                        text   : "Save",
+                        'class': 'btn btnMedium btnSuccess',
+                        click  : function () {
                             this.letsSaveCard();
                         }.bind(this)
                     }
                 ]
             });
+            this.renderRetailerSelect();
             this.delegateEvents();
-
+            
             return this;
         }
-
+        
     });
-
+    
     return ItemView;
 });

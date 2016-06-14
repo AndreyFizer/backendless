@@ -9,7 +9,8 @@
     "backbone": "~1.1.0",
     "backendless": "^3.1.9",
     "toastr": "^2.1.2",
-    "async": "^1.5.2"
+    "async": "^1.5.2",
+    "Jcrop": "^2.0.4"
   },
   "devDependencies": {},
   "homepage": "https://github.com/AndreyFizer/backendless",
