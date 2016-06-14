@@ -17,19 +17,20 @@ define([
             var src;
 
             if (parseInt(coordinates.w, 10) > 0) {
-                img = $('.imageCrop')[0];
+                img = $('.styleImage')[0];
+
                 canvasCrop = document.createElement('canvas');
                 canvasCrop.height = 600;
                 canvasCrop.width = 600;
                 ctx = canvasCrop.getContext('2d');
                 ctx.drawImage(img, coordinates.x, coordinates.y, coordinates.w, coordinates.h, 0, 0, canvasCrop.width, canvasCrop.height);
-                src = canvasCrop.toDataURL('image/' + parts[1]);
+                src = canvasCrop.toDataURL('images/' + parts[1]);
             }
 
             callback(null, src);
         }
 
-        $('.imageCrop').Jcrop({
+        $('.styleImage').Jcrop({
             aspectRatio: aspectRatio,
             setSelect  : [0, 0, 200, 200],
             onSelect   : imgSelect,

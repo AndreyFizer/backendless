@@ -10,7 +10,7 @@ define([
     'Underscore',
     'Backendless',
     'models',
-    'views/styleItem/styleCreateView',
+    'views/styleItem/DialogView',
     'text!templates/styleItem/styleTemp.html',
     'text!templates/styleItem/styleListTemp.html'
 
@@ -35,7 +35,6 @@ define([
         letsCreateStyleItem: function (ev) {
             ev.stopPropagation();
 
-            // render create styleItem page
             this.dialogView = new DialogView();
         },
 
@@ -71,10 +70,9 @@ define([
 
             var $styleRow = $(ev.currentTarget).closest('tr');
             var styleId = $styleRow.data('id');
-            var styleModel = this.collection.get(styleId);
+            var style = this.collection.get(styleId).toJSON();
 
-            this.dialogView = new DialogView({model: styleModel});
-            this.dialogView.on('userAction', this.userAction, this);
+            this.dialogView = new DialogView({model: style});
         },
 
         renderStyles: function () {

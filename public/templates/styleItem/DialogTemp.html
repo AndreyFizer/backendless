@@ -1,7 +1,7 @@
 <div id="styleItem-form" class="dialogFormBlock">
     <!-- style imageString -->
     <div class="styleImageContainer coverImage">
-        <img src="images/def_user.png" alt="img" /><br />
+        <img src="images/def_user.png" alt="img" id="cropImage" /><br />
         <input type="file" id="styleImage" class="styleInputFile" hidden>
         <a class="btn btnSmall btnBlue"><label for="styleImage">Upload</label></a>
     </div>
@@ -26,12 +26,12 @@
     <!-- style title -->
     <div class="formItem">
         <label for="title">Title</label>
-        <input type="text" id="title" />
+        <input type="text" value="<%= model.styleTitle || '' %>" id="title" />
     </div>
 
     <!--style description -->
     <div class="formItem">
         <label for="description">Description</label>
-        <input type="text" id="description" />
+        <input type="text" value="<%= model.styleDescription || '' %>" id="description" />
     </div>
 </div>

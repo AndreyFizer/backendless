@@ -23,6 +23,8 @@ define([
             var styleStorage = Backendless.Persistence.of(Models.Style);
             var query = new Backendless.DataQuery();
             var currentStyles = opts && opts.currentStyles;
+
+            this.model.on('change', this.updateStyleData, this);
     
             query.options = {pageSize : 50};
 
@@ -36,7 +38,9 @@ define([
             ));
         },
 
-        events: {},
+        updateStyleData: function () {
+
+        },
 
         acceptNewStyles: function (cb) {
             var checked = this.$el.find('input:checked');
