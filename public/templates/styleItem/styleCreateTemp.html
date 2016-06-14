@@ -1,19 +1,35 @@
 <div id="styleItem-form" class="dialogFormBlock">
-    <!-- styleItems fields -->
+    <!-- style imageString -->
     <div class="styleImageContainer coverImage">
         <img src="images/def_user.png" alt="img" /><br />
         <input type="file" id="styleImage" class="styleInputFile" hidden>
         <a class="btn btnSmall btnBlue"><label for="styleImage">Upload</label></a>
     </div>
+
+    <!-- style gender -->
     <div id="editCardGender">
         <input id="male" type="radio" name="gender" value="male" checked><label for="male">male</label>
         <input id="female" type="radio" name="gender" value="female"><label for="female">female</label>
         <input id="unisex" type="radio" name="gender" value="unisex"><label for="unisex">unisex</label>
     </div>
+
+    <!-- retailers list in select -->
+    <div class="formItem">
+        <select class="retailers">
+            <%  var limit = retailers.length;
+            for (var index = 0; index < limit; index +=1) { %>
+            <option><%= retailers[index].retailerName %></option>
+            <% } %>
+        </select>
+    </div>
+
+    <!-- style title -->
     <div class="formItem">
         <label for="title">Title</label>
         <input type="text" id="title" />
     </div>
+
+    <!--style description -->
     <div class="formItem">
         <label for="description">Description</label>
         <input type="text" id="description" />

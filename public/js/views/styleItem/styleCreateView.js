@@ -57,84 +57,116 @@ define([
 
         letsSaveStyleItem: function () {
             var self = this;
+            var retailerStorage = Backendless.Persistence.of(Models.Retailer);
+            var query;
 
             // get user data from dialog form
             var $dialogForm = this.$el.find('#styleItem-form');
+            var retailerName = $dialogForm.find('.retailers').val().trim();
             var description = $dialogForm.find('#description').val().trim();
             var gender = $dialogForm.find('input:checked').val().trim();
             var title = $dialogForm.find('#title').val().trim();
             var file = $dialogForm.find('#styleImage')[0].files[0];
 
-            return APP.successNotification(gender);
-
-            if (!title && !description){
+            if (!title && !description) {
                 return APP.warningNotification('Enter, please, title or description!');
             }
 
-            // create instance of style and add props
-            var Style = Models.Style;
-            var style = new Style();
-            style.styleDescription = description;
-            style.styleTitle = title;
-            style.gender = gender;
+            // define query to get such retailer from db
+            query = new Backendless.DataQuery();
+            query.condition = "retailerName='" + retailerName + "'";
 
-            // upload style image
-            this.letsUploadFile(file, 'styleImages', function (err, result) {
-                if (err) {
-                    return APP.errorHandler(err);
-                }
-                // add file url style model
-                result ? style.imageString = result.fileURL : style.imageString = '';
-                // save created style in database
-                Backendless.Persistence.of(Style)
-                    .save(style, new Backendless.Async(
-                        function success() {
-                            // append new style to list of styleItems
-                            $('#styleListContainer').before(self.styleTemp(style));
+            // get retailer model by retailerName from database
+            retailerStorage.find(query, new Backendless.Async(
+                function success(response) {
+                    var retailer = response.data[0];
+                    var style;
 
-                            // close dialog page
-                            self.remove();
-                            APP.successNotification('New style has successfully created!');
-                        },
-                        function (err) {
-                            APP.errorHandler(err);
+                    // create style instance and add props
+                    style = new Models.Style();
+                    style.styleDescription = description;
+                    style.retailerString = retailerName;
+                    style.styleTitle = title;
+                    style.gender = gender;
+
+                    // upload style image
+                    self.letsUploadFile(file, 'styleImages', function (err, result) {
+                        if (err) {
+                            return APP.errorHandler(err);
                         }
-                    ));
-            });
+
+                        // define style imageString
+                        result ? style.imageString = result.fileURL : style.imageString = 'images/def_user.png';
+
+                        // add created style to retailer
+                        retailer.trendingStyles.push(style);
+
+                        // save created style and update retailer in database
+                        retailerStorage.save(retailer, new Backendless.Async(
+                            function success() {
+                                // append new style to list of styleItems
+                                $('#styleListContainer').before(self.styleTemp(style));
+
+                                // close dialog page
+                                self.remove();
+                                APP.successNotification('New style has successfully created!');
+                            },
+                            function (err) {
+                                APP.errorHandler(err);
+                            }
+                        ));
+                    });
+                },
+                function error(err) {
+                    APP.errorHandler(err);
+                }
+            ));
         },
 
         render: function () {
             this.undelegateEvents();
 
-            this.$el.html(this.dialogTemp()).dialog({
-                closeOnEscape: false,
-                autoOpen     : true,
-                dialogClass  : "cardDialog",
-                title        : 'Style item page',
-                modal        : true,
-                resizable    : false,
-                draggable    : false,
-                width        : "500px",
-                close        : function () {
-                    this.remove()
-                }.bind(this),
-                buttons      : [
-                    {
-                        text   : "Cancel",
-                        'class': 'btn btnMedium btnError',
-                        click  : function () {
-                            $(this).dialog("close");
-                        }
-                    },
-                    {
-                        text   : "Save",
-                        'class': 'btn btnMedium btnSuccess',
-                        click  : function () {
-                            this.letsSaveStyleItem();
-                        }.bind(this)
-                    }
-                ]
-            });
+            var self = this;
+
+            Backendless.Persistence.of(Models.Retailer).find(new Backendless.Async(
+                function success(response) {
+                    var retailers = response.data;
+
+                    self.$el.html(self.dialogTemp({retailers: retailers})).dialog({
+                        closeOnEscape: false,
+                        autoOpen     : true,
+                        dialogClass  : "cardDialog",
+                        title        : 'Style item page',
+                        modal        : true,
+                        resizable    : false,
+                        draggable    : false,
+                        width        : "500px",
+                        close        : function () {
+                            self.remove()
+                        },
+                        buttons      : [
+                            {
+                                text   : "Cancel",
+                                'class': 'btn btnMedium btnError',
+                                click  : function () {
+                                    self.remove();
+                                }
+                            },
+                            {
+                                text   : "Save",
+                                'class': 'btn btnMedium btnSuccess',
+                                click  : function () {
+                                    self.letsSaveStyleItem();
+                                }
+                            }
+                        ]
+                    });
+                },
+
+                function error(err) {
+                    APP.handleError(err);
+                }
+            ));
 
             this.delegateEvents();
 

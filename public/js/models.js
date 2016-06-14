@@ -54,10 +54,16 @@ define(function () {
 
         this.___class = 'StyleItem';
         this.gender = args.gender || '';
+        this.retailer = args.retailer || '';
+        this.mainImage = args.mainImage || '';
         this.styleTitle = args.styleTitle || '';
         this.imageString = args.imageString || '';
+        this.retailerLogo = args.retailerLogo || '';
+        this.retailerName = args.retailerName || '';
+        this.retailerString = args.retailerString || '';
         this.styleDescription = args.styleDescription || '';
-        this.feuredProductIDs = args.feuredProductIDs || '';
+        this.feuredProductIDs = args.featuredProductIDs || '';
+        this.featuredProductIDs = args.featuredProductIDs || '';
     }
 
     function RetailerPage(a) {
@@ -73,7 +79,7 @@ define(function () {
         this.coverImage = args.coverImage || '';
         this.favorited = args.favorited || '';
         this.following = args.following || '';
-        this.UserString = args.userString || '';
+        this.UserString = args.UserString || '';
         this.retailerId = args.retailerId || '';
         this.shoppingTip = args.shoppingTip || '';
         this.notification = args.notification || '';
