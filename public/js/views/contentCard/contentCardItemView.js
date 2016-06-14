@@ -10,13 +10,16 @@ define([
     'Backbone',
     'Backendless',
     'text!templates/contentCard/contentCardItemTemp.html',
-    'models'
+    'models',
+    'async'
 
-], function ($, _, Backbone, Backendless, MainTemp, Models) {
+], function ($, _, Backbone, Backendless, MainTemp, Models, async) {
     var ItemView;
     ItemView = Backbone.View.extend({
 
         template: _.template(MainTemp),
+        
+        fileArray: [],
 
         initialize: function () {
 
@@ -33,31 +36,40 @@ define([
             var self = this;
             var cardStorage = Backendless.Persistence.of(Models.Feed);
             var cardData = this.addMode ? new Models.Feed : this.model;
-
-            var $cardImage = this.$el.find('#contCardImgInpt');
-            var cardImage = $cardImage[0] && $cardImage[0].files[0];
-
             var cardGender = this.$el.find('#editCardGender>input:checked').val();
             var cardTitle = this.$el.find('#editCardTitle').val().trim();
             var cardDescription = this.$el.find('#editCardDescrip').val().trim();
+            var fileLength = this.fileArray.length;
+            var parallelArray = [];
 
             if (!cardTitle && !cardDescription){
                 return APP.warningNotification('Enter, please, title or description!');
             }
-    
-            this.letsUploadFile(cardImage, 'cardImage', function (error, result) {
-                if (error) {
-                    return APP.errorHandler(error);
+
+            for (var i=0; i < fileLength; i +=1){
+                parallelArray.push(
+                    function (cb) {
+                        var file = self.fileArray[i];
+
+                        self.letsUploadFile(file, 'cardImage', cb)
+                    }
+                )
+            }
+
+            async.parallel(parallelArray, function (err, res) {
+                if (err){
+                    return APP.errorHandler(err);
                 }
-    
-                if (result && result.fileURL) {
-                    cardData.mainImage = result.fileURL;
+
+                if (res.length){
+                    cardData.mainImage = res[0];
+                    cardData.altImages= res.join(',');
                 }
-    
+
                 cardData.gender = cardGender;
                 cardData.offerTitle = cardTitle;
                 cardData.offerDescription = cardDescription;
-    
+
                 cardStorage.save(cardData, new Backendless.Async(
                     function () {
                         self.remove();
@@ -67,7 +79,16 @@ define([
                     },
                     APP.errorHandler
                 ))
+
             });
+
+            // this.letsUploadFile(cardImage, 'cardImage', function (error, result) {
+            //     if (error) {
+            //         return APP.errorHandler(error);
+            //     }
+            //
+            //
+            // });
 
         },
 
@@ -83,12 +104,17 @@ define([
             var fr;
 
             if (filesExt.join().search(parts[parts.length - 1]) !== -1) {
+                self.fileArray.push(file);
                 fr = new FileReader();
 
                 fr.onload = function () {
                     var src = fr.result;
 
-                    $container.find('img').attr('src', src);
+                    if (self.fileArray.length > 1) {
+                        $container.find('#fileArrayList').append('<img  src="' + src + '" alt="Img">');
+                    } else {
+                        $container.find('#fileArrayList').html('<img  src="' + src + '" alt="Img">');
+                    }
                 };
 
                 if (file) {
