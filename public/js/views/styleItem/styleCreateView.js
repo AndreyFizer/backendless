@@ -65,6 +65,8 @@ define([
             var title = $dialogForm.find('#title').val().trim();
             var file = $dialogForm.find('#styleImage')[0].files[0];
 
+            return APP.successNotification(gender);
+
             if (!title && !description){
                 return APP.warningNotification('Enter, please, title or description!');
             }

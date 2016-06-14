@@ -1,6 +1,8 @@
-<tr class="styleItemRow">
+<tr class="styleItemRow" data-id="<%= objectId %>">
     <td class="align-center"><img width="60px" height="60px" src="<%= imageString || 'images/def_user.png' %>" alt="img" /></td>
     <td><%= gender || '' %></td>
     <td><%= styleTitle || ''%></td>
     <td><%= styleDescription || ''%></td>
+    <td class="align-center"><a class="styleEditBtn btn btnSmall btnSuccess">Edit</a></td>
+    <td class="align-center"><a class="styleDeleteBtn btn btnSmall btnError">Delete</a></td>
 </tr>

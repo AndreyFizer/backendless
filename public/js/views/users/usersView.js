@@ -29,10 +29,10 @@ define([
         },
 
         events: {
-            'click .usrRemoveBtn': 'letsRemoveUser',
-            'click .usrEditBtn'  : 'letsEditUser',
-            'click .usrItem'     : 'letsShowRetailers',
-            'click .usrRetItemRow'     : 'goToCurrentRetailer'
+            'click .usrRemoveBtn' : 'letsRemoveUser',
+            'click .usrEditBtn'   : 'letsEditUser',
+            'click .usrItem'      : 'letsShowRetailers',
+            'click .usrRetItemRow': 'goToCurrentRetailer'
 
         },
 
@@ -47,9 +47,9 @@ define([
         letsRemoveUser: function (ev) {
             ev.stopPropagation();
 
-            var self      = this;
-            var $userRow  = this.$el.find(ev.target).closest('.usrItem');
-            var userId    = $userRow.attr('id');
+            var self = this;
+            var $userRow = this.$el.find(ev.target).closest('.usrItem');
+            var userId = $userRow.attr('id');
             var userModel = this.collection.get(userId);
 
             if (confirm('Do you really want to remove user?')) {
@@ -78,7 +78,7 @@ define([
             ev.stopPropagation();
 
             var userId = this.$el.find(ev.target).closest('.usrItem').attr('id');
-            var user   = this.collection.get(userId);
+            var user = this.collection.get(userId);
 
             this.dialogView = new DialogView({model: user});
             this.dialogView.on('userAction', this.userAction, this);
@@ -92,7 +92,7 @@ define([
         },
 
         userAction: function (data) {
-            var isNew    = data.isNew || false;
+            var isNew = data.isNew || false;
             var userData = data.model || {};
 
             if (isNew) {
@@ -115,7 +115,7 @@ define([
         },
 
         renderRetailers: function (userId) {
-            var retailers      = this.collection.get(userId).get('followedRetailers');
+            var retailers = this.collection.get(userId).get('followedRetailers');
             var $retailersCont = this.$el.find('#userRetailers').html('');
 
             // On app loading render first user's following retailers list
