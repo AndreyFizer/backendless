@@ -1019,6 +1019,16 @@ textarea {
   .ui-dialog .coverImage a {
     margin-top: 20px;
     cursor: pointer; }
+  .ui-dialog .coverImage #fileArrayList {
+    width: 430px;
+    overflow-x: auto;
+    height: 120px;
+    white-space: nowrap; }
+    .ui-dialog .coverImage #fileArrayList img {
+      display: inline-block;
+      width: 100px;
+      height: 100px;
+      margin: 0 5px; }
 
 table {
   border-collapse: separate;
