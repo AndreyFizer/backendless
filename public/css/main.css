@@ -1048,6 +1048,14 @@ textarea {
       height: 100px;
       margin: 0 5px; }
 
+.ui-dialog .vidContainer {
+  text-align: center;
+  padding: 10px 0; }
+  .ui-dialog .vidContainer video {
+    display: inline-block; }
+  .ui-dialog .vidContainer a {
+    margin: 5px 0; }
+
 table {
   border-collapse: separate;
   border-spacing: 0;
