@@ -45,6 +45,7 @@ define([
             var cardDescription = this.$el.find('#editCardDescrip').val().trim();
             var $videoInput = this.$el.find('#contCardVideoInpt');
             var videoFile = $videoInput[0] && $videoInput[0].files[0];
+            var retailerId = this.$el.find('#editCardRetailer').data('id');
             
             if (!cardTitle && !cardDescription) {
                 return APP.warningNotification('Enter, please, title or description!');
@@ -64,14 +65,16 @@ define([
                 
                 imgArray: function (pCb) {
                     var urlArray = [];
+                    var i=0;
                     
                     async.each(self.fileArray, function (file, eCb) {
+                        var j = ++i;
                         self.letsUploadFile(file, 'cardImage', function (err, res) {
                             if (err) {
                                 return eCb(err);
                             }
                             
-                            urlArray.push(res.fileURL);
+                            urlArray[j-1] = res.fileURL;
                             eCb();
                         })
                     }, function (err) {
@@ -81,7 +84,11 @@ define([
                         
                         pCb(null, urlArray);
                     })
-                }
+                }/*,
+
+                removeCardFromRetailer: function (pCb) {
+                    self.model.
+                }*/
             }, function (err, resObj) {
                 APP.hideSpiner();
 
@@ -176,7 +183,7 @@ define([
             var self = this;
             var $selectContainer = this.$el.find('#retSelectContainer');
             var query = new Backendless.DataQuery();
-            var storageService = Backendless.Persistence.of(Models.Retailer)
+            var storageService = Backendless.Persistence.of(Models.Retailer);
             
             query.options = {relations: ['contentCards']};
             
