@@ -9,7 +9,7 @@
   padding-right: 0.9375rem; }
 
 html,
-body, header .mainMenu {
+body, .formItem ul, header .mainMenu {
   margin: 0;
   padding: 0; }
 
@@ -879,6 +879,24 @@ textarea {
   display: block;
   color: #4f5054;
   margin: 20px 0 10px; }
+
+.formItem a {
+  display: block;
+  color: #4f5054;
+  margin: 20px 0 10px;
+  text-decoration: none; }
+
+.formItem ul {
+  list-style: none;
+  width: 100%;
+  border: 1px solid #acacac; }
+  .formItem ul li {
+    height: 30px;
+    padding: 0 10px;
+    line-height: 30px;
+    background-color: #ffffff; }
+    .formItem ul li:nth-child(odd) {
+      background-color: #afd5f0; }
 
 .formCheck {
   margin: 20px 0 10px; }
