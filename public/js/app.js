@@ -35,10 +35,10 @@ define([
         };
         
         APP.showSpiner = function () {
-            $('#spinerContainer').show();    
+            $('#spinnerWrapper').show();
         };
         APP.hideSpiner = function () {
-            $('#spinerContainer').hide();
+            $('#spinnerWrapper').hide();
         };
         
 
