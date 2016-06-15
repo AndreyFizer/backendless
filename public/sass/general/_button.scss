@@ -88,6 +88,9 @@
   &:hover {
     color: $white !important;
   }
+  label{
+    cursor: pointer;
+  }
 }
 #createBtn{
   margin-bottom: 15px;
