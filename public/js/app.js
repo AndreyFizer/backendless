@@ -33,6 +33,14 @@ define([
         APP.errorHandler = function (err) {
             messenger.alert('error', err.message);
         };
+        
+        APP.showSpiner = function () {
+            $('#spinerContainer').show();    
+        };
+        APP.hideSpiner = function () {
+            $('#spinerContainer').hide();
+        };
+        
 
         new TopBarView;
         APP.router = new Router();

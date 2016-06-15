@@ -49,7 +49,8 @@ define([
             if (!cardTitle && !cardDescription) {
                 return APP.warningNotification('Enter, please, title or description!');
             }
-            
+
+            APP.showSpiner();
             async.parallel({
                 videoUrl: function (pCb) {
                     self.letsUploadFile(videoFile, 'cardVideo', function (err, res) {
@@ -82,6 +83,8 @@ define([
                     })
                 }
             }, function (err, resObj) {
+                APP.hideSpiner();
+
                 if (err) {
                     return APP.errorHandler(err);
                 }
