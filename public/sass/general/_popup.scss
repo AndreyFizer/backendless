@@ -37,5 +37,18 @@
       margin-top: 20px;
       cursor: pointer;
     }
+    #fileArrayList{
+      width: 430px;
+      overflow-x: auto;
+      height: 120px;
+      white-space: nowrap;
+
+      img{
+        display: inline-block;
+        width: 100px;
+        height: 100px;
+        margin: 0 5px;
+      }
+    }
   }
 }

@@ -42,6 +42,29 @@ textarea{
     color: $loginTextColor;
     margin: 20px 0 10px;
   }
+  a{
+    display: block;
+    color: $loginTextColor;
+    margin: 20px 0 10px;
+    text-decoration: none;
+  }
+  ul{
+    @extend %noIndent;
+    list-style: none;
+    width: 100%;
+    border: 1px solid $inputColor;
+
+    li{
+      height: 30px;
+      padding: 0 10px;
+      line-height: 30px;
+      background-color: $white;
+
+      &:nth-child(odd){
+        background-color: $blue-1;
+      }
+    }
+  }
 }
 .formCheck{
   margin: 20px 0 10px;

@@ -9,7 +9,7 @@
   padding-right: 0.9375rem; }
 
 html,
-body, header .mainMenu {
+body, .formItem ul, header .mainMenu {
   margin: 0;
   padding: 0; }
 
@@ -828,6 +828,8 @@ h6 {
       background-color: #cbdbe6; }
   .btn:hover {
     color: #ffffff !important; }
+  .btn label {
+    cursor: pointer; }
 
 #createBtn {
   margin-bottom: 15px; }
@@ -877,6 +879,24 @@ textarea {
   display: block;
   color: #4f5054;
   margin: 20px 0 10px; }
+
+.formItem a {
+  display: block;
+  color: #4f5054;
+  margin: 20px 0 10px;
+  text-decoration: none; }
+
+.formItem ul {
+  list-style: none;
+  width: 100%;
+  border: 1px solid #acacac; }
+  .formItem ul li {
+    height: 30px;
+    padding: 0 10px;
+    line-height: 30px;
+    background-color: #ffffff; }
+    .formItem ul li:nth-child(odd) {
+      background-color: #afd5f0; }
 
 .formCheck {
   margin: 20px 0 10px; }
@@ -1017,6 +1037,16 @@ textarea {
   .ui-dialog .coverImage a {
     margin-top: 20px;
     cursor: pointer; }
+  .ui-dialog .coverImage #fileArrayList {
+    width: 430px;
+    overflow-x: auto;
+    height: 120px;
+    white-space: nowrap; }
+    .ui-dialog .coverImage #fileArrayList img {
+      display: inline-block;
+      width: 100px;
+      height: 100px;
+      margin: 0 5px; }
 
 table {
   border-collapse: separate;
@@ -1045,6 +1075,45 @@ table {
     background: #f5f9fa; }
   table tr.active {
     background: #f1f1f1; }
+
+#spinnerWrapper {
+  background: rgba(0, 0, 0, 0.4);
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 113;
+  display: none; }
+  #spinnerWrapper .spinner {
+    animation: rotate 2s linear infinite;
+    z-index: 114;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -25px 0 0 -25px;
+    width: 50px;
+    height: 50px; }
+    #spinnerWrapper .spinner .path {
+      stroke: #afd5f0;
+      stroke-linecap: round;
+      animation: dash 1.5s ease-in-out infinite; }
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg); } }
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0; }
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35; }
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -124; } }
 
 header {
   height: 40px;
