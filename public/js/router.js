@@ -17,7 +17,7 @@ define([
         routes: {
             'login'          : 'loginRout',
             'registr'        : 'registrationRout',
-            'users'          : 'usersRout',
+            // 'users'          : 'usersRout',
             'styles'         : 'styleItemsRout',
             'cards'          : 'contentCardsRout',
             'retailers(/:id)': 'retailerRout',
@@ -25,7 +25,7 @@ define([
         },
 
         anyRout: function () {
-            Backbone.history.navigate('users', {trigger: true})
+            Backbone.history.navigate('retailers', {trigger: true})
         },
 
         retailerRout: function (argId) {
@@ -192,7 +192,7 @@ define([
                     this.wrapperView = new View;
                 }.bind(this))
             } else {
-                Backbone.history.navigate('users', {trigger: true})
+                Backbone.history.navigate('retailers', {trigger: true})
             }
 
         },
@@ -206,7 +206,7 @@ define([
                     this.wrapperView = new View;
                 }.bind(this))
             } else {
-                Backbone.history.navigate('users', {trigger: true})
+                Backbone.history.navigate('retailers', {trigger: true})
             }
         }
 

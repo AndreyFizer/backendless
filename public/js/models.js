@@ -41,6 +41,7 @@ define(function () {
         this.___class = 'FeedContentCard';
         this.gender = args.gender || '';
         this.retailer = args.retailer || '';
+        this.retailerString = args.retailerString || '';
         this.videoURL = args.videoURL || '';
         this.altImages = args.altImages || '';
         this.mainImage = args.mainImage || '';

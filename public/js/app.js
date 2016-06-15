@@ -80,7 +80,7 @@ define([
 
         usr = Backendless.UserService.getCurrentUser();
 
-        url = Backbone.history.fragment || 'users';
+        url = Backbone.history.fragment || 'retailers';
 
         if (Backbone.history.fragment) {
             Backbone.history.fragment = ''

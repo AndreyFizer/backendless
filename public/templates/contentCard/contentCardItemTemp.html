@@ -1,6 +1,6 @@
 <div class="inDialogBlock">
     <div class="imgContainer coverImage">
-        <h4>Main image</h4>
+        <h4>Alt images</h4>
         <div id="fileArrayList">
             <%if (model.altImages){%>
                 <% model.altImages.split(',').forEach(function(oneImage){%>
@@ -41,8 +41,8 @@
         <input type="text" id="editCardDescrip" value="<%- model.offerDescription || ''%>">
     </div>
     <div class="formItem">
-        <a id="editCardRetailer" data-id="" href="javascript:;">Without retailer</a>
-        <ul id="retSelectContainer">
+        <a id="editCardRetailer" data-id="" href="javascript:;"><%- model.retailerString || 'Without retailer'%></a>
+        <ul id="retSelectContainer" hidden>
             <!--retailer select list-->
         </ul>
     </div>

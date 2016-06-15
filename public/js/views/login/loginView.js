@@ -49,7 +49,7 @@ define([
                         userId    : usr.objectId
                     });
                     $('body').addClass('loggedState');
-                    Backbone.history.navigate('users', {trigger: true});
+                    Backbone.history.navigate('retailers', {trigger: true});
 
                 },function (err) {
                     APP.errorHandler(err);
