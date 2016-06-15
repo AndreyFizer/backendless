@@ -16,7 +16,7 @@
     <div class="vidContainer">
         <h4>Card video</h4>
         <div class="videoBox">
-            <video width="300" height="300" preload="none" controls="controls" poster="images/def_user.png">
+            <video width="300" height="300" preload="none" controls="controls" poster=<%= model.videoURL ? "images/def_video.png" : "images/no_video.png"%>>
                 <source src="<%= model.videoURL || ''%>" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
                 <source src="<%= model.videoURL || ''%>" type='video/ogg; codecs="theora, vorbis"'>
                 <source src="<%= model.videoURL || ''%>" type='video/webm; codecs="vp8, vorbis"'>

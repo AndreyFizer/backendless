@@ -229,7 +229,9 @@ define([
             fr.onload = function () {
                 var src = fr.result;
                 
-                APP.successNotification('Video successfully uploaded...')
+                APP.successNotification('Video successfully uploaded...');
+                $container.find('video').attr('poster','images/def_video.png');
+                
             };
             
             if (file) {
