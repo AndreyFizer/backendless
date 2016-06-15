@@ -51,4 +51,15 @@
       }
     }
   }
+  .vidContainer{
+    text-align: center;
+    padding: 10px 0;
+
+    video{
+      display: inline-block;
+    }
+    a{
+      margin: 5px 0;
+    }
+  }
 }

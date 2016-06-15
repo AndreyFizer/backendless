@@ -15,13 +15,15 @@
     </div>
     <div class="vidContainer">
         <h4>Card video</h4>
-        <video width="300" height="300" preload="none" controls="controls" poster="images/def_user.png">
-            <source src="<%= model.videoURL || ''%>" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
-            <source src="<%= model.videoURL || ''%>" type='video/ogg; codecs="theora, vorbis"'>
-            <source src="<%= model.videoURL || ''%>" type='video/webm; codecs="vp8, vorbis"'>
-            Тег video не поддерживается вашим браузером.
-            <a href="<%= model.videoURL || ''%>">Download video</a>.
-        </video>
+        <div class="videoBox">
+            <video width="300" height="300" preload="none" controls="controls" poster="images/def_user.png">
+                <source src="<%= model.videoURL || ''%>" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
+                <source src="<%= model.videoURL || ''%>" type='video/ogg; codecs="theora, vorbis"'>
+                <source src="<%= model.videoURL || ''%>" type='video/webm; codecs="vp8, vorbis"'>
+                Тег video не поддерживается вашим браузером.
+                <a href="<%= model.videoURL || ''%>">Download video</a>.
+            </video>
+        </div>
         <input type="file" id="contCardVideoInpt" class="vidInpmFile" hidden>
         <a class="btn btnSmall btnBlue"><label for="contCardVideoInpt">Upload</label></a>
     </div>
