@@ -11,9 +11,11 @@
             <%}%>
         </div>
         <input type="file" id="contCardImgInpt" class="retInpmFile" hidden>
-        <a><label class="btn btnSmall btnBlue" id="linkText" for="contCardImgInpt">Change</label></a>
+        <button class="btn btnSmall btnBlue imgAct" data-val="change" for="contCardImgInpt">Change images</button>
+        <button class="btn btnSmall btnBlue imgAct" data-val="add" for="contCardImgInpt">Add image</button>
+        <button class="btn btnSmall btnBlue imgAct" data-val="remove" for="contCardImgInpt">Remove all</button>
     </div>
-    <div class="vidContainer">
+    <!--<div class="vidContainer">
         <h4>Card video</h4>
         <div class="videoBox">
             <video width="300" height="300" preload="none" controls="controls" poster="<%= model.videoURL ? 'images/def_video.png' : 'images/no_video.png'%>">
@@ -24,25 +26,34 @@
                 <a href="<%= model.videoURL || ''%>">Download video</a>.
             </video>
         </div>
-        <input type="file" id="contCardVideoInpt" class="vidInpmFile" hidden>
-        <a><label for="contCardVideoInpt" class="btn btnSmall btnBlue">Upload</label></a>
-    </div>
+        <input type="text" id="contCardVideoInpt" class="vidInpmFile">
+    </div>-->
 </div>
 <div class="inDialogBlock dialogFormBlock">
     <div id="editCardGender">
+        <span>Gender:</span>
         <input id="gm" type="radio" name="gender" value="male" checked><label for="gm">male</label>
         <input id="gf" type="radio" name="gender" value="female" <%= model.gender==='female' ? 'checked' : '' %> ><label for="gf">female</label>
         <input id="gb" type="radio" name="gender" value="both" <%= model.gender==='both' ? 'checked' : '' %> ><label for="gb">both</label>
     </div>
     <div class="formItem">
-        <label for="editCardTitle">Title</label>
+        <label for="editCardTitle">Title:</label>
         <input type="text" id="editCardTitle" value="<%- model.offerTitle || ''%>">
     </div>
     <div class="formItem">
-        <label for="editCardDescrip">Description</label>
+        <label for="editCardDescrip">Description:</label>
         <input type="text" id="editCardDescrip" value="<%- model.offerDescription || ''%>">
     </div>
     <div class="formItem">
+        <label for="editCardVideoUrl">Video URL:</label>
+        <input type="text" id="editCardVideoUrl" value="<%- model.videoURL || ''%>">
+    </div>
+    <div class="formItem">
+        <label for="editCardProductId">Product id:</label>
+        <input type="text" id="editCardProductId" value="<%- model.featuredProductId || ''%>">
+    </div>
+    <div class="formItem">
+        <label for="editCardRetailer">Retailer:</label>
         <a id="editCardRetailer" data-id="" href="javascript:;"><%- model.retailerString || 'Without retailer'%></a>
         <ul id="retSelectContainer" hidden>
             <!--retailer select list-->

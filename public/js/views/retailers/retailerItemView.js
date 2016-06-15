@@ -40,6 +40,7 @@ define([
             var retName = this.$el.find('#regName').val().trim();
             var retWebsite = this.$el.find('#regWeb').val().trim();
             var retDescription = this.$el.find('#regDescrip').val().trim();
+            var retTips = this.$el.find('#regTips').val().trim();
 
             if (!retName || !retWebsite){
                 return APP.warningNotification('"Name" and "Website" are required fields');
@@ -53,6 +54,7 @@ define([
             var fileRetLogo = $fileRetLogo[0] && $fileRetLogo[0].files[0];
             var fileRetCover = $fileRetCover[0] && $fileRetCover[0].files[0];
 
+            APP.showSpiner();
             async.parallel([
                 function (cb) {
                     self.letsUploadFile(fileLogo, 'logos', cb)
@@ -68,6 +70,7 @@ define([
 
             ], function (error, result) {
                 if (error) {
+                    APP.hideSpiner();
                     return APP.errorHandler(error);
                 }
 
@@ -84,17 +87,22 @@ define([
                 retailerData.retailerName = retName;
                 retailerData.website = retWebsite;
                 retailerData.retailerDescription = retDescription;
+                retailerData.shoppingTips = retTips;
 
                 retailerStorage.save(retailerData, new Backendless.Async(
                     function (respons) {
                         self.remove();
+                        APP.hideSpiner();
                         APP.successNotification(self.addMode ? 'Retailer successfully created.' : 'Retailer successfully updated.');
                         self.trigger('retailerAction', {
                             isNew: self.addMode,
                             model: respons
                         });
                     },
-                    APP.errorHandler
+                    function (err) {
+                        APP.hideSpiner();
+                        APP.errorHandler(err);
+                    }
                 ))
             });
 
@@ -127,7 +135,7 @@ define([
                 }
 
             } else {
-                alert('Invalid file type!');
+                APP.warningNotification('Invalid file type!');
             }
         },
 

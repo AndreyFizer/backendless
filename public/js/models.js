@@ -83,7 +83,6 @@ define(function () {
         this.UserString = args.UserString || '';
         this.retailerId = args.retailerId || '';
         this.shoppingTip = args.shoppingTip || '';
-        this.notification = args.notification || '';
         this.retailerLogo = args.retailerLogo || '';
         this.retailerName = args.retailerName || '';
         this.shoppingTips = args.shoppingTips || '';
