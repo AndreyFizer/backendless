@@ -29,7 +29,6 @@ define([
 
         events: {
             'click #styleCreateBtn': 'letsCreateStyleItem',
-            'click .styleDeleteBtn': 'letsDeleteStyleItem',
             'click .styleEditBtn'  : 'letsEditStyleItem'
         },
 
@@ -37,32 +36,6 @@ define([
             ev.stopPropagation();
 
             this.dialogView = new DialogView();
-        },
-
-        letsDeleteStyleItem: function (ev) {
-            ev.preventDefault();
-
-            var self = this;
-            var $styleRow = $(ev.currentTarget).closest('tr');
-            var styleId = $styleRow.data('id');
-            var styleModel = this.collection.get(styleId);
-
-            if (confirm('Do you really wanna remove this style?')) {
-                // hide such style row
-                $styleRow.hide();
-
-                // remove style from db
-                this.styleStorage.remove(styleModel, new Backendless.Async(
-                    function success() {
-                        self.collection.remove(styleModel);
-                        $styleRow.remove();
-                    },
-                    function (err) {
-                        $styleRow.show();
-                        APP.errorHandler(err);
-                    }
-                ));
-            }
         },
 
         letsEditStyleItem: function (ev) {

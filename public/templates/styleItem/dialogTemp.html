@@ -4,6 +4,7 @@
         <img src="images/def_user.png" alt="img" id="cropImage" /><br />
         <input type="file" id="styleImage" class="styleInputFile" hidden>
         <a class="btn btnSmall btnBlue"><label for="styleImage">Upload</label></a>
+        <span id="cropBtn" hidden><a class="btn btnSmall btnBlue"><label for="styleImage">Crop</label></a></span>
     </div>
 
     <!-- style gender -->
@@ -15,7 +16,8 @@
 
     <!-- retailers list in select -->
     <div class="formItem">
-        <select class="retailers">
+        <label for="selectRetailers">Retailers</label>
+        <select class="retailers" id="selectRetailers">
             <%  var limit = retailers.length;
             for (var index = 0; index < limit; index +=1) { %>
             <option><%= retailers[index].retailerName %></option>
