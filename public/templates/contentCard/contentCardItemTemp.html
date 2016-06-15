@@ -2,10 +2,28 @@
     <div class="imgContainer coverImage">
         <h4>Main image</h4>
         <div id="fileArrayList">
-            <img id="contCardImg" src="<%= model.mainImage || 'images/def_user.png'%>" alt="Img">
+            <%if (model.altImages){%>
+                <% model.altImages.split(',').forEach(function(oneImage){%>
+                    <img src="<%= oneImage%>" alt="Img">
+                <%})%>
+            <%} else {%>
+                <img src="images/def_user.png" alt="Img">
+            <%}%>
         </div>
         <input type="file" id="contCardImgInpt" class="retInpmFile" hidden>
-        <a class="btn btnSmall btnBlue"><label for="contCardImgInpt">Add</label></a>
+        <a class="btn btnSmall btnBlue"><label id="linkText" for="contCardImgInpt">Change</label></a>
+    </div>
+    <div class="vidContainer">
+        <h4>Card video</h4>
+        <video width="300" height="300" preload="none" controls="controls" poster="images/def_user.png">
+            <source src="<%= model.videoURL || ''%>" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
+            <source src="<%= model.videoURL || ''%>" type='video/ogg; codecs="theora, vorbis"'>
+            <source src="<%= model.videoURL || ''%>" type='video/webm; codecs="vp8, vorbis"'>
+            Тег video не поддерживается вашим браузером.
+            <a href="<%= model.videoURL || ''%>">Download video</a>.
+        </video>
+        <input type="file" id="contCardVideoInpt" class="vidInpmFile" hidden>
+        <a class="btn btnSmall btnBlue"><label for="contCardVideoInpt">Upload</label></a>
     </div>
 </div>
 <div class="inDialogBlock dialogFormBlock">
@@ -21,5 +39,11 @@
     <div class="formItem">
         <label for="editCardDescrip">Description</label>
         <input type="text" id="editCardDescrip" value="<%- model.offerDescription || ''%>">
+    </div>
+    <div class="formItem">
+        <a id="editCardRetailer" data-id="" href="javascript:;">Without retailer</a>
+        <ul id="retSelectContainer">
+            <!--retailer select list-->
+        </ul>
     </div>
 </div>
