@@ -10,7 +10,7 @@ define([
     'Underscore',
     'Backendless',
     'models',
-    'views/styleItem/DialogView',
+    'views/styleItem/dialogView',
     'text!templates/styleItem/styleTemp.html',
     'text!templates/styleItem/styleListTemp.html'
 
@@ -23,6 +23,7 @@ define([
         styleListTemp: _.template(StyleListTemp),
 
         initialize: function () {
+            this.styleStorage = Backendless.Persistence.of(Models.Style);
             this.render();
         },
 
@@ -51,28 +52,34 @@ define([
                 $styleRow.hide();
 
                 // remove style from db
-                Backendless.Persistence.of(Models.Style)
-                    .remove(styleModel, new Backendless.Async(
-                        function success() {
-                            self.collection.remove(styleModel);
-                            $styleRow.remove();
-                        },
-                        function (err) {
-                            $styleRow.show();
-                            APP.errorHandler(err);
-                        }
-                    ));
+                this.styleStorage.remove(styleModel, new Backendless.Async(
+                    function success() {
+                        self.collection.remove(styleModel);
+                        $styleRow.remove();
+                    },
+                    function (err) {
+                        $styleRow.show();
+                        APP.errorHandler(err);
+                    }
+                ));
             }
         },
 
         letsEditStyleItem: function (ev) {
             ev.preventDefault();
 
+            var self = this;
             var $styleRow = $(ev.currentTarget).closest('tr');
             var styleId = $styleRow.data('id');
-            var style = this.collection.get(styleId).toJSON();
 
-            this.dialogView = new DialogView({model: style});
+            this.styleStorage.findById(styleId, new Backendless.Async(
+                function success(style) {
+                    self.dialogView = new DialogView({model: style});
+                },
+                function error(err) {
+                    APP.errorHandler(err);
+                }
+            ));
         },
 
         renderStyles: function () {
