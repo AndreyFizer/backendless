@@ -31,9 +31,10 @@ define([
         },
         
         events: {
-            'change .retInpmFile' : 'prepareForDrawing',
-            'change .vidInpmFile' : 'prepareForVideo',
-            'click .retSelectItem': 'onSelectClick'
+            'change .retInpmFile'    : 'prepareForDrawing',
+            'change .vidInpmFile'    : 'prepareForVideo',
+            'click .retSelectItem'   : 'onSelectClick',
+            'click #editCardRetailer': 'onSelectHeaderClick'
         },
         
         letsSaveCard: function () {
@@ -95,43 +96,45 @@ define([
                         targetId = self.model.retailer;
                         if (targetId) {
                             query = new Backendless.DataQuery();
-                            //query.condition = "objectId = " + targetId;
+
+                            query.condition = "objectId = '" + targetId + "'";
                             query.options = {relations: ['contentCards']};
 
-                            retailerStorage.findById(targetId, query, new Backendless.Async(
+                            retailerStorage.find(query, new Backendless.Async(
                                 function (retailer) {
-                                    var l = retailer.contentCards && retailer.contentCards.length;
+                                    var myData = retailer.data[0];
+                                    var l = myData.contentCards && myData.contentCards.length;
                                     var newArray = [];
 
                                     if (l) {
                                         for (var i = 0; i < l; i++) {
-                                            if (retailer.contentCards[i].objectId !== retailerId) {
-                                                newArray.push(retailer.contentCards[i]);
+                                            if (myData.contentCards[i].objectId !== self.model.objectId) {
+                                                newArray.push(myData.contentCards[i]);
                                             }
                                         }
                                     } else {
                                         return pCb(null, true);
                                     }
 
-                                    retailer.contentCards = newArray;
-                                    retailerStorage.save(retailer, new Backendless.Async(
+                                    myData.contentCards = newArray;
+                                    retailerStorage.save(myData, new Backendless.Async(
                                         function () {
                                             pCb(null, true)
                                         },
                                         function (err) {
-                                            return pCb(err);
+                                            pCb(err);
                                         }
                                     ))
                                 },
                                 function (err) {
-                                    return pCb(err);
+                                    pCb(err);
                                 }
                             ));
                         } else {
-                            return pCb(null, true);
+                            pCb(null, true);
                         }
                     } else {
-                        return pCb(null, true);
+                        pCb(null, true);
                     }
                 }
 
@@ -297,7 +300,14 @@ define([
             var currentName = $selectedRow.text() || '';
             
             this.$el.find('#editCardRetailer').data("id", currentId).text(currentName);
+            $container.slideUp();
             
+        },
+
+        onSelectHeaderClick: function (ev) {
+            ev.preventDefault();
+
+            this.$el.find('#retSelectContainer').slideToggle();
         },
         
         render: function () {
