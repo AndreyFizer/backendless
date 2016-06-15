@@ -39,6 +39,7 @@ define([
         letsSaveCard: function () {
             var self = this;
             var cardStorage = Backendless.Persistence.of(Models.Feed);
+            var retailerStorage = Backendless.Persistence.of(Models.Retailer);
             var cardData = this.addMode ? new Models.Feed : this.model;
             var cardGender = this.$el.find('#editCardGender>input:checked').val();
             var cardTitle = this.$el.find('#editCardTitle').val().trim();
@@ -65,7 +66,7 @@ define([
                 
                 imgArray: function (pCb) {
                     var urlArray = [];
-                    var i=0;
+                    var i = 0;
                     
                     async.each(self.fileArray, function (file, eCb) {
                         var j = ++i;
@@ -74,7 +75,7 @@ define([
                                 return eCb(err);
                             }
                             
-                            urlArray[j-1] = res.fileURL;
+                            urlArray[j - 1] = res.fileURL;
                             eCb();
                         })
                     }, function (err) {
@@ -84,40 +85,119 @@ define([
                         
                         pCb(null, urlArray);
                     })
-                }/*,
+                },
 
-                removeCardFromRetailer: function (pCb) {
-                    self.model.
-                }*/
+                removeFromRetailer: function (pCb) {
+                    var query;
+                    var targetId;
+
+                    if (retailerId) {
+                        targetId = self.model.retailer;
+                        if (targetId) {
+                            query = new Backendless.DataQuery();
+                            //query.condition = "objectId = " + targetId;
+                            query.options = {relations: ['contentCards']};
+
+                            retailerStorage.findById(targetId, query, new Backendless.Async(
+                                function (retailer) {
+                                    var l = retailer.contentCards && retailer.contentCards.length;
+                                    var newArray = [];
+
+                                    if (l) {
+                                        for (var i = 0; i < l; i++) {
+                                            if (retailer.contentCards[i].objectId !== retailerId) {
+                                                newArray.push(retailer.contentCards[i]);
+                                            }
+                                        }
+                                    } else {
+                                        return pCb(null, true);
+                                    }
+
+                                    retailer.contentCards = newArray;
+                                    retailerStorage.save(retailer, new Backendless.Async(
+                                        function () {
+                                            pCb(null, true)
+                                        },
+                                        function (err) {
+                                            return pCb(err);
+                                        }
+                                    ))
+                                },
+                                function (err) {
+                                    return pCb(err);
+                                }
+                            ));
+                        } else {
+                            return pCb(null, true);
+                        }
+                    } else {
+                        return pCb(null, true);
+                    }
+                }
+
             }, function (err, resObj) {
                 APP.hideSpiner();
+                var retailerItem;
+                var l;
+                var flag = true;
 
                 if (err) {
                     return APP.errorHandler(err);
                 }
-                
+
                 if (resObj.imgArray && resObj.imgArray.length) {
                     cardData.mainImage = resObj.imgArray[0];
                     cardData.altImages = resObj.imgArray.join(',');
                 }
-                
+
                 if (resObj.videoUrl) {
                     cardData.videoURL = resObj.videoUrl.fileURL;
                 }
-                
+
                 cardData.gender = cardGender;
                 cardData.offerTitle = cardTitle;
                 cardData.offerDescription = cardDescription;
-                
-                cardStorage.save(cardData, new Backendless.Async(
-                    function () {
-                        self.remove();
-                        APP.successNotification('Content card successfully saved.');
-                        // Backbone.history.navigate('cards', {trigger: true});
-                        window.location.reload();
-                    },
-                    APP.errorHandler
-                ))
+
+                if (retailerId) {
+                    retailerItem = self.selectCollection.get(retailerId).toJSON();
+
+                    cardData.retailer = retailerId;
+                    cardData.retailerString = retailerItem.retailerName;
+
+                    l = retailerItem.contentCards.length;
+
+                    for (var i = 0; i < l; i++) {
+                        if (retailerItem.contentCards[i].objectId === retailerId) {
+                            retailerItem.contentCards[i] = cardData;
+                            flag = false;
+                        }
+                    }
+
+                    if (flag) {
+                        retailerItem.contentCards.push(cardData);
+                    }
+
+                    retailerStorage.save(retailerItem, new Backendless.Async(
+                        function () {
+                            self.remove();
+                            APP.successNotification('Content card successfully saved.');
+                            // Backbone.history.navigate('cards', {trigger: true});
+                            window.location.reload();
+                        },
+                        APP.errorHandler
+                    ))
+                } else {
+                    cardStorage.save(cardData, new Backendless.Async(
+                        function () {
+                            self.remove();
+                            APP.successNotification('Content card successfully saved.');
+                            // Backbone.history.navigate('cards', {trigger: true});
+                            window.location.reload();
+                        },
+                        APP.errorHandler
+                    ))
+                }
+
             });
             
         },

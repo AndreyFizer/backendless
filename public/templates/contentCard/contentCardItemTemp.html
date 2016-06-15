@@ -41,7 +41,7 @@
         <input type="text" id="editCardDescrip" value="<%- model.offerDescription || ''%>">
     </div>
     <div class="formItem">
-        <a id="editCardRetailer" data-id="" href="javascript:;">Without retailer</a>
+        <a id="editCardRetailer" data-id="" href="javascript:;"><%- model.retailerString || 'Without retailer'%></a>
         <ul id="retSelectContainer">
             <!--retailer select list-->
         </ul>
