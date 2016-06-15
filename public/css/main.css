@@ -875,28 +875,30 @@ textarea {
 .dialogFormBlock {
   padding: 10px 20px; }
 
-.formItem label {
-  display: block;
-  color: #4f5054;
-  margin: 20px 0 10px; }
-
-.formItem a {
-  display: block;
-  color: #4f5054;
-  margin: 20px 0 10px;
-  text-decoration: none; }
-
-.formItem ul {
-  list-style: none;
-  width: 100%;
-  border: 1px solid #acacac; }
-  .formItem ul li {
-    height: 30px;
-    padding: 0 10px;
-    line-height: 30px;
-    background-color: #ffffff; }
-    .formItem ul li:nth-child(odd) {
-      background-color: #afd5f0; }
+.formItem {
+  position: relative; }
+  .formItem label {
+    display: block;
+    color: #4f5054;
+    margin: 20px 0 10px; }
+  .formItem a {
+    display: block;
+    color: #4f5054;
+    margin: 20px 0 10px;
+    text-decoration: none; }
+  .formItem ul {
+    list-style: none;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #acacac; }
+    .formItem ul li {
+      height: 30px;
+      padding: 0 10px;
+      line-height: 30px;
+      background-color: #ffffff; }
+      .formItem ul li:nth-child(odd) {
+        background-color: #afd5f0; }
 
 .formCheck {
   margin: 20px 0 10px; }
@@ -1047,6 +1049,14 @@ textarea {
       width: 100px;
       height: 100px;
       margin: 0 5px; }
+
+.ui-dialog .vidContainer {
+  text-align: center;
+  padding: 10px 0; }
+  .ui-dialog .vidContainer video {
+    display: inline-block; }
+  .ui-dialog .vidContainer a {
+    margin: 5px 0; }
 
 table {
   border-collapse: separate;

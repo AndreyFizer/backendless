@@ -92,7 +92,7 @@ define([
                     var query;
                     var targetId;
 
-                    if (retailerId) {
+                    if (!self.addMode && retailerId) {
                         targetId = self.model.retailer;
                         if (targetId) {
                             query = new Backendless.DataQuery();
@@ -139,7 +139,7 @@ define([
                 }
 
             }, function (err, resObj) {
-                APP.hideSpiner();
+                // APP.hideSpiner();
                 var retailerItem;
                 var l;
                 var flag = true;
@@ -167,12 +167,14 @@ define([
                     cardData.retailer = retailerId;
                     cardData.retailerString = retailerItem.retailerName;
 
-                    l = retailerItem.contentCards.length;
+                    if (!self.addMode) {
+                        l = retailerItem.contentCards.length;
 
-                    for (var i = 0; i < l; i++) {
-                        if (retailerItem.contentCards[i].objectId === retailerId) {
-                            retailerItem.contentCards[i] = cardData;
-                            flag = false;
+                        for (var i = 0; i < l; i++) {
+                            if (retailerItem.contentCards[i].objectId === self.model.objectId) {
+                                retailerItem.contentCards[i] = cardData;
+                                flag = false;
+                            }
                         }
                     }
 
@@ -185,9 +187,13 @@ define([
                             self.remove();
                             APP.successNotification('Content card successfully saved.');
                             // Backbone.history.navigate('cards', {trigger: true});
+                            APP.hideSpiner();
                             window.location.reload();
                         },
-                        APP.errorHandler
+                        function (err) {
+                            APP.hideSpiner();
+                            APP.errorHandler(err);
+                        }
                     ))
                 } else {
                     cardStorage.save(cardData, new Backendless.Async(
@@ -195,9 +201,13 @@ define([
                             self.remove();
                             APP.successNotification('Content card successfully saved.');
                             // Backbone.history.navigate('cards', {trigger: true});
+                            APP.hideSpiner();
                             window.location.reload();
                         },
-                        APP.errorHandler
+                        function (err) {
+                            APP.hideSpiner();
+                            APP.errorHandler(err);
+                        }
                     ))
                 }
 
@@ -219,7 +229,9 @@ define([
             fr.onload = function () {
                 var src = fr.result;
                 
-                APP.successNotification('Video successfully uploaded...')
+                APP.successNotification('Video successfully uploaded...');
+                $container.find('video').attr('poster','images/def_video.png');
+                
             };
             
             if (file) {

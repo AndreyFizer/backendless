@@ -37,6 +37,8 @@ textarea{
   padding: 10px 20px;
 }
 .formItem {
+  position: relative;
+
   label {
     display: block;
     color: $loginTextColor;
@@ -52,6 +54,8 @@ textarea{
     @extend %noIndent;
     list-style: none;
     width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
     border: 1px solid $inputColor;
 
     li{
