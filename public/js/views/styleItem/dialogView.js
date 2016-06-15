@@ -57,42 +57,7 @@ define([
                 fr = new FileReader();
 
                 fr.onload = function () {
-                    var src = fr.result;
-                    var $imgContainer = $container.find('img');
-
-                    $imgContainer.attr('src', src);
-
-                    // show crop button
-                    $('#cropBtn').show();
-
-                    function imgSelect(coordinates) {
-                        var canvasCrop;
-                        var ctx;
-                        var img;
-                        var src;
-
-                        if (parseInt(coordinates.w, 10) > 0) {
-                            img = $('#cropImage')[0];
-
-                            canvasCrop = document.createElement('canvas');
-                            canvasCrop.height = 200;
-                            canvasCrop.width = 200;
-                            ctx = canvasCrop.getContext('2d');
-                            ctx.drawImage(img, coordinates.x, coordinates.y, coordinates.w, coordinates.h, 0, 0, canvasCrop.width, canvasCrop.height);
-                            src = canvasCrop.toDataURL('images/' + parts[1]);
-
-                        }
-                    }
-
-                    $imgContainer.Jcrop({
-                        aspectRatio: 1,
-                        setSelect  : [0, 0, 100, 200],
-                        onSelect   : imgSelect,
-                        onChange   : imgSelect,
-                        boxWidth   : 550,
-                        boxHeight  : 550,
-                        minSize    : [50, 50]
-                    });
+                    $container.find('img').attr('src', fr.result);
                 };
 
                 if (file) {
