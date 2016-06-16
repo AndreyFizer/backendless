@@ -18,8 +18,8 @@ define([
 
     return Backbone.View.extend({
 
-        dialogTemp      : _.template(DialogTemp),
-        styleTemp       : _.template(StyleTemp),
+        dialogTemp: _.template(DialogTemp),
+        styleTemp : _.template(StyleTemp),
 
         initialize: function () {
             this.retailerStorage = Backendless.Persistence.of(Models.Retailer);
@@ -30,24 +30,12 @@ define([
         events: {
             'click #editCardRetailer': 'letsShowRetailersList',
             'click .retSelectItem'   : 'letsChoiceRetailer',
-            'change #styleImage'     : 'letsPrepareForImageUpload',
-            'click #cropBtn'         : 'letsCropImage'
-        },
-
-        // TODO implement crop function
-        letsCropImage: function (ev) {
-            ev.preventDefault();
-
-            var dataURL = $('canvas')[0].toDataURL('image/png');
-
-            console.log(dataURL);
-
-            $('#cropImage').attr('src', dataURL);
+            'change #styleImage'     : 'letsPrepareForImageUpload'
         },
 
         letsPrepareForImageUpload: function (ev) {
             ev.preventDefault();
-
+            
             var $inputFile = $(ev.currentTarget);
             var $container = $inputFile.closest('.styleImageContainer');
             var file = $inputFile[0].files[0];
@@ -60,7 +48,7 @@ define([
                 fr = new FileReader();
 
                 fr.onload = function () {
-                    $container.find('img').attr('src', fr.result);
+                    $container.find('#cropImage').attr('src', fr.result);
                 };
 
                 if (file) {

@@ -1,7 +1,7 @@
 <div id="styleItem-form" class="dialogFormBlock">
     <!-- style imageString -->
     <div class="styleImageContainer coverImage">
-        <img src="<%= model.imageString%>" alt="img" id="cropImage" /><br />
+        <img src="<%= model.imageString || 'images/style_default.png' %>" alt="img" id="cropImage" /><br />
         <input type="file" id="styleImage" class="styleInputFile" hidden>
         <a class="btn btnSmall btnBlue"><label for="styleImage">Upload</label></a>
         <span id="cropBtn" hidden><a class="btn btnSmall btnBlue"><label for="styleImage">Crop</label></a></span>
@@ -16,6 +16,18 @@
 
     <!-- retailers list in select -->
     <div class="formItem">
+        <label for="editCardRetailer">Retailer:</label>
+        <a id="editCardRetailer" data-id="" href="javascript:;"><%- model.retailerString || 'Without retailer'%></a>
+        <ul id="retailersList" hidden>
+            <%  var limit = retailers.length;
+            for (var index = 0; index < limit; index +=1) { %>
+            <li data-id='<%= retailers[index].objectId %>' class='retSelectItem'><%- retailers[index].retailerName || ''%></li>
+            <% } %>
+        </ul>
+
+
+
+
         <label for="selectRetailers">Retailers</label>
         <select class="retailers" id="selectRetailers">
             <%  var limit = retailers.length;
