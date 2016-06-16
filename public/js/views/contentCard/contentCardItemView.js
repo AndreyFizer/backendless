@@ -345,7 +345,6 @@ define([
             
             this.$el.find('#editCardRetailer').data("id", currentId).text(currentName);
             $container.slideUp();
-            
         },
         
         onSelectHeaderClick: function (ev) {
