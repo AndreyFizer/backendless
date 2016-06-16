@@ -17,7 +17,7 @@
     <!-- retailers list in select -->
     <div class="formItem">
         <label for="editCardRetailer">Retailer:</label>
-        <a id="editCardRetailer" data-id="" href="javascript:;"><%- model.retailerString || 'Without retailer'%></a>
+        <a id="editCardRetailer" data-id="" href="javascript:;"><%- model.retailerName || 'Without retailer'%></a>
         <ul id="retailersList" hidden>
             <%  var limit = retailers.length;
             for (var index = 0; index < limit; index +=1) { %>

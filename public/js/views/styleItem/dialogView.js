@@ -175,9 +175,9 @@ define([
         letsUpdateStyleItem: function (userData) {
             var self = this;
             var currentRetailer = this.model.retailerString;
-
+            
             // if user update retailer
-            if (currentRetailer !== userData.retailerName) {
+            if (currentRetailer !== userData.retailerId) {
                 var query = new Backendless.DataQuery();
                 query.condition = "retailerName='" + currentRetailer + "'";
                 query.options = {relations: ["trendingStyles"]};
@@ -218,7 +218,8 @@ define([
             // get retailer model by retailerName from database
             this.retailerStorage.find(queryData, new Backendless.Async(
                 function success(response) {
-                    var defaultImageUrl = 'images/def_user.png';
+                    console.log(response)
+
                     var retailer = response.data[0];
                     var style = self.model;
 
@@ -234,7 +235,7 @@ define([
                         }
 
                         // define style imageString
-                        result ? style.imageString = result.fileURL : style.imageString = defaultImageUrl;
+                        result ? style.imageString = result.fileURL : style.imageString = '';
 
                         // add created style to retailer
                         retailer.trendingStyles.push(style);
@@ -265,7 +266,6 @@ define([
                 }
             ));
         },
-
         render: function () {
             var self = this;
 
