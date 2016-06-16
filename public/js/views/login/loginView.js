@@ -47,10 +47,12 @@ define([
             Backendless.Persistence.of(Models.User).find(queryData, new Backendless.Async(
                 function success(response) {
                     var isAdmin;
-                    var data;
 
-                    response.data.length ? data = response.data[0] : data = [];
-                    isAdmin = data.admin || false;
+                    if (!response.data.length) {
+                        return APP.warningNotification('Sorry, you should register first');
+                    }
+
+                    isAdmin = response.data[0].admin || false;
 
                     if (isAdmin) {
                         Backendless.UserService.login(userEmail, userPass, stayLoggedIn, new Backendless.Async(
@@ -68,7 +70,7 @@ define([
                             }
                         ));
                     } else {
-                        APP.warningNotification('Sorry, permission to login only for admins')
+                        APP.warningNotification('Sorry, permission to login only for admins');
                     }
                 },
                 function error(err) {

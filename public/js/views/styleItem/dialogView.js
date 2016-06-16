@@ -35,7 +35,7 @@ define([
 
         letsPrepareForImageUpload: function (ev) {
             ev.preventDefault();
-            
+
             var $inputFile = $(ev.currentTarget);
             var $container = $inputFile.closest('.styleImageContainer');
             var file = $inputFile[0].files[0];

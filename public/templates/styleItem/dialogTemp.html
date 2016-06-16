@@ -24,15 +24,6 @@
             <li data-id='<%= retailers[index].objectId %>' class='retSelectItem'><%- retailers[index].retailerName || ''%></li>
             <% } %>
         </ul>
-
-
-        <label for="selectRetailers">Retailers</label>
-        <select class="retailers" id="selectRetailers">
-            <%  var limit = retailers.length;
-            for (var index = 0; index < limit; index +=1) { %>
-            <option><%= retailers[index].retailerName %></option>
-            <% } %>
-        </select>
     </div>
 
     <!-- style title -->
@@ -45,5 +36,11 @@
     <div class="formItem">
         <label for="description">Description</label>
         <input type="text" value="<%= model.styleDescription || '' %>" id="description" />
+    </div>
+
+    <!--style productIDs -->
+    <div class="formItem">
+        <label for="featuredProductIDs">Featured products id</label>
+        <input type="text" value="<%= model.featuredProductIDs || '' %>" id="featuredProductIDs" />
     </div>
 </div>
