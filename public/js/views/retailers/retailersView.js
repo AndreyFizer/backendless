@@ -147,8 +147,8 @@ define([
                 usrId = retData.objectId;
                 this.collection.add(retData, {merge: true});
                 usrRow = this.$el.find('#' + usrId);
-                usrRow.find('.tLogo>img').attr('src', retData.logo || 'styles/libs/images/def_user.png');
-                usrRow.find('.tRetLogo>img').attr('src', retData.retailerLogo || 'styles/libs/images/def_user.png');
+                usrRow.find('.tLogo>img').attr('src', retData.retailerLogo || 'images/def_user.png');
+                usrRow.find('.tRetLogo>img').attr('src', retData.retailerDarkLogo || 'images/def_user.png');
                 usrRow.find('.tRetName').text(retData.retailerName || '');
                 usrRow.find('.tRetWeb').text(retData.website || '');
                 usrRow.find('.tRetDescrip').text(retData.retailerDescription || '');

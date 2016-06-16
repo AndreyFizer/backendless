@@ -57,11 +57,11 @@ define([
             APP.showSpiner();
             async.parallel([
                 function (cb) {
-                    self.letsUploadFile(fileLogo, 'logos', cb)
+                    self.letsUploadFile(fileLogo, 'lightLogo', cb)
                 },
 
                 function (cb) {
-                    self.letsUploadFile(fileRetLogo, 'retailerLogos', cb)
+                    self.letsUploadFile(fileRetLogo, 'darkLogo', cb)
                 },
 
                 function (cb) {
@@ -75,10 +75,10 @@ define([
                 }
 
                 if (result[0]) {
-                    retailerData.logo = result[0].fileURL;
+                    retailerData.retailerLogo = result[0].fileURL;
                 }
                 if (result[1]) {
-                    retailerData.retailerLogo = result[1].fileURL;
+                    retailerData.retailerDarkLogo = result[1].fileURL;
                 }
                 if (result[2]) {
                     retailerData.coverImage = result[2].fileURL;

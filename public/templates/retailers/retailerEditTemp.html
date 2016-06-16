@@ -1,15 +1,15 @@
 <div class="inDialogBlock">
     <div class="smallImgContainer">
         <div class="imgContainer">
-            <h4>Logo</h4>
-            <img id="retLogoImg" src="<%= model.logo || 'images/def_user.png'%>" alt="Img">
+            <h4>Light logo</h4>
+            <img id="retLogoImg" src="<%= model.retailerLogo  || 'images/def_user.png'%>" alt="Img">
             <input type="file" id="retLogoImgInpt" class="retInpmFile" hidden>
             <a class="btn btnSmall btnBlue"><label for="retLogoImgInpt">Upload</label></a>
         </div>
 
         <div class="imgContainer">
-            <h4>Retailer logo</h4>
-            <img id="retRetLogoImg" src="<%= model.retailerLogo || 'images/def_user.png'%>" alt="Img">
+            <h4>Dark logo</h4>
+            <img id="retRetLogoImg" src="<%= model.retailerDarkLogo || 'images/def_user.png'%>" alt="Img">
             <input type="file" id="retRetLogoImgInpt" class="retInpmFile" hidden>
             <a class="btn btnSmall btnBlue"><label for="retRetLogoImgInpt">Upload</label></a>
         </div>
