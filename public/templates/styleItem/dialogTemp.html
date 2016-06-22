@@ -11,13 +11,13 @@
     <div id="editCardGender">
         <input id="male" type="radio" name="gender" value="male" checked><label for="male">male</label>
         <input id="female" type="radio" name="gender" value="female"><label for="female">female</label>
-        <input id="unisex" type="radio" name="gender" value="unisex"><label for="unisex">unisex</label>
+        <input id="unisex" type="radio" name="gender" value="both"><label for="unisex">both</label>
     </div>
 
     <!-- retailers list in select -->
     <div class="formItem">
         <label for="editCardRetailer">Retailer:</label>
-        <a id="editCardRetailer" data-id="" href="javascript:;"><%- model.retailerName || 'Without retailer'%></a>
+        <a id="editCardRetailer" data-id="<%- model.retailerId || ''%>" href="javascript:;"><%- model.retailerString || 'Without retailer'%></a>
         <ul id="retailersList" hidden>
             <%  var limit = retailers.length;
             for (var index = 0; index < limit; index +=1) { %>

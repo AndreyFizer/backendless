@@ -44,8 +44,8 @@ define([
             var retMalePIds = this.$el.find('#regMaleProdIds').val().trim();
             var retFemalePIds = this.$el.find('#regFemaleProdIds').val().trim();
 
-            if (!retName || !retWebsite) {
-                return APP.warningNotification('"Name" and "Website" are required fields');
+            if (!retName) {
+                return APP.warningNotification('"Name" is required field...');
             }
 
             var $fileLogo = this.$el.find('#retLogoImgInpt');

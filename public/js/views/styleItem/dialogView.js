@@ -113,8 +113,8 @@ define([
 
             style.featuredProductIDs = userData.featuredProductIDs;
             style.styleDescription = userData.description;
-            style.retailerString = retailerId;
-            style.retailerName = userData.retailerName;
+            style.retailerId = retailerId;
+            style.retailerString = userData.retailerName;
             style.styleTitle = userData.title;
             style.gender = userData.gender;
 
@@ -174,12 +174,12 @@ define([
 
         letsUpdateStyleItem: function (userData) {
             var self = this;
-            var currentRetailer = this.model.retailerString;
+            var currentRetailer = this.model.retailerId;
             
             // if user update retailer
             if (currentRetailer !== userData.retailerId) {
                 var query = new Backendless.DataQuery();
-                query.condition = "retailerName='" + currentRetailer + "'";
+                query.condition = "objectId='" + currentRetailer + "'";
                 query.options = {relations: ["trendingStyles"]};
 
                 // get current retailer model by retailerName from database
@@ -213,7 +213,7 @@ define([
         updateStyle: function (userData) {
             var self = this;
             var queryData = new Backendless.DataQuery();
-            queryData.condition = "retailerName='" + userData.retailerName + "'";
+            queryData.condition = "objectId='" + userData.retailerId + "'";
 
             // get retailer model by retailerName from database
             this.retailerStorage.find(queryData, new Backendless.Async(
@@ -226,6 +226,7 @@ define([
                     style.styleDescription = userData.description;
                     style.retailerString = userData.retailerName;
                     style.styleTitle = userData.title;
+                    style.retailerId = userData.retailerId;
                     style.gender = userData.gender;
 
                     // upload style image

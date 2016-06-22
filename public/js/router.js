@@ -16,7 +16,7 @@ define([
 
         routes: {
             'login'          : 'loginRout',
-            'registr'        : 'registrationRout',
+            // 'registr'        : 'registrationRout',
             // 'users'          : 'usersRout',
             'styles'         : 'styleItemsRout',
             'cards'          : 'contentCardsRout',
@@ -34,7 +34,8 @@ define([
 
             query.options = {
                 relations: ['trendingStyles', 'contentCards'],
-                sortBy   : 'retailerName asc'
+                sortBy   : 'retailerName asc',
+                pageSize : 100
             };
 
             if (APP.sessionData.get('authorized')) {
@@ -119,7 +120,9 @@ define([
             var self = this;
             var query = new Backendless.DataQuery();
 
-            query.options = {pageSize: 50};
+            query.options = {
+                pageSize: 100
+            };
 
             if (APP.sessionData.get('authorized')) {
 

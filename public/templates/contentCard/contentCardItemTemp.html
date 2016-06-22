@@ -3,7 +3,7 @@
         <h4>Alt images</h4>
         <div id="fileArrayList">
             <%if (model.altImages){%>
-                <% model.altImages.split(',').forEach(function(oneImage){%>
+                <% model.altImages.split(', ').forEach(function(oneImage){%>
                     <img src="<%= oneImage%>" alt="Img">
                 <%})%>
             <%} else {%>

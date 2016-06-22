@@ -41,6 +41,7 @@ define(function () {
         this.___class = 'FeedContentCard';
         this.gender = args.gender || '';
         this.retailer = args.retailer || '';
+        this.retailerId = args.retailerId || '';
         this.retailerString = args.retailerString || '';
         this.videoURL = args.videoURL || '';
         this.altImages = args.altImages || '';
@@ -56,12 +57,13 @@ define(function () {
         this.___class = 'StyleItem';
         this.gender = args.gender || '';
         this.retailer = args.retailer || '';
+        this.retailerId = args.retailerId || '';
+        this.retailerString = args.retailerString || '';
         this.mainImage = args.mainImage || '';
         this.styleTitle = args.styleTitle || '';
         this.imageString = args.imageString || '';
         this.retailerLogo = args.retailerLogo || '';
         this.retailerName = args.retailerName || '';
-        this.retailerString = args.retailerString || '';
         this.styleDescription = args.styleDescription || '';
         this.feuredProductIDs = args.featuredProductIDs || '';
         this.featuredProductIDs = args.featuredProductIDs || '';

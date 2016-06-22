@@ -26,7 +26,7 @@ define([
 
             this.model.on('change', this.updateStyleData, this);
     
-            query.options = {pageSize : 50};
+            query.options = {pageSize : 100};
 
             styleStorage.find(query, new Backendless.Async(
                 function (res) {

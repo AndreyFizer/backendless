@@ -52,6 +52,7 @@ define([
                 case 'change':
                     this.fileArray = [];
                     this.hasFiles = false;
+                    this.model.altImages = '';
                     this.$el.find('#contCardImgInpt').trigger('click');
                     break;
                 default:
@@ -118,7 +119,7 @@ define([
                     var targetId;
                     
                     if (!self.addMode && retailerId) {
-                        targetId = self.model.retailer;
+                        targetId = self.model.retailerId;
                         if (targetId) {
                             query = new Backendless.DataQuery();
                             
@@ -174,11 +175,11 @@ define([
                 }
                 
                 if (resObj.imgArray && resObj.imgArray.length) {
-                    if (self.hasFiles) {
-                        cardData.altImages = self.model.altImages + ',' + resObj.imgArray.join(',')
+                    if (cardData.altImages) {
+                        cardData.altImages = self.model.altImages + ', ' + resObj.imgArray.join(', ')
                     } else {
                         cardData.mainImage = resObj.imgArray[0];
-                        cardData.altImages = resObj.imgArray.join(',');
+                        cardData.altImages = resObj.imgArray.join(', ');
                     }
                 }
 
@@ -196,7 +197,7 @@ define([
                 if (retailerId) {
                     retailerItem = self.selectCollection.get(retailerId).toJSON();
                     
-                    cardData.retailer = retailerId;
+                    cardData.retailerId = retailerId;
                     cardData.retailerString = retailerItem.retailerName;
                     
                     if (!self.addMode) {
@@ -283,18 +284,21 @@ define([
             var fr;
             
             if (filesExt.join().search(parts[parts.length - 1]) !== -1) {
-                self.fileArray.push(file);
+                //self.fileArray.push(file);
                 // self.$el.find('#linkText').text('Add image');
                 fr = new FileReader();
                 
                 fr.onload = function () {
                     var src = fr.result;
-                    
+
+                    self.fileArray.push(file);
+
                     if (self.imgMode === 'change' || !self.hasFiles) {
                         $container.find('#fileArrayList').html('<img src="' + src + '" alt="Img">');
                     } else {
                         $container.find('#fileArrayList').append('<img src="' + src + '" alt="Img">');
                     }
+                    self.hasFiles = true;
                 };
                 
                 if (file) {
@@ -312,7 +316,10 @@ define([
             var query = new Backendless.DataQuery();
             var storageService = Backendless.Persistence.of(Models.Retailer);
             
-            query.options = {relations: ['contentCards']};
+            query.options = {
+                relations: ['contentCards'],
+                pageSize : 100
+            };
             
             storageService.find(query, new Backendless.Async(
                 function (list) {
