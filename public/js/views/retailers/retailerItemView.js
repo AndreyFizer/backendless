@@ -41,8 +41,10 @@ define([
             var retWebsite = this.$el.find('#regWeb').val().trim();
             var retDescription = this.$el.find('#regDescrip').val().trim();
             var retTips = this.$el.find('#regTips').val().trim();
+            var retMalePIds = this.$el.find('#regMaleProdIds').val().trim();
+            var retFemalePIds = this.$el.find('#regFemaleProdIds').val().trim();
 
-            if (!retName || !retWebsite){
+            if (!retName || !retWebsite) {
                 return APP.warningNotification('"Name" and "Website" are required fields');
             }
 
@@ -57,11 +59,11 @@ define([
             APP.showSpiner();
             async.parallel([
                 function (cb) {
-                    self.letsUploadFile(fileLogo, 'logos', cb)
+                    self.letsUploadFile(fileLogo, 'lightLogo', cb)
                 },
 
                 function (cb) {
-                    self.letsUploadFile(fileRetLogo, 'retailerLogos', cb)
+                    self.letsUploadFile(fileRetLogo, 'darkLogo', cb)
                 },
 
                 function (cb) {
@@ -75,10 +77,10 @@ define([
                 }
 
                 if (result[0]) {
-                    retailerData.logo = result[0].fileURL;
+                    retailerData.retailerLogo = result[0].fileURL;
                 }
                 if (result[1]) {
-                    retailerData.retailerLogo = result[1].fileURL;
+                    retailerData.retailerDarkLogo = result[1].fileURL;
                 }
                 if (result[2]) {
                     retailerData.coverImage = result[2].fileURL;
@@ -88,6 +90,8 @@ define([
                 retailerData.website = retWebsite;
                 retailerData.retailerDescription = retDescription;
                 retailerData.shoppingTips = retTips;
+                retailerData.maleFeaturedProductIDs = retMalePIds;
+                retailerData.femaleFeaturedProductIDs = retFemalePIds;
 
                 retailerStorage.save(retailerData, new Backendless.Async(
                     function (respons) {
@@ -144,7 +148,7 @@ define([
 
             this.undelegateEvents();
 
-            this.$el.html(this.template({model : retailerData})).dialog({
+            this.$el.html(this.template({model: retailerData})).dialog({
                 closeOnEscape: false,
                 autoOpen     : true,
                 dialogClass  : "retailerDialog",
@@ -153,21 +157,21 @@ define([
                 resizable    : false,
                 draggable    : false,
                 width        : "600px",
-                close: function() {
+                close        : function () {
                     this.remove();
                 }.bind(this),
-                buttons: [
+                buttons      : [
                     {
-                        text: "Cancel",
-                        'class' : 'btn btnMedium btnError',
-                        click: function() {
+                        text   : "Cancel",
+                        'class': 'btn btnMedium btnError',
+                        click  : function () {
                             $(this).dialog("close");
                         }
                     },
                     {
-                        text: "Save",
-                        'class' : 'btn btnMedium btnSuccess',
-                        click: function() {
+                        text   : "Save",
+                        'class': 'btn btnMedium btnSuccess',
+                        click  : function () {
                             this.letsSaveRetailer();
                         }.bind(this)
                     }

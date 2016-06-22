@@ -20,9 +20,9 @@ define([
         template: _.template(StyleTemp),
 
         initialize: function (opts) {
+            var currentStyles = opts && opts.currentStyles;
             var styleStorage = Backendless.Persistence.of(Models.Style);
             var query = new Backendless.DataQuery();
-            var currentStyles = opts && opts.currentStyles;
 
             this.model.on('change', this.updateStyleData, this);
     

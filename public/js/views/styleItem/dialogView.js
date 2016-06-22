@@ -23,23 +23,14 @@ define([
 
         initialize: function () {
             this.retailerStorage = Backendless.Persistence.of(Models.Retailer);
+            this.styleStorage = Backendless.Persistence.of(Models.Style);
             this.render();
         },
 
         events: {
-            'change #styleImage': 'letsPrepareForImageUpload',
-            'click #cropBtn'    : 'letsCropImage'
-        },
-
-        // TODO implement crop function
-        letsCropImage: function (ev) {
-            ev.preventDefault();
-
-            var dataURL = $('canvas')[0].toDataURL('image/png');
-
-            console.log(dataURL);
-
-            $('#cropImage').attr('src', dataURL);
+            'click #editCardRetailer': 'letsShowRetailersList',
+            'click .retSelectItem'   : 'letsChoiceRetailer',
+            'change #styleImage'     : 'letsPrepareForImageUpload'
         },
 
         letsPrepareForImageUpload: function (ev) {
@@ -57,7 +48,7 @@ define([
                 fr = new FileReader();
 
                 fr.onload = function () {
-                    $container.find('img').attr('src', fr.result);
+                    $container.find('#cropImage').attr('src', fr.result);
                 };
 
                 if (file) {
@@ -70,90 +61,123 @@ define([
 
         letsSaveStyle: function () {
             var $dialogForm = this.$el.find('#styleItem-form');
-            var retailerName = $dialogForm.find('.retailers').val().trim();
+            var featuredProductIDs = $dialogForm.find('#featuredProductIDs').val().trim();
+            var $retailerData = $dialogForm.find('#editCardRetailer');
+            var retailerName = $retailerData.text().trim();
+            var retailerId = $retailerData.data('id');
             var description = $dialogForm.find('#description').val().trim();
             var gender = $dialogForm.find('input:checked').val().trim();
             var title = $dialogForm.find('#title').val().trim();
             var file = $dialogForm.find('#styleImage')[0].files[0];
             var userData = {
-                retailerName: retailerName,
-                description : description,
-                gender      : gender,
-                title       : title,
-                file        : file
+                featuredProductIDs: featuredProductIDs,
+                retailerName      : retailerName,
+                description       : description,
+                retailerId        : retailerId,
+                gender            : gender,
+                title             : title,
+                file              : file
             };
 
             // validate user data
-            if (!title || !description) {
-                return APP.warningNotification('Enter, please, title or description!');
+            if (!title || !description || !featuredProductIDs) {
+                return APP.warningNotification('Enter, please, title or description or featured productIDs!');
             }
 
-            if (_.isEmpty(this.model)) {
-                this.lestCreateStyleItem(userData);
-            } else {
-                this.letsUpdateStyleItem(userData);
-            }
+            // check and implement user activity (update or save)
+            _.isEmpty(this.model) ? this.lestCreateStyleItem(userData) : this.letsUpdateStyleItem(userData);
+        },
+
+        letsChoiceRetailer: function (ev) {
+            ev.stopPropagation();
+
+            var $selectedRow = $(ev.currentTarget);
+            var retailerName = $selectedRow.text() || '';
+            var retailerId = $selectedRow.data('id');
+
+            this.$el.find('#editCardRetailer').data("id", retailerId).text(retailerName);
+            this.$el.find('#retailersList').slideUp();
+        },
+
+        letsShowRetailersList: function (ev) {
+            ev.preventDefault();
+
+            this.$el.find('#retailersList').slideToggle();
         },
 
         lestCreateStyleItem: function (userData) {
+            var defaultImageUrl = 'images/style_default.png';
+            var retailerId = userData.retailerId;
+            var style = new Models.Style();
             var self = this;
-            var query = new Backendless.DataQuery();
-            query.condition = "retailerName='" + userData.retailerName + "'";
 
-            // get retailer model by retailerName from database
-            this.retailerStorage.find(query, new Backendless.Async(
+            style.featuredProductIDs = userData.featuredProductIDs;
+            style.styleDescription = userData.description;
+            style.retailerString = retailerId;
+            style.retailerName = userData.retailerName;
+            style.styleTitle = userData.title;
+            style.gender = userData.gender;
+
+            // upload style image
+            self.letsUploadFile(userData.file, 'styleImages', function (err, result) {
+                if (err) {
+                    return APP.errorHandler(err);
+                }
+
+                // define style imageString
+                result ? style.imageString = result.fileURL : style.imageString = defaultImageUrl;
+
+                // save new style
+                retailerId ? self.saveStyleWithRetailer(retailerId, style) : self.saveStyleWithoutRetailer(style);
+            });
+        },
+
+        saveStyleWithRetailer: function (retailerId, style) {
+            var self = this;
+
+            this.retailerStorage.findById(retailerId, new Backendless.Async(
                 function success(response) {
-                    var defaultImageUrl = 'images/def_user.png';
-                    var retailer = response.data[0];
-                    var style = new Models.Style();
+                    var retailer = response;
+                    retailer.trendingStyles.push(style);
 
-                    style.styleDescription = userData.description;
-                    style.retailerString = userData.retailerName;
-                    style.styleTitle = userData.title;
-                    style.gender = userData.gender;
-
-                    // upload style image
-                    self.letsUploadFile(userData.file, 'styleImages', function (err, result) {
-                        if (err) {
-                            return APP.errorHandler(err);
-                        }
-
-                        // define style imageString
-                        result ? style.imageString = result.fileURL : style.imageString = defaultImageUrl;
-
-                        // add created style to retailer
-                        retailer.trendingStyles.push(style);
-
-                        // save created style and updated retailer in database
-                        self.retailerStorage.save(retailer, new Backendless.Async(
-                            function success(response) {
-                                var createdStyle = response.trendingStyles[0];
-
-                                // append new style to list of styleItems
-                                $('#styleListContainer').before(self.styleTemp(createdStyle));
-
-                                // close dialog page
-                                self.remove();
-                                APP.successNotification('New style has successfully created!');
-                            },
-                            function (err) {
-                                APP.errorHandler(err);
-                            }
-                        ));
-                    });
-                },
-                function error(err) {
-                    APP.errorHandler(err);
+                    self.retailerStorage.save(retailer, new Backendless.Async(
+                        function success(response) {
+                            var createdStyle = response.trendingStyles[0];
+                            self.appendCreatedStyle(createdStyle);
+                        },
+                        self.handleError
+                    ));
                 }
             ));
+        },
+
+        saveStyleWithoutRetailer: function (style) {
+            var self = this;
+
+            this.styleStorage.save(style, new Backendless.Async(
+                function success(response) {
+                    self.appendCreatedStyle(response);
+                },
+                self.handleError
+            ))
+        },
+
+        appendCreatedStyle: function (createdStyle) {
+            var self = this;
+            // append new style to list of styleItems
+            $('#styleListContainer').before(self.styleTemp(createdStyle));
+
+            // close dialog page
+            self.remove();
+            APP.successNotification('New style has successfully created!');
         },
 
         letsUpdateStyleItem: function (userData) {
             var self = this;
             var currentRetailer = this.model.retailerString;
-
+            
             // if user update retailer
-            if (currentRetailer !== userData.retailerName) {
+            if (currentRetailer !== userData.retailerId) {
                 var query = new Backendless.DataQuery();
                 query.condition = "retailerName='" + currentRetailer + "'";
                 query.options = {relations: ["trendingStyles"]};
@@ -162,7 +186,6 @@ define([
                 this.retailerStorage.find(query, new Backendless.Async(
                     function success(response) {
                         var retailer = response.data[0];
-
 
                         // find position in retailer styles and remove it
                         var index = retailer.trendingStyles.map(function (item) {
@@ -174,15 +197,17 @@ define([
                         self.retailerStorage.save(retailer, new Backendless.Async(
                             function success() {
                             },
-                            function error(err) {
-                                APP.errorHandler(err);
-                            }
+                            self.handleError
                         ))
                     })
                 );
             }
             // update style item
             this.updateStyle(userData);
+        },
+
+        handleError: function (err) {
+            APP.errorHandler(err);
         },
 
         updateStyle: function (userData) {
@@ -193,7 +218,8 @@ define([
             // get retailer model by retailerName from database
             this.retailerStorage.find(queryData, new Backendless.Async(
                 function success(response) {
-                    var defaultImageUrl = 'images/def_user.png';
+                    console.log(response)
+
                     var retailer = response.data[0];
                     var style = self.model;
 
@@ -209,7 +235,7 @@ define([
                         }
 
                         // define style imageString
-                        result ? style.imageString = result.fileURL : style.imageString = defaultImageUrl;
+                        result ? style.imageString = result.fileURL : style.imageString = '';
 
                         // add created style to retailer
                         retailer.trendingStyles.push(style);
@@ -240,7 +266,6 @@ define([
                 }
             ));
         },
-
         render: function () {
             var self = this;
 
