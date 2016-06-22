@@ -32,7 +32,10 @@ define([
             var self = this;
             var query = new Backendless.DataQuery();
 
-            query.options = {relations: ['trendingStyles', 'contentCards']};
+            query.options = {
+                relations: ['trendingStyles', 'contentCards'],
+                sortBy   : 'retailerName asc'
+            };
 
             if (APP.sessionData.get('authorized')) {
 
