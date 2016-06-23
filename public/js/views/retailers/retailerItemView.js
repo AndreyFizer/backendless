@@ -39,7 +39,7 @@ define([
 
             var retName = this.$el.find('#regName').val().trim();
             var retWebsite = this.$el.find('#regWeb').val().trim();
-            var retDescription = this.$el.find('#regDescrip').val().trim();
+            var retDescription = this.$el.find('#regDescrip').val();
             var retTips = this.$el.find('#regTips').val().trim();
             var retMalePIds = this.$el.find('#regMaleProdIds').val().trim();
             var retFemalePIds = this.$el.find('#regFemaleProdIds').val().trim();
